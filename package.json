@@ -1,0 +1,29 @@
+{
+  "name": "shopify-crm",
+  "version": "1.0.0",
+  "description": "Shopify CRM app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ianemcallister/shopify-crm.git"
+  },
+  "author": "Ian McAllister",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ianemcallister/shopify-crm/issues"
+  },
+  "homepage": "https://github.com/ianemcallister/shopify-crm#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie": "^0.4.1",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "nonce": "^1.0.4",
+    "shopify-api-node": "^3.6.5"
+  }
+}
