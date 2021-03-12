@@ -8,10 +8,11 @@
 //  DEFINE DEPENDENCIES
 const crypto        = require('crypto');
 const nonce         = require('nonce')();
-const request       = require('request-promise');
+const bodyParser	= require('body-parser');
 const querystring   = require('querystring');
 const cookie        = require('cookie');
 const express 		= require('express');
+//const request       = require('request-promise');
 
 //return the express object
 var serverApp = express();
@@ -47,8 +48,8 @@ serverApp.use('/', function(req, res, next) {
 *	To clean up the code we've moved it to externl files
 */
 //	WEBHOOK ROUTES
-var webhookRoutes = require('./routes/webhooks');
-serverApp.use('/webhook', webhookRoutes);
+//var webhookRoutes = require('./routes/webhooks');
+//serverApp.use('/webhook', webhookRoutes);
 
 //	STANDARD GET
 serverApp.get('/', async function(req, res) {
@@ -58,7 +59,33 @@ serverApp.get('/', async function(req, res) {
 	console.log(req.query);
 
 	res.send("CKC CRM");
-})
+});
+
+//	SHOPIFY GET
+serverApp.get('/shopify', async function(req, res) {
+	//	DEFINE LOCAL VARIABLES
+	const shopName = req.query.shop; // Shop Name passed in URL
+
+	if (shopName) {
+        const shopState = nonce();
+        const redirectUri = process.env.TUNNEL_URL + '/shopify/callback'; // Redirect URI for shopify Callback
+        const installUri = 'https://' + shopName +
+            '/admin/oauth/authorize?client_id=' + process.env.SHOPIFY_API_KEY +
+            '&amp;scope=' + process.env.SCOPES +
+            '&amp;state=' + shopState +
+            '&amp;redirect_uri=' + redirectUri; // Install URL for app install
+ 
+        res.cookie('state', shopState);
+        res.redirect(installUri);
+    } else {
+        return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
+    }
+
+	//	NOIFTY PROGRESS
+	console.log('in shopify endpoint');
+
+	//	send response
+});
 
 
 /*
