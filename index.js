@@ -90,6 +90,15 @@ serverApp.get('/shopify', async function(req, res) {
 	
 });
 
+//	SHOPIFY TEST
+serverApp.get('/shopify/api', async function(req, res) {
+	//	define local variables
+	//	NOTIFY PROGRESS
+	console.log('got this reqest to shopify api: ', req);
+
+	res.send(200);
+});
+
 //	SHOPIFY GET CALLBACK
 serverApp.get('/shopify/callback', async function(req, res) {
 	//	DEFINE LOCAL VARIABLES
@@ -152,7 +161,7 @@ serverApp.get('/shopify/callback', async function(req, res) {
 			.then(function(shopResponse) {
 				res.redirect('https://' + shopName + '/admin/apps');
 			})
-			.cathc(function(error) {
+			.catch(function(error) {
 				res.status(error.statusCode).send(error.error.error_description);
 			});
 		})
