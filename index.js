@@ -76,7 +76,7 @@ serverApp.get('/shopify', async function(req, res) {
         const redirectUri = process.env.CKCCRM_REDIRECT_URL + '/shopify/callback'; // Redirect URI for shopify Callback
         const installUri = 'https://' + shopName +
             '/admin/oauth/authorize?client_id=' + process.env.CKCCRM_SHOPIFY_API_KEY +
-            '&amp;scope=' + process.env.SCOPES +
+            '&amp;scope=' + 'write_orders,read_customers' + //process.env.SCOPES +
             '&amp;state=' + shopState +
             '&amp;redirect_uri=' + redirectUri; // Install URL for app install
 		
