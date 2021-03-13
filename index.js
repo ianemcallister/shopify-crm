@@ -12,6 +12,7 @@ const bodyParser	= require('body-parser');
 const querystring   = require('querystring');
 const cookie        = require('cookie');
 const express 		= require('express');
+const fetch			= require('node-fetch');
 //const request       = require('request-promise');
 
 //return the express object
@@ -66,11 +67,15 @@ serverApp.get('/shopify', async function(req, res) {
 	//	DEFINE LOCAL VARIABLES
 	const shopName = req.query.shop; // Shop Name passed in URL
 
+	//	NOIFTY PROGRESS
+	console.log('in shopify endpoint');
+
+	//	response
 	if (shopName) {
         const shopState = nonce();
-        const redirectUri = process.env.TUNNEL_URL + '/shopify/callback'; // Redirect URI for shopify Callback
+        const redirectUri = process.env.CKCCRM_REDIRECT_URL + '/shopify/callback'; // Redirect URI for shopify Callback
         const installUri = 'https://' + shopName +
-            '/admin/oauth/authorize?client_id=' + process.env.SHOPIFY_API_KEY +
+            '/admin/oauth/authorize?client_id=' + process.env.SHOPIFY_CRM_APP_API_KEY +
             '&amp;scope=' + process.env.SCOPES +
             '&amp;state=' + shopState +
             '&amp;redirect_uri=' + redirectUri; // Install URL for app install
@@ -80,11 +85,80 @@ serverApp.get('/shopify', async function(req, res) {
     } else {
         return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
     }
+	
+});
 
-	//	NOIFTY PROGRESS
-	console.log('in shopify endpoint');
+//	SHOPIFY GET CALLBACK
+serverApp.get('/shopify/callback', async function(req, res) {
+	//	DEFINE LOCAL VARIABLES
+	const shopName 	= req.query.shopName;
+	const hmac 		= req.query.hmac;
+	const code		= req.query.code;
+	const shopState = req.query.shoState;
+	const stateCookie = cookie.parse(req.headers.cookie).state;
+    
+	//	NOTIFY PROGRESS
+	console.log(shopState + stateCookie);
 
-	//	send response
+	if (shopState !== stateCookie) {
+        return res.status(403).send('Request origin cannot be verified');
+    }
+
+	if(shopName && hmac && code) {
+		//	DEFINE LOCAL VARIABLES
+		const map = Object.assign({}, req.query);
+		delete map['signature'];
+		delete map['hmac'];
+		const message = querystring.stringify(map);
+		const providedHmac = Buffer.from(hmac, 'utf-8');
+		const generatedHash = Buffer.from(
+            crypto
+            .createHmac('sha256', process.env.SHOPIFY_API_SECRET)
+            .update(message)
+            .digest('hex'),
+            'utf-8'
+        );
+		let hashEquals = false;
+
+		try {
+            hashEquals = crypto.timingSafeEqual(generatedHash, providedHmac)
+        } catch (e) {
+            hashEquals = false;
+        };
+
+		if (!hashEquals) {
+            return res.status(400).send('HMAC validation failed');
+        }
+		const accessTokenRequestUrl = 'https://' + shopName + '/admin/oauth/access_token';
+        const accessTokenPayload = {
+            client_id: process.env.SHOPIFY_API_KEY,
+            client_secret: process.env.SHOPIFY_API_SECRET,
+            code,
+        };
+		fetch(accessTokenRequestUrl, { method: 'POST', json: accessTokenPayload})
+		.then(function(accessTokenResponse) {
+			const accessToken = accessTokenResponse.access_token;
+			const shopRequestUrl = 'https://' + shopName + '/admin/api/2019-07/shop.json';
+			const shopRequestHeaders = {
+				'X-Shopify-Access-Token': accessToken,
+			};
+
+			fetch(shopRequestUrl, {method: 'GET', headers: shopRequestHeaders })
+			.then(function(shopResponse) {
+				res.redirect('https://' + shopName + '/admin/apps');
+			})
+			.cathc(function(error) {
+				res.status(error.statusCode).send(error.error.error_description);
+			});
+		})
+		.catch(function(error) {
+			res.status(error.statusCode).send(error.error.error_description);
+		})
+	} else {
+		res.status(400).send('Required parameters missing');
+	}
+	
+
 });
 
 
