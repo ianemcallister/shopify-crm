@@ -94,7 +94,7 @@ serverApp.get('/shopify', async function(req, res) {
 serverApp.get('/shopify/api', async function(req, res) {
 	//	define local variables
 	//	NOTIFY PROGRESS
-	console.log('got this reqest to shopify api: ', req.body);
+	console.log('got this reqest to shopify api: ', req.query);
 
 	res.sendStatus(200);
 });
