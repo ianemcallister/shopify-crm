@@ -145,6 +145,9 @@ serverApp.get('/shopify/callback', async function(req, res) {
 				'X-Shopify-Access-Token': accessToken,
 			};
 
+			//	NOTIFY PROGRESS
+			console.log('accessToken: ', accessToken);
+
 			fetch(shopRequestUrl, {method: 'GET', headers: shopRequestHeaders })
 			.then(function(shopResponse) {
 				res.redirect('https://' + shopName + '/admin/apps');
