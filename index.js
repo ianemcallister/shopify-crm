@@ -75,12 +75,14 @@ serverApp.get('/shopify', async function(req, res) {
         const shopState = nonce();
         const redirectUri = process.env.CKCCRM_REDIRECT_URL + '/shopify/callback'; // Redirect URI for shopify Callback
         const installUri = 'https://' + shopName +
-            '/admin/oauth/authorize?client_id=' + process.env.SHOPIFY_CRM_APP_API_KEY +
+            '/admin/oauth/authorize?client_id=' + process.env.CKCCRM_SHOPIFY_API_KEY +
             '&amp;scope=' + process.env.SCOPES +
             '&amp;state=' + shopState +
             '&amp;redirect_uri=' + redirectUri; // Install URL for app install
- 
-        res.cookie('state', shopState);
+		
+		//	NOTIFY PROGRESS
+        console.log("REDIRECTING TO: ",installUri, shopState);
+		res.cookie('state', shopState);
         res.redirect(installUri);
     } else {
         return res.status(400).send('Missing shop parameter. Please add ?shop=your-development-shop.myshopify.com to your request');
@@ -113,7 +115,7 @@ serverApp.get('/shopify/callback', async function(req, res) {
 		const providedHmac = Buffer.from(hmac, 'utf-8');
 		const generatedHash = Buffer.from(
             crypto
-            .createHmac('sha256', process.env.SHOPIFY_API_SECRET)
+            .createHmac('sha256', process.env.CKCCRM_SHOPIFY_API_SECRET)
             .update(message)
             .digest('hex'),
             'utf-8'
@@ -131,8 +133,8 @@ serverApp.get('/shopify/callback', async function(req, res) {
         }
 		const accessTokenRequestUrl = 'https://' + shopName + '/admin/oauth/access_token';
         const accessTokenPayload = {
-            client_id: process.env.SHOPIFY_API_KEY,
-            client_secret: process.env.SHOPIFY_API_SECRET,
+            client_id: process.env.CKCCRM_SHOPIFY_API_KEY,
+            client_secret: process.env.CKCCRM_SHOPIFY_API_SECRET,
             code,
         };
 		fetch(accessTokenRequestUrl, { method: 'POST', json: accessTokenPayload})
