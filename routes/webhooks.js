@@ -6,7 +6,7 @@ module.exports = (function() {
     'use strict';
     //  DEFINE DEPENDENCIES
     var webhookRoutes   = require('express').Router();
-    var dc              = require('../cd/enrollment.js');
+    var dc              = require('../dc/enrollment.js');
     //var CKC_StanOps     = require('../crm/standardOps.js');
 
     function _parseMappings(mappings) {
