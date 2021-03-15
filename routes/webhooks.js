@@ -37,7 +37,6 @@ module.exports = (function() {
                 console.log(data.loyalty_account);
 
                 //  DEFINE LOCAL VARAIBLES
-                var 
 
                 //  RETURN
                 res.sendStatus(200);
