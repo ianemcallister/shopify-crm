@@ -24,7 +24,9 @@ module.exports = (function() {
         
         //  NOTIFY POST DATA
         console.log(req.body);
-        console.log(req.body.data);
+        
+        //  DEFINE LOCAL VARIABLES
+        var data = req.body.data.object;
 
         try {
             
@@ -32,14 +34,17 @@ module.exports = (function() {
             if(req.body.type == "loyalty.account.created") {
                 //  NOTIFY PROGRESS
                 console.log('loyatly account created');
+                console.log(data.loyalty_account);
 
                 //  DEFINE LOCAL VARAIBLES
+                var 
 
                 //  RETURN
                 res.sendStatus(200);
             } else if(req.body.type == "loyalty.account.deleted"){
                 //  NOTIFY PROGRESS
                 console.log('loyalty account deleted');
+                console.log(data.loyalty_account);
 
                 //  DEFINE LOCAL VARAIBLES
 
@@ -48,6 +53,7 @@ module.exports = (function() {
             } else if(req.body.type == "loyalty.account.updated"){
                 //  NOTIFY PROGRESS
                 console.log('loyalty account updated');
+                console.log(data.loyalty_account);
 
                 //  DEFINE LOCAL VARAIBLES
 
@@ -55,7 +61,8 @@ module.exports = (function() {
                 res.sendStatus(200);
             } else if(req.body.type == "loyalty.event.created"){  
                 //  NOTIFY PROGRESS
-                console.log('loyalty event ceated');  
+                console.log('loyalty event ceated');
+                console.log(data.loyalty_event);  
 
                 //  DEFINE LOCAL VARAIBLES
 
@@ -64,9 +71,10 @@ module.exports = (function() {
             } else if(req.body.type == "payment.created") {
                  //  NOTIFY PROGRESS
                  console.log('payment created');
+                 console.log(data.payment); 
 
                 //  DEFINE LOCAL VARIABLES
-                var paymentId = req.body.data.object.payment.id;
+                var paymentId = data.payment.id;
 
                 res.sendStatus(200);
             } else {
