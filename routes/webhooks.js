@@ -6,8 +6,20 @@ module.exports = (function() {
     'use strict';
     //  DEFINE DEPENDENCIES
     var webhookRoutes   = require('express').Router();
-    //var Delightcircle   = require('../crm/delightCircle.js');
+    var dc              = require('../cd/enrollment.js');
     //var CKC_StanOps     = require('../crm/standardOps.js');
+
+    function _parseMappings(mappings) {
+        //  DEFINE LOCAL VARIABLES
+        var returnObject = {};
+
+        //  Iterate over object
+        mappings.forEach(function(mapping) {
+            returnObject[mapping[type]] = mapping[value];
+        });
+
+        return returnObject;
+    };
 
     //  TEST
     webhookRoutes.get('/test', function(req, res) {
@@ -37,6 +49,18 @@ module.exports = (function() {
                 console.log(data.loyalty_account);
 
                 //  DEFINE LOCAL VARAIBLES
+                var mapping = _parseMappings(data.mapping);
+                var phone = mapping[phone];
+                var loyaltyId = data.id;
+
+                if(phone) {
+                    //  NOTIFY PROGRESS
+                    console.log('phone # found');
+
+                    //  SEND ENROLLMENT URL
+                    var status = await dc.enrollmentInvite.viaSMS(loyaltyId, phone);
+                    console.log('Success?: ', status);
+                }
 
                 //  RETURN
                 res.sendStatus(200);
