@@ -20,13 +20,12 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
     //  NOTIFY PROGRESS
     console.log('_GetShopifyCustomerId: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
 
-    //  1. GET CRM CUSTOMER ID
-    var crmMerchId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
-
     //  2. GET SHOPIFY CUSTOMER ID
-    var merchCustomerRecord = await CRM.get.merchCustomerRecordViaPhone(crmMerchId, merchCustPhone, merchCustsqLyltyId);
-
-    return merchCustomerRecord
+    return await CRM.get.merchCustomerRecordViaPhone(
+        await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id),    // get crm merchant id
+        merchCustPhone, 
+        merchCustsqLyltyId
+    );
 
 };
 
@@ -47,6 +46,7 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
     
     //  1. Get Shopify Customer Id
     var merchCustomerRecord = await _GetShopifyCustomerId(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
+    console.log('got this merchantCustomer REcord' , merchCustomerRecord);
 
     //  2. Check activation status
     if(merchCustomerRecord.dcEnrollmentCompleted) {

@@ -20,11 +20,8 @@ async function GetCrmMerchIdViaSqMrchId(sq_merchant_id) {
     //  NOTIFY PROGRESS
     console.log('getting Merchent id from square merchant id: ', sq_merchant_id);
 
-    //  DEFINE LOCAL VARIABLES
-    var crmMerchId = await Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id);
-
     //  RETURN
-    return crmMerchId;
+    return await Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id);;
 };
 
 /*
