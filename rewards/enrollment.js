@@ -20,12 +20,14 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
     //  NOTIFY PROGRESS
     console.log('_GetShopifyCustomerId: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
 
+    //  1. GET CR MERCHANT ID
+    var crmMerchantId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
+
+        //  NOTIFY PROGRESS
+        console.log('gto this crmMerchantId', crmMerchantId);
+
     //  2. GET SHOPIFY CUSTOMER ID
-    return await CRM.get.merchCustomerRecordViaPhone(
-        await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id),    // get crm merchant id
-        merchCustPhone, 
-        merchCustsqLyltyId
-    );
+    return await CRM.get.merchCustomerRecordViaPhone(crmMerchantId, merchCustPhone, merchCustsqLyltyId);
 
 };
 
