@@ -49,8 +49,8 @@ serverApp.use('/', function(req, res, next) {
 *	To clean up the code we've moved it to externl files
 */
 //	WEBHOOK ROUTES
-//var webhookRoutes = require('./routes/webhooks');
-//serverApp.use('/webhook', webhookRoutes);
+var webhookRoutes = require('./routes/webhooks');
+serverApp.use('/webhooks', webhookRoutes);
 
 //	STANDARD GET
 serverApp.get('/', async function(req, res) {
