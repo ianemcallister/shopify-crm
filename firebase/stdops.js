@@ -89,11 +89,11 @@ async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
             return merchantId;
         }, function(error) {
             console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
-            return error
+            //return error
         });
     } catch (error) {
         console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
-        return error
+        //return error
     }
 };
 
