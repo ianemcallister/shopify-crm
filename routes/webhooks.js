@@ -12,7 +12,7 @@ module.exports = (function() {
     function _parseMappings(mappings) {
         //  NOTIFY PROGRESS
         console.log('Parsing Mappings ', mappings);
-        
+
         //  DEFINE LOCAL VARIABLES
         var returnObject = {};
 
@@ -21,6 +21,10 @@ module.exports = (function() {
             returnObject[mapping.type] = mapping.value;
         });
 
+        //  NOTIFY PROGRESS
+        console.log('Mapping Object: ', returnObject);
+
+        //  RETURN
         return returnObject;
     };
 

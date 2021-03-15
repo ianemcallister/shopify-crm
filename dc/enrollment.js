@@ -27,6 +27,7 @@ async function EnrollmentInviteViaSMS(sqLyltyId, phone) {
     //  2. Check enrollment status
     //  3. Generate enrollment url
     //  4. Send enrollment url
+    var enrollmentUrlSent = till.send.enrollmentInvite();
 
     //  DEFINE LOCAL VARIABLES
     return true;
