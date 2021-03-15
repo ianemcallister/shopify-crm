@@ -42,7 +42,7 @@ function _extractKey(anObject) {
     //  NOTIFY PROGRESS
     console.log('received this objet', anObject);
 
-    Object.keys(anObject).forEach(function(element) {
+    return Object.keys(anObject).forEach(function(element) {
         console.log(element);
         return element;
     });
