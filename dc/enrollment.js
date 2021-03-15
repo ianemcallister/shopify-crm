@@ -2,7 +2,7 @@
 *   DELIGHT CIRCLE ENROLLMENT MODULE  
 */
 //  DEFINE DEPENDENCIES
-var CRM         = requre('../ckc/crm.js');
+var CRM         = require('../ckc/crm.js');
 var till        = require('../till/enrollment.js');
 
 //  DEFINE MODULE
