@@ -23,7 +23,8 @@ async function EnrollmentInviteViaSMS(sqLyltyId, phone) {
     //  NOTIFY PROGERSS
     console.log('EnrollmentInviteViaSMS: sqLyltyId("', sqLyltyId, '", phone("', phone, '"');
 
-    //  1. 
+    //  1. Check for existing customer record with that phone
+    //  2. 
 
     //  DEFINE LOCAL VARIABLES
     return true;

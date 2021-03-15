@@ -15,7 +15,7 @@ module.exports = (function() {
 
         //  Iterate over object
         mappings.forEach(function(mapping) {
-            returnObject[mapping.type = mapping.value;
+            returnObject[mapping.type] = mapping.value;
         });
 
         return returnObject;
