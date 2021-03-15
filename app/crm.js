@@ -8,7 +8,7 @@ var Firebase    = require('../firebase/stdops.js');
 //  DEFINE MODULE
 var ckccrm = {
     get: {
-        crmCustomerIdViaSqMrchId: GetCrmCustomerIdViaSqMrchId,
+        crmMerchIdViaSqMrchId: GetCrmMerchIdViaSqMrchId,
         merchCustomerRecordViaPhone: GetMerchCustomerRecordViaPhone
     }
 };
@@ -16,7 +16,7 @@ var ckccrm = {
 /*
 *   GET SQUARE CUSTOMER ID VIA SQUARE MERCHANT ID
 */
-async function GetCrmCustomerIdViaSqMrchId(sq_merchant_id) {
+async function GetCrmMerchIdViaSqMrchId(sq_merchant_id) {
     //  NOTIFY PROGRESS
     console.log('getting customer id from square merchant id: ', sq_merchant_id);
 

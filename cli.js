@@ -6,7 +6,11 @@ var Firebase    = require('./firebase/stdops.js');
 
 async function execute() {
     try {
-        await Firebase.test()
+        var recordId = await Firebase.create.newMerchantRecord({
+            sqMerchId: "DNFEDFQ5904GJ",
+            merchantName: "29 Kettle Confectionery"
+        })
+        console.log('recordId: ', recordId);
     } catch (error) {
         console.log('error', error);
     }

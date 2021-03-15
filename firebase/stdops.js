@@ -27,27 +27,68 @@ var db = admin.database();
 
 //  DEFINE MODULE
 var firebaseStOps = {
+    create: {
+        newMerchantRecord: CreateNewMerchantRecord
+    },
     get: {
-        crmCustomerIdviaSqMrchId: GetCrmCustomerIdviaSqMrchId
+        crmMerchIdviaSqMrchId: GetCrmMerchIdviaSqMrchId
     },
     test: test
 };
 
 /*
+*   PRIVATE: PUSH
+*/
+async function _push(path, data) {
+    //  NOTIFY PROGRESS
+    //console.log('writing firease push', path, data);
+
+    //  DEFINE LOCAL VARIABLES
+    var writePath = db.ref(path);
+
+    //  return value
+    return await writePath.push(data)
+};
+
+/*
 *   GET CRM CUSTOMER ID VIA SQUARE MERCHANT ID
 */
-async function GetCrmCustomerIdviaSqMrchId(sq_merchant_id) {
+async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
     //  NOTIFY PROGRESS
-    console.log('Getting the crm customer id via suqare merchant id: ', sq_merchant_id);
+    console.log('Getting the crm merchant id via suqare merchant id: ', sq_merchant_id);
 
-    return '11';
+    //  DEFINING LOCAL VARIABLE
+    var ref = db.ref('Merchants');
+    var queryRef = ref.orderByChild('sqMerchId').equalTo(sq_merchant_id);
+
+    try {
+        await queryRef.once('value', function(data){
+            console.log('collected merch id', data);
+            return data;
+        }, function(error) {
+            console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
+            return error
+        });
+    } catch (error) {
+        console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
+        return error
+    }
+};
+
+/*
+*   CREATE NEW MERCHANT RECORD
+*/
+async function CreateNewMerchantRecord(data) {
+    //  NOTIFY PROGESS
+    console.log("Creating a new merchant record");
+
+    return await _push('merchant', data);
 };
 
 //  FUNCTION: TEST
 async function test() {
     //  NOTIIFY PROGRESS
     console.log('this is the firebase test function');
-    var db = admin.database();
     var ref = db.ref("test");
     ref.once("value", function(snapshot) {
     console.log(snapshot.val());
