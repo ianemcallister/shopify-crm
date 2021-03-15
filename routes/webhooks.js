@@ -53,7 +53,7 @@ module.exports = (function() {
                 var phone = mapping[phone];
                 var loyaltyId = data.id;
 
-                if(phone) {
+                if(phone != undefined) {
                     //  NOTIFY PROGRESS
                     console.log('phone # found');
 

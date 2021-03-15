@@ -24,7 +24,9 @@ async function EnrollmentInviteViaSMS(sqLyltyId, phone) {
     console.log('EnrollmentInviteViaSMS: sqLyltyId("', sqLyltyId, '", phone("', phone, '"');
 
     //  1. Check for existing customer record with that phone
-    //  2. 
+    //  2. Check enrollment status
+    //  3. Generate enrollment url
+    //  4. Send enrollment url
 
     //  DEFINE LOCAL VARIABLES
     return true;
