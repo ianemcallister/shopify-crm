@@ -25,7 +25,7 @@ if(TILL_URL.query != null) {
 /*
 *   SEND ENROLLMENT INVITE
 */
-async function SendEnrollmentInvite() {
+async function SendEnrollmentInvite(phone, enrollmenturl) {
     //  NOTIFY PROGRESS
 
     //  DEFEIN LOCAL VARABIELS

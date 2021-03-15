@@ -6,8 +6,7 @@ module.exports = (function() {
     'use strict';
     //  DEFINE DEPENDENCIES
     var webhookRoutes   = require('express').Router();
-    var dc              = require('../dc/enrollment.js');
-    //var CKC_StanOps     = require('../crm/standardOps.js');
+    var rewards              = require('../rewards/enrollment.js');
 
     function _parseMappings(mappings) {
         //  NOTIFY PROGRESS
@@ -45,6 +44,7 @@ module.exports = (function() {
         console.log(req.body);
         
         //  DEFINE LOCAL VARIABLES
+        var sq_merchant_id = req.body.merchant_id;
         var data = req.body.data.object;
 
         try {
@@ -65,7 +65,7 @@ module.exports = (function() {
                     console.log('phone # found');
 
                     //  SEND ENROLLMENT URL
-                    var status = await dc.enrollmentInvite.viaSMS(loyaltyId, phone);
+                    var status = await rewards.enrollmentInvite.viaSMS(phone, loyaltyId, sq_merchant_id);
                     console.log('Success?: ', status);
                 }
 
