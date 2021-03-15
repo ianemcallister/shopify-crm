@@ -23,6 +23,8 @@ async function EnrollmentInviteViaSMS(sqLyltyId, phone) {
     //  NOTIFY PROGERSS
     console.log('EnrollmentInviteViaSMS: sqLyltyId("', sqLyltyId, '", phone("', phone, '"');
 
+    //  1. 
+
     //  DEFINE LOCAL VARIABLES
     return true;
 }
