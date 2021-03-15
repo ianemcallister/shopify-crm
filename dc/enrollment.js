@@ -2,7 +2,7 @@
 *   DELIGHT CIRCLE ENROLLMENT MODULE  
 */
 //  DEFINE DEPENDENCIES
-
+var till    = require('../till/enrollment.js');
 
 //  DEFINE MODULE
 var dcEnrollment = {
