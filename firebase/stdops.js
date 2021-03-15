@@ -27,6 +27,7 @@ var db = admin.database();
 //  DEFINE MODULE
 var firebaseStOps = {
     create: {
+        newMerchCustomerRecord: CreateNewMerchCustomerRecord,
         newMerchantRecord: CreateNewMerchantRecord
     },
     get: {
@@ -38,7 +39,7 @@ var firebaseStOps = {
 /*
 *   PRIVATE: EXTRACT KEY
 */
-function _extractKey(anObject) {
+async function _extractKey(anObject) {
     //  NOTIFY PROGRESS
    // console.log('received this objet', anObject);
 
@@ -68,33 +69,38 @@ async function _push(path, data) {
     return await writePath.push(data)
 };
 
+
 /*
 *   GET CRM CUSTOMER ID VIA SQUARE MERCHANT ID
 */
 async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
     //  NOTIFY PROGRESS
-    console.log('Getting the crm merchant id via suqare merchant id: ', sq_merchant_id);
+    //console.log('Firebase/GetCrmMerchIdviaSqMrchId: Getting the crm merchant id via suqare merchant id: ', sq_merchant_id);
 
     //  DEFINING LOCAL VARIABLE
     var ref = db.ref('Merchants');
     var queryRef = ref.orderByChild('sqMerchId').equalTo(sq_merchant_id);
 
     try {
-        await queryRef.once('value', function(snapshot){
-            //  DEFINE LOCAL VARIABLES
-            var merchantRecord = snapshot.val();
-            var merchantId = _extractKey(merchantRecord);
-
-            console.log('collected merch id', merchantId);
-            return merchantId;
-        }, function(error) {
-            console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
-            //return error
-        });
+        var merchantIdsnapshot = await queryRef.once('value')
+        return _extractKey(merchantIdsnapshot.val());
     } catch (error) {
         console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
-        //return error
+        return error
     }
+};
+
+/*
+*
+*/
+async function CreateNewMerchCustomerRecord(mercId, data) {
+    //  NOTIFY PROGRESS
+    console.log('Creating a new custome record');
+
+    //  DEFINE LOCAL VARIABLES
+    var writePath = "Merchants/" + mercId + "/Customers";
+
+    return await _push(writePath, data);
 };
 
 /*
