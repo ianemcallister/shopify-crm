@@ -61,9 +61,9 @@ async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
     var queryRef = ref.orderByChild('sqMerchId').equalTo(sq_merchant_id);
 
     try {
-        await queryRef.once('value', function(data){
-            console.log('collected merch id', data);
-            return data;
+        await queryRef.once('value', function(snapshot){
+            console.log('collected merch id', snapshot.val());
+            return snapshot.val();
         }, function(error) {
             console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
             return error
