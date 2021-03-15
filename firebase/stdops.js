@@ -36,6 +36,15 @@ var firebaseStOps = {
 };
 
 /*
+*   PRIVATE: EXTRACT KEY
+*/
+function _extractKey(object) {
+    object.forEach(function(element) {
+        return element;
+    });
+};
+
+/*
 *   PRIVATE: PUSH
 */
 async function _push(path, data) {
@@ -62,8 +71,12 @@ async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
 
     try {
         await queryRef.once('value', function(snapshot){
-            console.log('collected merch id', snapshot.val());
-            return snapshot.val();
+            //  DEFINE LOCAL VARIABLES
+            var merchantRecord = snapshot.val();
+            var merchantId = _extractKey(merchantRecord);
+
+            console.log('collected merch id', merchantId);
+            return merchantId;
         }, function(error) {
             console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
             return error
