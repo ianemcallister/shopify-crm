@@ -21,10 +21,10 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
     console.log('_GetShopifyCustomerId: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
 
     //  1. GET CRM CUSTOMER ID
-    var crmCustomerId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
+    var crmMerchId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
 
     //  2. GET SHOPIFY CUSTOMER ID
-    var merchCustomerRecord = await CRM.get.merchCustomerRecordViaPhone(crmCustomerId, merchCustPhone, merchCustsqLyltyId);
+    var merchCustomerRecord = await CRM.get.merchCustomerRecordViaPhone(crmMerchId, merchCustPhone, merchCustsqLyltyId);
 
     return merchCustomerRecord
 

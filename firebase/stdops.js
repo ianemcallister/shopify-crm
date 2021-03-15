@@ -42,10 +42,16 @@ function _extractKey(anObject) {
     //  NOTIFY PROGRESS
     console.log('received this objet', anObject);
 
-    return Object.keys(anObject).forEach(function(element) {
-        console.log(element);
-        return element;
+    //  DEFINE LOCAL VARIABLES
+    var aKey = "";
+
+    //  ITERATE OVER OBJECT
+    Object.keys(anObject).forEach(function(element) {
+        aKey = element;
     });
+
+    //  RETURN VALUE
+    return aKey;
 };
 
 /*
