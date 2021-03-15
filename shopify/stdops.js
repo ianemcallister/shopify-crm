@@ -16,7 +16,7 @@ var shopifyStandardOps = {
 *   GET MERCHANT CUSTOMER ACTIVATION URL
 */
 async function GetMerchCustomerActivationUrl() {
-
+    return true;
 };
 
 //  EXPORT MODULE
