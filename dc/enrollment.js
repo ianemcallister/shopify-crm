@@ -2,7 +2,8 @@
 *   DELIGHT CIRCLE ENROLLMENT MODULE  
 */
 //  DEFINE DEPENDENCIES
-var till    = require('../till/enrollment.js');
+var CRM         = requre('../ckc/crm.js');
+var till        = require('../till/enrollment.js');
 
 //  DEFINE MODULE
 var dcEnrollment = {
@@ -20,17 +21,26 @@ var dcEnrollment = {
 *   @return(status) - Bool: Success | Failure
 */
 async function EnrollmentInviteViaSMS(sqLyltyId, phone) {
+    //  DEFINE LOCAL VARIABLES
+    var enrollmentUrlSent = false;
+
     //  NOTIFY PROGERSS
-    console.log('EnrollmentInviteViaSMS: sqLyltyId("', sqLyltyId, '", phone("', phone, '"');
+    console.log('EnrollmentInviteViaSMS: sqLyltyId(', sqLyltyId, '), phone(', phone,')');
 
     //  1. Check for existing customer record with that phone
-    //  2. Check enrollment status
-    //  3. Generate enrollment url
-    //  4. Send enrollment url
-    var enrollmentUrlSent = till.send.enrollmentInvite();
+    var customerRecord = await CRM.get.customerRecordByPhoneFromSquare(phone, sqLyltyId);
 
-    //  DEFINE LOCAL VARIABLES
-    return true;
+    //  2. Check activation status
+    if(customerRecord.dcEnrollmentCompleted) {
+        //  3. Generate enrollment url
+        var enrollmenturl = await shopify.get.customerActivationUrl(shopifyCustomerId);
+
+        //  4. Send enrollment url
+        enrollmentUrlSent = await till.send.enrollmentInvite();
+    }
+
+    // RETURN
+    return enrollmentUrlSent;
 }
 
 //  EXPORT MODULE
