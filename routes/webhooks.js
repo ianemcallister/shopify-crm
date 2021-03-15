@@ -10,6 +10,9 @@ module.exports = (function() {
     //var CKC_StanOps     = require('../crm/standardOps.js');
 
     function _parseMappings(mappings) {
+        //  NOTIFY PROGRESS
+        console.log('Parsing Mappings ', mappings);
+        
         //  DEFINE LOCAL VARIABLES
         var returnObject = {};
 
