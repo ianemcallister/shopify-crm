@@ -4,6 +4,7 @@
 //  DEFINE DEPENDENCIES
 var CRM         = require('../app/crm.js');
 var till        = require('../till/enrollment.js');
+var shopify     = require('../shopify/stdops.js');
 
 //  DEFINE MODULE
 var rewards = {
