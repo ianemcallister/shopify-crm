@@ -50,7 +50,7 @@ module.exports = (function() {
 
                 //  DEFINE LOCAL VARAIBLES
                 var mapping = _parseMappings(data.loyalty_account.mappings);
-                var phone = mapping[phone];
+                var phone = mapping.phone;
                 var loyaltyId = data.id;
 
                 if(phone != undefined) {
