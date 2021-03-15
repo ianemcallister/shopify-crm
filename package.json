@@ -26,6 +26,8 @@
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "nonce": "^1.0.4",
-    "shopify-api-node": "^3.6.5"
+    "request-json": "^0.6.5",
+    "shopify-api-node": "^3.6.5",
+    "url": "^0.11.0"
   }
 }
