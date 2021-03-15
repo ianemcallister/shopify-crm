@@ -57,15 +57,15 @@ module.exports = (function() {
 
                 //  DEFINE LOCAL VARAIBLES
                 var mapping = _parseMappings(data.loyalty_account.mappings);
-                var phone = mapping.PHONE;
-                var loyaltyId = data.loyalty_account.id;
+                var merchCustPhone = mapping.PHONE;
+                var merchCustloyaltyId = data.loyalty_account.id;
 
-                if(phone != undefined) {
+                if(merchCustPhone != undefined) {
                     //  NOTIFY PROGRESS
                     console.log('phone # found');
 
                     //  SEND ENROLLMENT URL
-                    var status = await rewards.enrollmentInvite.viaSMS(phone, loyaltyId, sq_merchant_id);
+                    var status = await rewards.enrollmentInvite.viaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
                     console.log('Success?: ', status);
                 }
 

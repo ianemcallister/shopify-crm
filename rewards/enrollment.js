@@ -23,9 +23,9 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
     var crmCustomerId = await CRM.get.crmCustomerIdViaSqMrchId(sq_merchant_id);
 
     //  2. GET SHOPIFY CUSTOMER ID
-    var ckcCustomerRecord = await CRM.get.merchCustomerRecordViaPhone(crmCustomerId, merchCustPhone, merchCustsqLyltyId);
+    var merchCustomerRecord = await CRM.get.merchCustomerRecordViaPhone(crmCustomerId, merchCustPhone, merchCustsqLyltyId);
 
-    return ckcCustomerRecord
+    return merchCustomerRecord
 
 };
 
@@ -37,24 +37,24 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
 *   @param(phone) - String: "+15555555555" 12 character
 *   @return(status) - Bool: Success | Failure
 */
-async function EnrollmentInviteViaSMS(phone, sqLyltyId, sq_merchant_id) {
+async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id) {
     //  DEFINE LOCAL VARIABLES
     var enrollmentUrlSent = false;
 
     //  NOTIFY PROGERSS
-    console.log('EnrollmentInviteViaSMS: sqLyltyId(', sqLyltyId, '), phone(', phone,'), merchant_id(', sq_merchant_id, ")");
+    console.log('EnrollmentInviteViaSMS: sqLyltyId(', merchCustloyaltyId, '), phone(', merchCustPhone,'), merchant_id(', sq_merchant_id, ")");
     
     //  1. Get Shopify Customer Id
-    var ckcCustomerRecord = await _GetShopifyCustomerId(phone, sqLyltyId, sq_merchant_id);
+    var merchCustomerRecord = await _GetShopifyCustomerId(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
 
     //  2. Check activation status
-    if(customerRecord.dcEnrollmentCompleted) {
+    if(merchCustomerRecord.dcEnrollmentCompleted) {
 
         //  3. Generate enrollment url
-        var enrollmenturl = await shopify.get.customerActivationUrl(shopifyCustomerId);
+        var merchCustEnrollmentUrl = await shopify.get.merchCustomerActivationUrl(merchCustomerRecord.shopifyId);
 
         //  4. Send enrollment url
-        enrollmentUrlSent = await till.send.enrollmentInvite(phone, enrollmenturl);
+        enrollmentUrlSent = await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
     }
 
     // RETURN

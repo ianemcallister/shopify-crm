@@ -36,7 +36,7 @@ async function GetMerchCustomerRecordViaPhone(crmCustomerId, merchCustPhone, mer
 
     //  DEFINE LOCAL VARIABLES
     var merchCustomerRecord = {
-        shopify_customer_id: "",
+        shopifyId: "",
         dcEnrollmentCompleted: true
     };
 
