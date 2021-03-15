@@ -18,21 +18,21 @@ var ckccrm = {
 */
 async function GetCrmMerchIdViaSqMrchId(sq_merchant_id) {
     //  NOTIFY PROGRESS
-    console.log('getting customer id from square merchant id: ', sq_merchant_id);
+    console.log('getting Merchent id from square merchant id: ', sq_merchant_id);
 
     //  DEFINE LOCAL VARIABLES
-    var crmCustomerId = Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id);
+    var crmMerchId = await Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id);
 
     //  RETURN
-    return crmCustomerId;
+    return crmMerchId;
 };
 
 /*
 *   GET CUSTOMER RECORD
 */
-async function GetMerchCustomerRecordViaPhone(crmCustomerId, merchCustPhone, merchCustsqLyltyId) {
+async function GetMerchCustomerRecordViaPhone(crmMerchId, merchCustPhone, merchCustsqLyltyId) {
     //  NOTIFY PROGRESS
-    console.log('GetMerchCustomerRecordViaPhone: ', crmCustomerId, merchCustPhone, merchCustsqLyltyId);
+    console.log('GetMerchCustomerRecordViaPhone: ', crmMerchId, merchCustPhone, merchCustsqLyltyId);
 
     //  DEFINE LOCAL VARIABLES
     var merchCustomerRecord = {
