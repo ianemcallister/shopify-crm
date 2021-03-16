@@ -2,9 +2,9 @@
 *   DELIGHT CIRCLE ENROLLMENT MODULE  
 */
 //  DEFINE DEPENDENCIES
-var CRM         = require('../app/crm.js');
-var till        = require('../till/enrollment.js');
-var shopifyMod  = require('../shopify/stdops.js');
+const CRM         = require('../app/crm.js');
+const till        = require('../till/enrollment.js');
+const shopifyMod  = require('../shopify/stdops.js');
 
 //  DEFINE MODULE
 var rewards = {

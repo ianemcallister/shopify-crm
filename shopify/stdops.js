@@ -3,15 +3,15 @@
 */
 
 //  DEFINE DEPENDENICE
-var shopifyAPINode = require('shopify-api-node');
+const shopifyAPINode = require('shopify-api-node');
 
 //  INSTANCIATE
-var shopifyCredentials ={
+const shopifyCredentials ={
     shopName: process.env.CKC_SHOPIFY_SHOP_NAME,
     apiKey: process.env.CKC_SHOPIFY_API_KEY,
     password: process.env.CKC_SHOPIFY_API_PASS
   }
-var ShopifyAPI = new shopifyAPINode(shopifyCredentials);
+const ShopifyAPI = new shopifyAPINode(shopifyCredentials);
 
 //  DEFINE MODULE
 var shopifyStandardOps = {
