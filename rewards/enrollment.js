@@ -29,6 +29,8 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
     if(merchCustomerShopifyId == undefined || "") {
         //  NOTIFY PRGORESS
         console.log('need a new shopify customer id');
+        var newMerchCustShopifyId = await shopifyMod.newMerchCustId(merchCustPhone, sq_merchant_id);
+        
     } else {
         return merchCustomerShopifyId
     }

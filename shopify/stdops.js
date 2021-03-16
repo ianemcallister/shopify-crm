@@ -17,7 +17,8 @@ const ShopifyAPI = new shopifyAPINode(shopifyCredentials);
 var shopifyStandardOps = {
     get: {
         merchCustomerActivationUrl: GetMerchCustomerActivationUrl,
-        merchCustomerId: GetMerchCustomerId
+        merchCustomerId: GetMerchCustomerId,
+        newMerchCustId: GetNewMerchCustId
     }
 };
 
@@ -55,6 +56,17 @@ async function _customerSearch(params) {
 };
 
 /*
+*   PRIVATE: CREATE A NEW CUSTOMER RECORD
+*/
+async function CreateNewCustomerRecord(params) {
+    //  NOTIFY PROGRESS
+    console.log('SHOPIFY/CreateNewCustomerRecord: ', params);
+
+    var newCustomerRecord = await ShopifyAPI.customer.create(params);
+    return newCustomerRecord; 
+};
+
+/*
 *   GET MERCHANT CUSTOMER ACTIVATION URL
 */
 async function GetMerchCustomerActivationUrl(merchCustShopifyId) {
@@ -86,7 +98,30 @@ async function GetMerchCustomerId(phone) {
         console.log('error', error);
     }
     
-}
+};
+
+/*
+*   GET NEW MERCHANT CUSTOMER SHOPIFY ID
+*/
+async function GetNewMerchCustId(merchCustPhone, sq_merchant_id) {
+    //  NOTIFY PRGORESS
+    console.log('/shopify/stdops/GetNewMerchCustId: ', merchCustPhone, sq_merchant_id);
+
+    //  LOCAL VARIABLES
+    var newCustomerObject = {
+        first_name: "(Temp)",
+        last_name: "(Temp)",
+        phone: merchCustPhone,
+        addresses: [
+            { phone: merchCustPhone }
+        ]
+    };
+
+    var newCustomerRecord = await CreateNewCustomerRecord(newCustomerObject);
+    var newCustomerShopifyId = newCustomerRecord.customer.id;
+    return newCustomerShopifyId;
+
+};
 
 //  EXPORT MODULE
 module.exports = shopifyStandardOps;
