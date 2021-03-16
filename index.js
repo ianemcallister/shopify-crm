@@ -76,9 +76,9 @@ serverApp.get('/shopify', async function(req, res) {
         const redirectUri = process.env.CKCCRM_REDIRECT_URL + '/shopify/callback'; // Redirect URI for shopify Callback
         const installUri = 'https://' + shopName +
             '/admin/oauth/authorize?client_id=' + process.env.CKCCRM_SHOPIFY_API_KEY +
-            '&amp;scope=' + 'write_orders,read_customers' + //process.env.SCOPES +
-            '&amp;state=' + shopState +
-            '&amp;redirect_uri=' + redirectUri; // Install URL for app install
+            '\&scope=' + 'write_orders,read_customers' + //process.env.SCOPES +
+            '\&state=' + shopState +
+            '\&redirect_uri=' + redirectUri; // Install URL for app install
 		
 		//	NOTIFY PROGRESS
         console.log("REDIRECTING TO: ",installUri, shopState);
@@ -103,6 +103,8 @@ serverApp.post('/shopify/api', async function(req, res) {
 
 //	SHOPIFY GET CALLBACK
 serverApp.get('/shopify/callback', async function(req, res) {
+	//	NOTIFY PROGRESS
+	console.log('callback received this request: ', req);
 	//	DEFINE LOCAL VARIABLES
 	const shopName 	= req.query.shopName;
 	const hmac 		= req.query.hmac;
