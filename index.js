@@ -59,7 +59,7 @@ serverApp.get('/', async function(req, res) {
 	//  NOTIFY PROGRESS
 	console.log(req.query);
 
-	res.send("CKC CRM");
+	res.sendStatus(200);
 });
 
 //	SHOPIFY GET
