@@ -31,7 +31,9 @@ var firebaseStOps = {
         newMerchantRecord: CreateNewMerchantRecord
     },
     get: {
-        crmMerchIdviaSqMrchId: GetCrmMerchIdviaSqMrchId
+        crmMerchIdviaSqMrchId: GetCrmMerchIdviaSqMrchId,
+        merchCustShopifyId: GetMerchCustShopifyId,
+        merchCustRecord: GetMerchCustRecord
     },
     test: test
 };
@@ -39,7 +41,7 @@ var firebaseStOps = {
 /*
 *   PRIVATE: EXTRACT KEY
 */
-async function _extractKey(anObject) {
+function _extractKey(anObject) {
     //  NOTIFY PROGRESS
    // console.log('received this objet', anObject);
 
@@ -53,6 +55,32 @@ async function _extractKey(anObject) {
 
     //  RETURN VALUE
     return aKey;
+};
+
+/*
+*   PRIVATE: EXTRACT FIELD
+*/
+function _extractField(field, aRecord) {
+    var aKey = '';
+    Object.keys(aRecord).forEach(function(key){
+        aKey = key;
+    });
+
+    return aRecord[aKey][field];
+};
+
+/*
+*   PRIVATE: EXTRACT KEYED OBJECT
+*/
+function _extractKeyedObject(aRecord) {
+    //  LOCAL VARIABLES
+    var aKey = "";
+
+    Object.keys(aRecord).forEach(function(key) {
+        aKey = key;
+    });
+
+    return aRecord[aKey];
 };
 
 /*
@@ -112,6 +140,48 @@ async function CreateNewMerchantRecord(data) {
 
     return await _push('merchant', data);
 };
+
+/*
+*
+*/
+async function GetMerchCustShopifyId(crmMerchId, merchCustPhone) {
+    //  NOTIFY PROGERSS
+    console.log('Firebase/Stdops/GetMerchCustShopifyId: ', crmMerchId, merchCustPhone);
+
+    //  LOCAL VARIABLES
+    var readPath = 'Merchants/' + crmMerchId + '/Customers'
+    var ref = db.ref(readPath);
+    var queryRef = ref.orderByChild('phone').equalTo(merchCustPhone);
+
+    try {
+        var merchCustRecordSnapshot = await queryRef.once('value');
+        return _extractField("shopifyId", merchCustRecordSnapshot.val());
+    } catch (error) {
+        console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
+        return error
+    }
+};
+
+/*
+*   GET MERCHANT CUSTOMER RECORD
+*/
+async function GetMerchCustRecord(crmMerchId, merchCustPhone) {
+    //  NOTIFY PROGRESS
+    console.log('Firebase/Stdops/GetMerchCustRecord: ', crmMerchId, merchCustPhone);
+
+    //  LOCAL VARIABLES
+    var readPath = 'Merchants/' + crmMerchId + '/Customers'
+    var ref = db.ref(readPath);
+    var queryRef = ref.orderByChild('phone').equalTo(merchCustPhone);
+
+    try {
+        var merchCustRecordSnapshot = await queryRef.once('value');
+        return _extractKeyedObject(merchCustRecordSnapshot.val());
+    } catch (error) {
+        console.log('GetMerchCustRecord Error: ', error);
+        return error
+    }
+}
 
 //  FUNCTION: TEST
 async function test() {

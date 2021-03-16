@@ -21,9 +21,7 @@ async function GetCrmMerchIdViaSqMrchId(sq_merchant_id) {
     //console.log('CRM/GetCrmMerchIdViaSqMrchId: getting Merchent id from square merchant id: ', sq_merchant_id);
 
     //  1. COLLECT MERCHANT ID
-    var id = await Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id);
-    console.log('got this id ', id);
-    return id;
+    return await Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id);
      
 };
 
@@ -34,21 +32,14 @@ async function GetMerchCustomerRecordViaPhone(crmMerchId, merchCustPhone, merchC
     //  NOTIFY PROGRESS
     console.log('GetMerchCustomerRecordViaPhone: ', crmMerchId, merchCustPhone, merchCustsqLyltyId);
 
-    //  DEFINE LOCAL VARIABLES
-    var merchCustomerRecord = {
-        shopifyId: "",
-        dcEnrollmentCompleted: true
-    };
-
-    // EXEVUTE ASYNC WORK
+    // EXECUTE ASYNC WORK
     try {
-        
+        var customerRecord = await Firebase.get.merchCustRecord(crmMerchId, merchCustPhone);
+        return { shopifyId: customerRecord.shopifyId, rewardsEnrolled: customerRecord.rewardsEnrolled }
     } catch (error) {
-        
+        console.log('error', error);
     }
 
-    //  RETURN
-    return merchCustomerRecord;
 };
 
 //  EXPORT MODULE

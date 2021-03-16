@@ -20,14 +20,13 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
     //  NOTIFY PROGRESS
     console.log('_GetShopifyCustomerId: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
 
-    //  1. GET CR MERCHANT ID
+    //  1. GET CRM MERCHANT ID
     var crmMerchantId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
 
-        //  NOTIFY PROGRESS
-        console.log('gto this crmMerchantId', crmMerchantId);
-
     //  2. GET SHOPIFY CUSTOMER ID
-    return await CRM.get.merchCustomerRecordViaPhone(crmMerchantId, merchCustPhone, merchCustsqLyltyId);
+    var merchCustomerShopifyId = await CRM.get.merchCustomerRecordViaPhone(crmMerchantId, merchCustPhone, merchCustsqLyltyId);
+    
+    return merchCustomerShopifyId
 
 };
 
@@ -48,10 +47,10 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
     
     //  1. Get Shopify Customer Id
     var merchCustomerRecord = await _GetShopifyCustomerId(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
-    console.log('got this merchantCustomer REcord' , merchCustomerRecord);
+    console.log('got this merchantCustomer Record: ' , merchCustomerRecord);
 
     //  2. Check activation status
-    if(merchCustomerRecord.dcEnrollmentCompleted) {
+    if(merchCustomerRecord.rewardsEnrolled) {
 
         //  3. Generate enrollment url
         var merchCustEnrollmentUrl = await shopify.get.merchCustomerActivationUrl(merchCustomerRecord.shopifyId);
