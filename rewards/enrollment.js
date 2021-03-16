@@ -26,7 +26,13 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
     //  2. GET SHOPIFY CUSTOMER ID
     var merchCustomerShopifyId = await CRM.get.merchCustomerRecordViaPhone(crmMerchantId, merchCustPhone, merchCustsqLyltyId);
     
-    return merchCustomerShopifyId
+    if(merchCustomerShopifyId == undefined || "") {
+        //  NOTIFY PRGORESS
+        console.log('need a new shopify customer id');
+    } else {
+        return merchCustomerShopifyId
+    }
+    
 
 };
 

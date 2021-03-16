@@ -5,8 +5,8 @@
 module.exports = (function() {
     'use strict';
     //  DEFINE DEPENDENCIES
-    var webhookRoutes   = require('express').Router();
-    var rewards              = require('../rewards/enrollment.js');
+    var webhookRoutes       = require('express').Router();
+    var rewards             = require('../rewards/enrollment.js');
 
     function _parseMappings(mappings) {
         //  NOTIFY PROGRESS
