@@ -68,7 +68,7 @@ serverApp.get('/shopify-crm', async function(req, res) {
 	res.sendStatus(200);
 });
 
-serverApp.post('/shopify-crm', asyn function(req, res) {
+serverApp.post('/shopify-crm', async function(req, res) {
 	console.log('got this request', req);
 	res.sendStatus(200);
 });
