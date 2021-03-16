@@ -7,7 +7,7 @@ const shopifyAPINode = require('shopify-api-node');
 
 //  INSTANCIATE
 const shopifyCredentials ={
-    shopName: process.env.CKCCRM_REDIRECT_URL,
+    shopName: process.env.CKC_SHOPIFY_SHOP_NAME,
     apiKey: process.env.CKCCRM_SHOPIFY_API_KEY,
     password: process.env.CKCCRM_SHOPIFY_API_SECRET
   }
