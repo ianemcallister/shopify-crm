@@ -3,7 +3,7 @@
 */
 
 //  DEFINE DEPENDENICE
-var shopify = require('shopify-api-node');
+var shopifyAPINode = require('shopify-api-node');
 
 //  INSTANCIATE
 var shopifyCredentials ={
@@ -11,7 +11,7 @@ var shopifyCredentials ={
     apiKey: process.env.CKC_SHOPIFY_API_KEY,
     password: process.env.CKC_SHOPIFY_API_PASS
   }
-var ShopifyAPI = new shopify(shopifyCredentials);
+var ShopifyAPI = new shopifyAPINode(shopifyCredentials);
 
 //  DEFINE MODULE
 var shopifyStandardOps = {
