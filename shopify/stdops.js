@@ -11,7 +11,7 @@ var shopifyCredentials ={
     apiKey: process.env.CKC_SHOPIFY_API_KEY,
     password: process.env.CKC_SHOPIFY_API_PASS
   }
-var Shopify = new shopify(shopifyCredentials);
+var ShopifyAPI = new shopify(shopifyCredentials);
 
 //  DEFINE MODULE
 var shopifyStandardOps = {
@@ -29,7 +29,7 @@ async function _customerAcctActUrl(id) {
     console.log("shopify/stdops/_customerAcctActUrl", id);
 
     try {
-        var activationUrl = await Shopify.customer.accountActivationUrl(id);
+        var activationUrl = await ShopifyAPI.customer.accountActivationUrl(id);
         return activationUrl;
     } catch (error) {
         console.log('_customerAcctActUrl error', error);
@@ -46,7 +46,7 @@ async function _customerSearch(params) {
     //  DEFINE LOCAL VARIABLS
 
     try {
-        var customerRecord = await Shopify.customer.search(params);
+        var customerRecord = await ShopifyAPI.customer.search(params);
         //console.log('got this customer record', customerRecord);
         return customerRecord;
     } catch (error) {
