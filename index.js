@@ -52,6 +52,10 @@ serverApp.use('/', function(req, res, next) {
 var webhookRoutes = require('./routes/webhooks');
 serverApp.use('/webhooks', webhookRoutes);
 
+//	OMNI-CRM ROUTES
+var omniCRMRoutes = require('./routes/omniCRM');
+serverApp.use('/omni-crm', omniCRMRoutes);
+
 //	STANDARD GET
 serverApp.get('/', async function(req, res) {
 	//  DEFINE LOCAL VARIABLES
@@ -59,17 +63,6 @@ serverApp.get('/', async function(req, res) {
 	//  NOTIFY PROGRESS
 	console.log(req.query);
 
-	res.sendStatus(200);
-});
-
-//
-serverApp.get('/omni-crm', async function(req, res) {
-	console.log('got this request', req);
-	res.sendStatus(200);
-});
-
-serverApp.post('/omni-crm', async function(req, res) {
-	console.log('got this request', req);
 	res.sendStatus(200);
 });
 
