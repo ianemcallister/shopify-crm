@@ -4,7 +4,7 @@
 //  DEFINE DEPENDENCIES
 var CRM         = require('../app/crm.js');
 var till        = require('../till/enrollment.js');
-var shopify     = require('../shopify/stdops.js');
+var shopifyMod  = require('../shopify/stdops.js');
 
 //  DEFINE MODULE
 var rewards = {
@@ -59,7 +59,7 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
     if(merchCustomerRecord.rewardsEnrolled) {
 
         //  3. Generate enrollment url
-        var merchCustEnrollmentUrl = await shopify.get.merchCustomerActivationUrl(merchCustomerRecord.shopifyId);
+        var merchCustEnrollmentUrl = await shopifyMod.get.merchCustomerActivationUrl(merchCustomerRecord.shopifyId);
 
         //  4. Send enrollment url
         enrollmentUrlSent = await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
