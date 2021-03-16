@@ -63,12 +63,12 @@ serverApp.get('/', async function(req, res) {
 });
 
 //
-serverApp.get('/shopify-crm', async function(req, res) {
+serverApp.get('/omni-crm', async function(req, res) {
 	console.log('got this request', req);
 	res.sendStatus(200);
 });
 
-serverApp.post('/shopify-crm', async function(req, res) {
+serverApp.post('/omni-crm', async function(req, res) {
 	console.log('got this request', req);
 	res.sendStatus(200);
 });
