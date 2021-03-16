@@ -34,9 +34,11 @@ module.exports = (function() {
     omniCRMRoutes.post('/enroll-customer', function(req, res) {
         //  validate sender
         var params = req.params;
+        var query = req.query;
         var payload = req.body;
 
-        console.log('got these params', params);
+        console.log('got these params: ', params);
+        console.log('got these queries: ', query);
         console.log('got this data: ', payload);
 
         res.sendStatus(200);
