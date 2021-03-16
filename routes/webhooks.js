@@ -60,14 +60,14 @@ module.exports = (function() {
                 var merchCustPhone = mapping.PHONE;
                 var merchCustloyaltyId = data.loyalty_account.id;
 
-                if(merchCustPhone != undefined) {
+                /*if(merchCustPhone != undefined) {
                     //  NOTIFY PROGRESS
                     console.log('phone # found');
 
                     //  SEND ENROLLMENT URL
                     var status = await rewards.enrollmentInvite.viaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
                     console.log('Success?: ', status);
-                }
+                }*/
 
                 //  RETURN
                 res.sendStatus(200);
