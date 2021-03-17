@@ -16,15 +16,70 @@ var rewards = {
 };
 
 /*
+*   PRIVATE: VALIDATE CUSTOMER PROFILES
+*/
+async function _validateCustomerProfiles(type, aRecord) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var timestamp = new Date(Date.now()).toISOString();
+
+    //  EXDCUTE ASYNC WORK
+    try {
+        if(aRecord == undefined) {
+            switch(type) {
+                case 'Shopify':
+                    //  CREATE A NEW SHOPIFY CUSTOMER AND RETURN THE RECORD
+                    return {};
+
+                    break;
+                case 'Square':
+                    //  CREATE A NEW SQUARE CUSTOMER AND RETURN THE RECORD -- NOT REQUIRED REIGHT NOW
+                    return aRecord
+                    break;
+                case 'FirebaseMerchId':
+                    //  CREATE A NEW FIREBASE MERCHATN RECORD AND RETURN THE KEY
+                    var newMerchantId = Firebase.get.pushId('Merchants');
+                    await Firebase.CreateNewMerchantRecord({
+                        _createdAt: timestamp,
+                        _updatedAt: timestamp,
+                        Channels: [],
+                        id: newMerchantId,
+                        merchantName: "",
+                        shopifyMerchId: "",
+                        sqMerchId: sq_merchant_id,
+                    });
+
+                    //  SAVE THE ID
+                    return newMerchantId;
+
+                    break;
+                case 'FirebaseCustRrd':
+                    //  CREATE A NEW FIREBASE CUSTOMER RECORD AND RETURN THE RECORD - TEMPORARY ONLY
+                    return {};
+
+                    break;
+                default:
+                    break;
+            };
+        } else { return aRecord; }
+            
+    } catch (error) {
+        console.log("_validateCustomerProfiles error: ", error);
+    }
+};
+
+/*
 *   PRIVATE: GET SHOPIFY CUSTOMER ID
 */
 async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_merchant_id, rewardsEnrollAt){
     //  NOTIFY PROGRESS
     //console.log('_GetMerchCustomerRecord: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
 
+    //  DEFINE LOCAL VARIABLES
+
     try {
         //  1. COLLECT PROFILES FROM ALL RESOURCES [Square, Shopify, Firebase]
-        var allRecords = await Promise.all([
+        var allRecordsRaw = await Promise.all([
             Shopify.get.merchCustomerRecord(merchCustPhone),
             Square.get.customerByPhone(merchCustPhone),
             Firebase.get.merchCustRecord(merchCustPhone),
@@ -33,9 +88,18 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
         ]);
         //console.log('_GetMerchCustomerRecord: ', allRecords);
 
+        //  2. VALIDATE RETURNING DATA
+        var validatedRecords = await Promise.all([
+            _validateCustomerProfiles('Shopify', allRecordsRaw[0]),
+            _validateCustomerProfiles('Square', allRecordsRaw[1]),
+            _validateCustomerProfiles('FirebaseCustRrd', allRecordsRaw[2]),
+            _validateCustomerProfiles('FirebaseMerchId', allRecordsRaw[3]),
+            _validateCustomerProfiles('object', allRecordsRaw[4]),
+        ]);
+
         //  2. CONSOLIDATE MERCHANT CUSTOMER RECORDS
-        var comprehensiveCustomerRecord = await CRM.consolidateCustomerRecords(allRecords);
-        console.log('comprehensiveCustomerRecord: ', comprehensiveCustomerRecord);
+        var comprehensiveCustomerRecord = await CRM.consolidateCustomerRecords(validatedRecords);
+        //console.log('comprehensiveCustomerRecord: ', comprehensiveCustomerRecord);
 
         //  3. UPDATE FIREBASE
         await Firebase.updateCustomerRecord(comprehensiveCustomerRecord);
@@ -46,24 +110,7 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
     } catch (error) {
         console.log('_GetMerchCustomerRecord Error: ', error);
     }
-
-
-    //  1. GET CRM MERCHANT ID
-    //var crmMerchantId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
-
-    //  2. GET SHOPIFY CUSTOMER ID
-    //var merchCustomerShopifyId = await CRM.get.merchCustomerRecordViaPhone(crmMerchantId, merchCustPhone, merchCustsqLyltyId);
     
-    /*if(merchCustomerShopifyId == undefined || "") {
-        //  NOTIFY PRGORESS
-        console.log('need a new shopify customer id');
-        var newMerchCustShopifyId = await shopifyMod.newMerchCustId(merchCustPhone, sq_merchant_id);
-        return newMerchCustShopifyId;
-    } else {
-        return merchCustomerShopifyId
-    }*/
-    
-
 };
 
 /*
@@ -72,7 +119,6 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
 *
 *   @param(sqLyltyId) - String: '664c22ba-9460-45a5-8917-381ae72dcfdc'   
 *   @param(phone) - String: "+15555555555" 12 character
-*   @return(status) - Bool: Success | Failure
 */
 async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id, rewardsEnrolledAt) {
     //  DEFINE LOCAL VARIABLES
@@ -89,8 +135,11 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
         if(!customerRecord.status.referralEnrolled) {
 
             //  3. Generate Enrollment Url
-        //    var merchCustEnrollmentUrl = await shopifyMod.get.merchCustomerActivationUrl(merchCustomerRecord.externalIds.shopifyId);
-
+            var customerEnrollmentUrl = await Shopify.get.merchCustomerActivationUrl(customerRecord.externalIds.shopifyId);
+            
+            //  NOTIFY PROGRESS
+            console.log('got this enrollment url: ', customerEnrollmentUrl);
+            
             //  4. Send Enrollment SMS
         //    await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
 

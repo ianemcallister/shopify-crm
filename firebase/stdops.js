@@ -67,7 +67,7 @@ function _extractField(field, aRecord) {
     Object.keys(aRecord).forEach(function(key){
         aKey = key;
     });
-    console.log('aRecord', aRecord, aKey, field);
+    //console.log('aRecord', aRecord, aKey, field);
     return aRecord[aKey][field];
 };
 
@@ -88,6 +88,15 @@ function _extractKeyedObject(aRecord) {
         return aRecord[aKey];
     }
     
+};
+
+/*
+*   PRIVATE: SET
+*/
+async function _set(path, data) {
+    var ref = db.ref(path);
+
+    return ref.set(data);
 };
 
 /*
@@ -171,11 +180,16 @@ async function CreateNewMerchCustomerRecord(mercId, data) {
 /*
 *   CREATE NEW MERCHANT RECORD
 */
-async function CreateNewMerchantRecord(data) {
+async function CreateNewMerchantRecord(data, id) {
     //  NOTIFY PROGESS
     console.log("Creating a new merchant record");
 
-    return await _push('merchant', data);
+    if(id != undefined) {
+        return await _set("Merchants/" + id, data);
+    } else {
+        return await _push('Merchants', data);
+    }
+    
 };
 
 /*

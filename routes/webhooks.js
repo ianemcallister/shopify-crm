@@ -45,6 +45,7 @@ module.exports = (function() {
         
         //  DEFINE LOCAL VARIABLES
         var sq_merchant_id = req.body.merchant_id;
+        var timestamp = req.body.data.created_at;
         var data = req.body.data.object;
 
         try {
@@ -56,20 +57,23 @@ module.exports = (function() {
                 console.log(data.loyalty_account);
 
                 //  DEFINE LOCAL VARAIBLES
-                var mapping = _parseMappings(data.loyalty_account.mappings);
-                var merchCustPhone = mapping.PHONE;
-                var merchCustloyaltyId = data.loyalty_account.id;
+                var mapping             = _parseMappings(data.loyalty_account.mappings);
+                var merchCustPhone      = mapping.PHONE;
+                var merchCustloyaltyId  = data.loyalty_account.id;
 
-                /*if(merchCustPhone != undefined) {
+                //  1. RECORD TOUCHPOINT
+
+                //  2. CONFIRM PRESENCE OF PHONE NUMBER
+                if(merchCustPhone != undefined) {
                     //  NOTIFY PROGRESS
-                    console.log('phone # found');
+                    console.log('phone # found', merchCustPhone);
 
-                    //  SEND ENROLLMENT URL
-                    var status = await rewards.enrollmentInvite.viaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
-                    console.log('Success?: ', status);
-                }*/
+                    //  3.2 INVITE CUSTOMER TO REFERRAL PROGRAM 
+                //    await rewards.enrollmentInvite.viaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id, timestamp);
+                    console.log('proccessed enrollment: ', merchCustPhone);
+                }
 
-                //  RETURN
+                //  3.1 RETURN
                 res.sendStatus(200);
             } else if(req.body.type == "loyalty.account.deleted"){
                 //  NOTIFY PROGRESS

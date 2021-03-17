@@ -33,7 +33,7 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
     var params   = allCustomerRecords[4];
     var templateFile = fs.readFileSync('./models/customerProfile.json', 'utf8');
     var template = JSON.parse(templateFile);
-    var timestamp = new Date(Date.now()).toISOString();;
+    var timestamp = new Date(Date.now()).toISOString();
    
     
     try {
