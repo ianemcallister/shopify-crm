@@ -10,13 +10,12 @@ const squareStOps = require('./square/stdops.js');
 
 async function execute() {
     try {
-        var merchId = '-MVrZajcORbaTjkuZL2a';
+        await rewards.enrollmentInvite.viaSMS('+15034646354', '', 'DNFEDFQ5904GJ');
+        console.log('finished with enrollment');
+
+        /*var merchId = '-MVrZajcORbaTjkuZL2a';
         var phone = '+15034646354'
-        console.log(await Promise.all([
-            Shopify.get.merchCustomerRecord(phone),
-            squareStOps.get.customerByPhone(phone),
-            Firebase.get.merchCustRecord(merchId, phone)
-        ]));
+        console.log(*/
         //console.log('CLI: got this crmMerchantId', await CRM.get.crmMerchIdviaSqMrchId('DNFEDFQ5904GJ'));
         
         //console.log('New Customer Id: ', await Shopify.get.newMerchCustId('+14062082327', 'DNFEDFQ5904GJ'));

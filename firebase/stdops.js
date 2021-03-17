@@ -149,14 +149,13 @@ async function CreateNewMerchantRecord(data) {
 /*
 *
 */
-async function GetMerchCustShopifyId(crmMerchId, merchCustPhone) {
+async function GetMerchCustShopifyId(merchCustPhone) {
     //  NOTIFY PROGERSS
-    console.log('Firebase/Stdops/GetMerchCustShopifyId: ', crmMerchId, merchCustPhone);
+    //console.log('Firebase/Stdops/GetMerchCustShopifyId: ', crmMerchId, merchCustPhone);
 
     //  LOCAL VARIABLES
-    var readPath = 'Merchants/' + crmMerchId + '/Customers'
-    var ref = db.ref(readPath);
-    var queryRef = ref.orderByChild('phone').equalTo(merchCustPhone);
+    var ref = db.ref('Customers');
+    var queryRef = ref.orderByChild('phoneNumber').equalTo(merchCustPhone);
 
     try {
         var merchCustRecordSnapshot = await queryRef.once('value');
@@ -170,14 +169,13 @@ async function GetMerchCustShopifyId(crmMerchId, merchCustPhone) {
 /*
 *   GET MERCHANT CUSTOMER RECORD
 */
-async function GetMerchCustRecord(crmMerchId, merchCustPhone) {
+async function GetMerchCustRecord(merchCustPhone) {
     //  NOTIFY PROGRESS
-    console.log('Firebase/Stdops/GetMerchCustRecord: ', crmMerchId, merchCustPhone);
+    console.log('Firebase/Stdops/GetMerchCustRecord: ', merchCustPhone);
 
     //  LOCAL VARIABLES
-    var readPath = 'Merchants/' + crmMerchId + '/Customers'
-    var ref = db.ref(readPath);
-    var queryRef = ref.orderByChild('phone').equalTo(merchCustPhone);
+    var ref = db.ref('Customers');
+    var queryRef = ref.orderByChild('phoneNumber').equalTo(merchCustPhone);
 
     try {
         var merchCustRecordSnapshot = await queryRef.once('value');

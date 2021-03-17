@@ -1,0 +1,33 @@
+{
+    "_createdAt": "",
+    "_updatedAt": "",
+    "_id": "",
+    "externalIds": {
+        "shopifyId": "",
+        "squareId": "",
+        "facebookId": "",
+        "igId": ""
+    },
+    "creationSource": "",
+    "email": "",
+    "phoneNumber": "",
+    "givenName": "",
+    "familyName": "",
+    "physicalAddresses": [],
+    "preferences": {
+        "emailUnsubscribed": false,
+        "optInToEmail": false,
+        "optInToSMS": false,
+        "acceptsMarketing": false,
+        "preferedCommunication": "",
+        "marketingOptInLevel": ""
+    },
+    "status": {
+        "emailVerified": false,
+        "smsVerified": false,
+        "acceptsMarketingUpdatedAt": "",
+        "invitedToReferral": "",
+        "referralEnrolled": false,
+        "rewardsEnrolled": false
+    }
+}
