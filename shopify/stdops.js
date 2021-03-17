@@ -3,7 +3,8 @@
 */
 
 //  DEFINE DEPENDENICE
-const shopifyAPINode = require('shopify-api-node');
+const fs                = require('fs');
+const shopifyAPINode    = require('shopify-api-node');
 
 //  INSTANCIATE
 const shopifyCredentials ={
@@ -15,6 +16,7 @@ const ShopifyAPI = new shopifyAPINode(shopifyCredentials);
 
 //  DEFINE MODULE
 var shopifyStandardOps = {
+    createNewShopifyCustomer: createNewShopifyCustomer,
     get: {
         merchCustomerActivationUrl: GetMerchCustomerActivationUrl,
         merchCustomerRecord: GetMerchCustomerRecord,
@@ -64,6 +66,27 @@ async function CreateNewCustomerRecord(params) {
 
     var newCustomerRecord = await ShopifyAPI.customer.create(params);
     return newCustomerRecord; 
+};
+
+/*
+*   CREATE NEW SHOPIFY CUSTOMER
+*/
+async function createNewShopifyCustomer(phone) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var paramsFile = fs.readFileSync('./models/shopifyCustomer.json', 'utf8');
+    var params = JSON.parse(paramsFile);
+    params.first_name = "TEMPORARY"
+    params.phone = phone;
+    params.addresses[0].phone = phone;
+
+    //  EXECUTE ASYNC WORK
+    try {
+        return await ShopifyAPI.customer.create(params)
+        
+    } catch (error) {
+        console.log('createNewShopifyCustomer error: ', error);
+    }
 };
 
 /*

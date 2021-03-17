@@ -10,7 +10,7 @@ const squareStOps = require('./square/stdops.js');
 
 async function execute() {
     try {
-        await rewards.enrollmentInvite.viaSMS('+15034646354', '', 'DNFEDFQ5904GJ', 'today');
+        await rewards.enrollmentInvite.viaSMS('+14083750514', '', 'DNFEDFQ5904GJ', 'today');
         console.log('finished with enrollment');
 
         /*var merchId = '-MVrZajcORbaTjkuZL2a';

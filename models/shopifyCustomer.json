@@ -1,0 +1,19 @@
+{
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "phone": "",
+    "verified_email": false,
+    "addresses": [
+      {
+        "address1": "",
+        "city": "",
+        "province": "",
+        "phone": "",
+        "zip": "",
+        "last_name": "",
+        "first_name": "",
+        "country": ""
+      }
+    ]
+  }

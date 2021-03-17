@@ -167,14 +167,19 @@ async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
 /*
 *
 */
-async function CreateNewMerchCustomerRecord(mercId, data) {
+async function CreateNewMerchCustomerRecord(data, id) {
     //  NOTIFY PROGRESS
-    console.log('Creating a new custome record');
+    console.log('Creating a new customer record');
 
     //  DEFINE LOCAL VARIABLES
-    var writePath = "Merchants/" + mercId + "/Customers";
+    var writePath = "Customers/" + id;
 
-    return await _push(writePath, data);
+    if(id != undefined) {
+        return await _set(writePath, data);
+    } else {
+        return await _push(writePath, data);
+    }
+    
 };
 
 /*

@@ -18,7 +18,7 @@ var rewards = {
 /*
 *   PRIVATE: VALIDATE CUSTOMER PROFILES
 */
-async function _validateCustomerProfiles(type, aRecord) {
+async function _validateCustomerProfiles(type, aRecord, phoneNumber) {
     //  NOTIFY PROGRESS
     //  LOCAL VARIABLES
     var timestamp = new Date(Date.now()).toISOString();
@@ -29,12 +29,13 @@ async function _validateCustomerProfiles(type, aRecord) {
             switch(type) {
                 case 'Shopify':
                     //  CREATE A NEW SHOPIFY CUSTOMER AND RETURN THE RECORD
-                    return {};
+                    var newShopifyRecord = await Shopify.createNewShopifyCustomer(phoneNumber);
+                    return newShopifyRecord;
 
                     break;
                 case 'Square':
                     //  CREATE A NEW SQUARE CUSTOMER AND RETURN THE RECORD -- NOT REQUIRED REIGHT NOW
-                    return aRecord
+                    
                     break;
                 case 'FirebaseMerchId':
                     //  CREATE A NEW FIREBASE MERCHATN RECORD AND RETURN THE KEY
@@ -47,7 +48,7 @@ async function _validateCustomerProfiles(type, aRecord) {
                         merchantName: "",
                         shopifyMerchId: "",
                         sqMerchId: sq_merchant_id,
-                    });
+                    }, newMerchantId);
 
                     //  SAVE THE ID
                     return newMerchantId;
@@ -55,7 +56,12 @@ async function _validateCustomerProfiles(type, aRecord) {
                     break;
                 case 'FirebaseCustRrd':
                     //  CREATE A NEW FIREBASE CUSTOMER RECORD AND RETURN THE RECORD - TEMPORARY ONLY
-                    return {};
+                    var newCustomerId = Firebase.get.pushId('Customers');
+                    var newCustomer = {
+                        _id:  newCustomerId
+                    };
+                    await Firebase.create.newMerchCustomerRecord(newCustomer, newCustomerId);
+                    return newCustomer;
 
                     break;
                 default:
@@ -90,7 +96,7 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
 
         //  2. VALIDATE RETURNING DATA
         var validatedRecords = await Promise.all([
-            _validateCustomerProfiles('Shopify', allRecordsRaw[0]),
+            _validateCustomerProfiles('Shopify', allRecordsRaw[0], merchCustPhone),
             _validateCustomerProfiles('Square', allRecordsRaw[1]),
             _validateCustomerProfiles('FirebaseCustRrd', allRecordsRaw[2]),
             _validateCustomerProfiles('FirebaseMerchId', allRecordsRaw[3]),
@@ -139,7 +145,7 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
             
             //  NOTIFY PROGRESS
             console.log('got this enrollment url: ', customerEnrollmentUrl);
-            
+
             //  4. Send Enrollment SMS
         //    await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
 
