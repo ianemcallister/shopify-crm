@@ -29,6 +29,7 @@
     "nonce": "^1.0.4",
     "request-json": "^0.6.5",
     "shopify-api-node": "^3.6.5",
+    "square": "^9.0.0",
     "url": "^0.11.0"
   }
 }

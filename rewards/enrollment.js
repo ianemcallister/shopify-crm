@@ -5,6 +5,7 @@
 const CRM         = require('../app/crm.js');
 const till        = require('../till/enrollment.js');
 const shopifyMod  = require('../shopify/stdops.js');
+const Square      = require('../square/stdops.js');
 
 //  DEFINE MODULE
 var rewards = {
@@ -16,9 +17,21 @@ var rewards = {
 /*
 *   PRIVATE: GET SHOPIFY CUSTOMER ID
 */
-async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merchant_id){
+async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_merchant_id){
     //  NOTIFY PROGRESS
-    console.log('_GetShopifyCustomerId: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
+    console.log('_GetMerchCustomerRecord: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
+
+    //  1. COLLECT PROFILES FROM ALL RESOURCES [Square, Shopify, Firebase]
+    var squareMerchCustomerRecord = "";
+    var shopifyMerchCustomerRecord = '';
+    var firebaseMerchCustomerRecord = '';
+    var allMerchCustRecords = await Promise.all([
+        await Square.get.customer()
+    ])
+    
+    //  2. CONSOLIDATE MERCHANT CUSTOMER RECORDS
+    //  3. UPDATE ALL DATA STORES [Square, Shopify, Firebase]
+    //  4. RETURN { SHOPIFY CUSTOMER ID, ENROLLMENT STATUS }
 
     //  1. GET CRM MERCHANT ID
     var crmMerchantId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
@@ -30,7 +43,7 @@ async function _GetShopifyCustomerId(merchCustPhone, merchCustsqLyltyId, sq_merc
         //  NOTIFY PRGORESS
         console.log('need a new shopify customer id');
         var newMerchCustShopifyId = await shopifyMod.newMerchCustId(merchCustPhone, sq_merchant_id);
-        
+        return newMerchCustShopifyId;
     } else {
         return merchCustomerShopifyId
     }
@@ -54,7 +67,7 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
     console.log('EnrollmentInviteViaSMS: sqLyltyId(', merchCustloyaltyId, '), phone(', merchCustPhone,'), merchant_id(', sq_merchant_id, ")");
     
     //  1. Get Shopify Customer Id
-    var merchCustomerRecord = await _GetShopifyCustomerId(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
+    var merchCustomerRecord = await _GetMerchCustomerRecord(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
     console.log('got this merchantCustomer Record: ' , merchCustomerRecord);
 
     //  2. Check activation status

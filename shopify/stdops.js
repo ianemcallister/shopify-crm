@@ -118,7 +118,7 @@ async function GetNewMerchCustId(merchCustPhone, sq_merchant_id) {
     };
 
     var newCustomerRecord = await CreateNewCustomerRecord(newCustomerObject);
-    var newCustomerShopifyId = newCustomerRecord.customer.id;
+    var newCustomerShopifyId = newCustomerRecord.id;
     return newCustomerShopifyId;
 
 };
