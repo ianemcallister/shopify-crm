@@ -26,11 +26,13 @@ var db = admin.database();
 
 //  DEFINE MODULE
 var firebaseStOps = {
+    updateCustomerRecord: UpdateCustomerRecord,
     create: {
         newMerchCustomerRecord: CreateNewMerchCustomerRecord,
         newMerchantRecord: CreateNewMerchantRecord
     },
     get: {
+        pushId: GetPushId,
         crmMerchIdviaSqMrchId: GetCrmMerchIdviaSqMrchId,
         merchCustShopifyId: GetMerchCustShopifyId,
         merchCustRecord: GetMerchCustRecord
@@ -43,7 +45,7 @@ var firebaseStOps = {
 */
 function _extractKey(anObject) {
     //  NOTIFY PROGRESS
-   // console.log('received this objet', anObject);
+    console.log('received this objet', anObject);
 
     //  DEFINE LOCAL VARIABLES
     var aKey = "";
@@ -65,7 +67,7 @@ function _extractField(field, aRecord) {
     Object.keys(aRecord).forEach(function(key){
         aKey = key;
     });
-
+    console.log('aRecord', aRecord, aKey, field);
     return aRecord[aKey][field];
 };
 
@@ -102,6 +104,36 @@ async function _push(path, data) {
     return await writePath.push(data)
 };
 
+/*
+*   UPDATE CUSTOMER RECORD
+*/
+async function UpdateCustomerRecord(customeRecord) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var ref = db.ref('Customers/' + customeRecord._id);
+    
+    //  EXECUTE ASYNC WORK
+    try {
+        ref.set(customeRecord, function(error) {
+            if (error) {
+                console.log("Data could not be saved." + error);
+              } else {
+                console.log("Data saved successfully.");
+              }
+        });
+    } catch (error) {
+        console.log('Firebase/UpdateCustomerRecord Error: ', error );
+    }
+};
+
+/*
+*   GET PUSH ID
+*/
+function GetPushId(path) {
+    var ref = db.ref(path); 
+    var newObject = ref.push();
+    return newObject.key;
+};
 
 /*
 *   GET CRM CUSTOMER ID VIA SQUARE MERCHANT ID
@@ -116,7 +148,7 @@ async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
 
     try {
         var merchantIdsnapshot = await queryRef.once('value')
-        return _extractKey(merchantIdsnapshot.val());
+        return _extractField("id", merchantIdsnapshot.val());
     } catch (error) {
         console.log('GetCrmCustomerIdviaSqMrchId Error: ', error);
         return error

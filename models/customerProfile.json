@@ -2,9 +2,12 @@
     "_createdAt": "",
     "_updatedAt": "",
     "_id": "",
+    "_merchantId": "",
     "externalIds": {
         "shopifyId": "",
         "squareId": "",
+        "squareLoyaltyId": "",
+        "squareMerchantId": "",
         "facebookId": "",
         "igId": ""
     },
@@ -26,8 +29,10 @@
         "emailVerified": false,
         "smsVerified": false,
         "acceptsMarketingUpdatedAt": "",
-        "invitedToReferral": "",
+        "invitedToReferralAt": "",
         "referralEnrolled": false,
-        "rewardsEnrolled": false
+        "rewardsEnrolled": false,
+        "rewardsEnrolledAt": "",
+        "referralEnroledAt": ""
     }
 }

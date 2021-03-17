@@ -93,7 +93,7 @@ async function GetMerchCustomerRecord(phone) {
 
     try {
         var customerRecord = await _customerSearch(params);
-        return customerRecord;
+        return customerRecord[0];
     } catch (error) {
         console.log('error', error);
     }

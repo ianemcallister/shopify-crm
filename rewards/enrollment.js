@@ -18,22 +18,35 @@ var rewards = {
 /*
 *   PRIVATE: GET SHOPIFY CUSTOMER ID
 */
-async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_merchant_id){
+async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_merchant_id, rewardsEnrollAt){
     //  NOTIFY PROGRESS
-    console.log('_GetMerchCustomerRecord: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
+    //console.log('_GetMerchCustomerRecord: ', merchCustPhone, merchCustsqLyltyId, sq_merchant_id);
 
-    //  1. COLLECT PROFILES FROM ALL RESOURCES [Square, Shopify, Firebase]
-    var allRecords = await Promise.all([
-        Shopify.get.merchCustomerRecord(merchCustPhone),
-        Square.get.customerByPhone(merchCustPhone),
-        Firebase.get.merchCustRecord(merchCustPhone),
-        Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id)
-    ]);
-    //console.log('_GetMerchCustomerRecord: ', allRecords);
+    try {
+        //  1. COLLECT PROFILES FROM ALL RESOURCES [Square, Shopify, Firebase]
+        var allRecords = await Promise.all([
+            Shopify.get.merchCustomerRecord(merchCustPhone),
+            Square.get.customerByPhone(merchCustPhone),
+            Firebase.get.merchCustRecord(merchCustPhone),
+            Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id),
+            {phone: merchCustPhone, sqLoyalty: merchCustsqLyltyId, sqMercantId: sq_merchant_id, rewardsEnrolledAt: rewardsEnrollAt }
+        ]);
+        //console.log('_GetMerchCustomerRecord: ', allRecords);
 
-    //  2. CONSOLIDATE MERCHANT CUSTOMER RECORDS
-    //  3. UPDATE ALL DATA STORES [Square, Shopify, Firebase]
-    //  4. RETURN { SHOPIFY CUSTOMER ID, ENROLLMENT STATUS }
+        //  2. CONSOLIDATE MERCHANT CUSTOMER RECORDS
+        var comprehensiveCustomerRecord = await CRM.consolidateCustomerRecords(allRecords);
+        console.log('comprehensiveCustomerRecord: ', comprehensiveCustomerRecord);
+
+        //  3. UPDATE FIREBASE
+        await Firebase.updateCustomerRecord(comprehensiveCustomerRecord);
+
+        //  4. RETURN CUSTOMER RECORD
+        return comprehensiveCustomerRecord;
+        
+    } catch (error) {
+        console.log('_GetMerchCustomerRecord Error: ', error);
+    }
+
 
     //  1. GET CRM MERCHANT ID
     //var crmMerchantId = await CRM.get.crmMerchIdviaSqMrchId(sq_merchant_id);
@@ -61,7 +74,7 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
 *   @param(phone) - String: "+15555555555" 12 character
 *   @return(status) - Bool: Success | Failure
 */
-async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id) {
+async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id, rewardsEnrolledAt) {
     //  DEFINE LOCAL VARIABLES
 
     //  NOTIFY PROGERSS
@@ -69,24 +82,27 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
     
     try {
         //  1. Retrieve Customer Record
-        var merchCustomerRecord = await _GetMerchCustomerRecord(merchCustPhone, merchCustloyaltyId, sq_merchant_id);
-        
+        var customerRecord = await _GetMerchCustomerRecord(merchCustPhone, merchCustloyaltyId, sq_merchant_id, rewardsEnrolledAt);
+        //console.log(merchCustomerRecord);   //  TODO: REMOVE THIS LATER
+
         //  2. Verify Enrollment Status
-        //if(!merchCustomerRecord.status.referralEnrolled) {
+        if(!customerRecord.status.referralEnrolled) {
 
             //  3. Generate Enrollment Url
         //    var merchCustEnrollmentUrl = await shopifyMod.get.merchCustomerActivationUrl(merchCustomerRecord.externalIds.shopifyId);
 
-            //  4. End Enrollment SMS
+            //  4. Send Enrollment SMS
         //    await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
 
-            //  5. Notify Status
-        //    console.log(merchCustPhone, ' sent a referral enrollment link');
-        //} else {
-            //  3. Notify Status
-        //    console.log(merchCustPhone, ' aready enrolled.');
+            //  5. Record Touchpoint
 
-        //}  
+            //  6. Notify Status
+        //    console.log(merchCustPhone, ' sent a referral enrollment link');
+        } else {
+            //  3. Notify Status
+            console.log(merchCustPhone, ' aready enrolled.');
+
+        }  
 
     //  HANDLE ANY ERRORS THAT COME UP    
     } catch (error) {
