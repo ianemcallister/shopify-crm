@@ -50,7 +50,18 @@ async function GetCustomerByPhone(phone) {
                 }
             }
         });
-        return customerRecords.customers[0];
+        
+        if(customerRecords.customers == undefined) {
+            console.log('Square/stdops/GetCustomerByPhone: no customers with that phone number');
+            console.log(customerRecords);
+            return undefined;
+        } else if (typeof(customerRecords) == 'object'){
+            console.log('Square/stdops/GetCustomerByPhone: found customer record');
+            return customerRecords.customers[0];
+        } else {
+            console.log("Square didn't wait");
+        }
+        
 
     } catch (error) {
         console.log('GetCustomerByPhone Error: ', error);

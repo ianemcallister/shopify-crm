@@ -76,11 +76,16 @@ function _extractKeyedObject(aRecord) {
     //  LOCAL VARIABLES
     var aKey = "";
 
-    Object.keys(aRecord).forEach(function(key) {
-        aKey = key;
-    });
-
-    return aRecord[aKey];
+    if(aRecord == null) {
+        return undefined;
+    } else {
+        Object.keys(aRecord).forEach(function(key) {
+            aKey = key;
+        });
+    
+        return aRecord[aKey];
+    }
+    
 };
 
 /*

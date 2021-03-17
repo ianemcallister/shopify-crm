@@ -17,7 +17,7 @@ const ShopifyAPI = new shopifyAPINode(shopifyCredentials);
 var shopifyStandardOps = {
     get: {
         merchCustomerActivationUrl: GetMerchCustomerActivationUrl,
-        merchCustomerId: GetMerchCustomerId,
+        merchCustomerRecord: GetMerchCustomerRecord,
         newMerchCustId: GetNewMerchCustId
     }
 };
@@ -84,7 +84,7 @@ async function GetMerchCustomerActivationUrl(merchCustShopifyId) {
 /*
 *   GET MERCHANT CUSTOMER ID
 */
-async function GetMerchCustomerId(phone) {
+async function GetMerchCustomerRecord(phone) {
     //  NOTIFY PROGRESS
     console.log('shopify/stdops/GetMerchCustomerId: ', phone);
 
@@ -93,7 +93,7 @@ async function GetMerchCustomerId(phone) {
 
     try {
         var customerRecord = await _customerSearch(params);
-        
+        return customerRecord;
     } catch (error) {
         console.log('error', error);
     }

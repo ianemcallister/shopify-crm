@@ -1,5 +1,5 @@
 /*
-*   DELIGHT CIRCLE ENROLLMENT MODULE  
+*   REWARDS ENROLLMENT MODULE  
 */
 //  DEFINE DEPENDENCIES
 const CRM         = require('../app/crm.js');
