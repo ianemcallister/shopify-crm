@@ -45,7 +45,7 @@ module.exports = (function() {
         
         //  DEFINE LOCAL VARIABLES
         var sq_merchant_id = req.body.merchant_id;
-        var timestamp = req.body.data.created_at;
+        var timestamp = req.body.created_at;
         var data = req.body.data.object;
 
         console.log('got this timestamp, ', timestamp, req.body.data);
