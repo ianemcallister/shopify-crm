@@ -6,7 +6,6 @@
     "externalIds": {
         "shopifyId": "",
         "squareId": "",
-        "squareLoyaltyId": "",
         "squareMerchantId": "",
         "facebookId": "",
         "igId": ""
@@ -28,11 +27,19 @@
     "status": {
         "emailVerified": false,
         "smsVerified": false,
-        "acceptsMarketingUpdatedAt": "",
-        "invitedToReferralAt": "",
-        "referralEnrolled": false,
-        "rewardsEnrolled": false,
+        "acceptsMarketingUpdatedAt": ""
+    },
+    "loyaltyEnrolled": false,
+    "referrals": {
+        "wasReferred": false,
+        "referedBy": "",
+        "referedAt": "",
+        "loginInviteSentAt": "",
+        "loginInviteCompletedAt": "",
+        "loginInviteCompleted": false
+    },
+    "rewards": {
         "rewardsEnrolledAt": "",
-        "referralEnroledAt": ""
+        "squareLoyaltyId": ""
     }
 }

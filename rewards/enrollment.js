@@ -64,6 +64,22 @@ async function _validateCustomerProfiles(type, aRecord, phoneNumber) {
                     return newCustomer;
 
                     break;
+                case 'Redirect':
+                    //  NOTIFY PROGRESS
+                    console.log('validating redirect');
+
+                    var newRedirect = Shopify.create.redirect(phoneNumber);
+                    return newRedirect;
+
+                    break;
+                case 'Referral':
+                    //  NOTIFY PROGRESS
+                    console.log('validating referral', phoneNumber);
+
+                    var newReferral = Shopify.create.referralCode(phoneNumber);
+                    return newReferral;
+
+                    break;
                 default:
                     break;
             };
@@ -90,9 +106,11 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
             Square.get.customerByPhone(merchCustPhone),
             Firebase.get.merchCustRecord(merchCustPhone),
             Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id),
-            {phone: merchCustPhone, sqLoyalty: merchCustsqLyltyId, sqMercantId: sq_merchant_id, rewardsEnrolledAt: rewardsEnrollAt }
+            {phone: merchCustPhone, sqLoyalty: merchCustsqLyltyId, sqMercantId: sq_merchant_id, rewardsEnrolledAt: rewardsEnrollAt },
+            Shopify.get.urlRedirect(merchCustPhone),
+            Shopify.get.referralCode(merchCustPhone)
         ]);
-        //console.log('_GetMerchCustomerRecord: ', allRecords);
+        console.log('_GetMerchCustomerRecord: ', allRecordsRaw);
 
         //  2. VALIDATE RETURNING DATA
         var validatedRecords = await Promise.all([
@@ -101,6 +119,8 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
             _validateCustomerProfiles('FirebaseCustRrd', allRecordsRaw[2]),
             _validateCustomerProfiles('FirebaseMerchId', allRecordsRaw[3]),
             _validateCustomerProfiles('object', allRecordsRaw[4]),
+            _validateCustomerProfiles('Redirect', allRecordsRaw[5], merchCustPhone),
+            _validateCustomerProfiles('Referral', allRecordsRaw[6], merchCustPhone)
         ]);
 
         //  2. CONSOLIDATE MERCHANT CUSTOMER RECORDS

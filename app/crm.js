@@ -23,7 +23,7 @@ var omniCRM = {
 */
 async function ConsolidateCustomerRecords(allCustomerRecords) {
     //  NOTIFY PROGRESS
-    console.log("ConsolidateCustomerRecords: ", allCustomerRecords);
+    //console.log("ConsolidateCustomerRecords: ", allCustomerRecords);
 
     //  DEFINE LOCAL VARIABLES
     var shopfyCR = allCustomerRecords[0];
@@ -31,6 +31,8 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
     var firebsCR = allCustomerRecords[2];
     var merchtId = allCustomerRecords[3];
     var params   = allCustomerRecords[4];
+    var redirect = allCustomerRecords[5];
+    var discount = allCustomerRecords[6];
     var templateFile = fs.readFileSync('./models/customerProfile.json', 'utf8');
     var template = JSON.parse(templateFile);
     var timestamp = new Date(Date.now()).toISOString();
@@ -136,16 +138,28 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
             //  12.1    Email Verified? (true or false)
             //  12.2    SMS Verified? (true or false)
             //  12.3    Accepts Marketing Updated At
-            //  12.4    Invite to Refereal At
-            //  12.5    Referral Enrolled (true or false)
-            //  12.6    Rewards Enrolled (true or false)
-            //  12.7    Referral Enrolled at
-            
-            //  12.8    Rewards Enrolled at
-            if(firebsCR.status.rewardsEnrolledAt == '' && params.rewardsEnrolledAt != undefined && params.rewardsEnrolledAt != "") { template.status.referralEnroledAt = params.rewardsEnrolledAt; }
             
         } else {
-            template.status.rewardsEnrolledAt = params.rewardsEnrolledAt;
+            
+        }
+
+        //  13. Referral
+        if(firebsCR.referrals == undefined) {
+            template.referrals.defaultReferralCode = discount.code;
+            template.referrals.defaultReferralCodeUrl = redirect.path;
+            template.referrals.defaultReferralCodeId = discount.id;
+            template.referrals.defaultReferralRedirectId = redirect.id;
+        } else {
+            template.referrals = firebsCR.referrals
+        }
+
+        //  14. Rewards
+        if(firebsCR.rewards == undefined) {
+            template.rewards.rewardsEnrolled = true;
+            template.rewards.rewardsEnrolledAt = params.rewardsEnrolledAt;
+        } else {
+            template.rewards.rewardsEnrolled = true;
+            if(firebsCR.rewards.rewardsEnrolledAt == '' && params.rewardsEnrolledAt != undefined && params.rewardsEnrolledAt != "") { template.rewards.referralEnroledAt = params.rewardsEnrolledAt; }
         }
 
         

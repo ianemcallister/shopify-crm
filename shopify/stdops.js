@@ -20,8 +20,34 @@ var shopifyStandardOps = {
     get: {
         merchCustomerActivationUrl: GetMerchCustomerActivationUrl,
         merchCustomerRecord: GetMerchCustomerRecord,
-        newMerchCustId: GetNewMerchCustId
+        newMerchCustId: GetNewMerchCustId,
+        urlRedirect: GetUrlRedirect,
+        referralCode: GetReferralCode,
+        priceCodesList: GetPriceCodesList
+    },
+    create: {
+        referralCode: CreateReferralCode,
+        redirect: CreateRedirect
     }
+};
+
+/*
+*   PRIVATE: HASH PHONE
+*/
+function _hashPhone(phone) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var key = ["A", 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+    var phoneHash = "";
+
+    //  EXECUTE
+    for (var i = 0; i < phone.length; i++) {
+        if(phone[i] != '+') {
+            phoneHash += key[parseInt(phone[i])];
+        }
+    };
+
+    return phoneHash;
 };
 
 /*
@@ -66,6 +92,38 @@ async function CreateNewCustomerRecord(params) {
 
     var newCustomerRecord = await ShopifyAPI.customer.create(params);
     return newCustomerRecord; 
+};
+
+/*
+*   PRIVATE: PARSE REFERRAL CODES
+*/
+function _praseReferralCodes(allCodes, query) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var returnObject = undefined;
+
+    //  EXECUTE -- ITERATE OVER LIST
+    allCodes.forEach(function(codeObject) {
+        if(codeObject.code == query) { returnObject = codeObject }
+    });
+
+    return returnObject;
+};
+
+/*
+*   PRIVATE: PARSE REDIRECTS
+*/
+function _parseRedirects(allRedirects, query) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var returnObject = undefined;
+
+    //  EXECUTE
+    allRedirects.forEach(function(redirectObject) {
+        if(redirectObject.path == query) { returnObject = redirectObject }
+    });
+
+    return returnObject;
 };
 
 /*
@@ -144,6 +202,98 @@ async function GetNewMerchCustId(merchCustPhone, sq_merchant_id) {
     var newCustomerShopifyId = newCustomerRecord.id;
     return newCustomerShopifyId;
 
+};
+
+/*
+*   GET URL REDIRECT
+*/
+async function GetUrlRedirect(phone) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var path = '/' + _hashPhone(phone);
+    var params = [{ path: path }];
+
+    //  EXECUTE ASYNC WORK
+    try {
+        var returnObject = await ShopifyAPI.redirect.list(params)
+        return _parseRedirects(returnObject);
+    } catch (error) {
+        console.log('GetUrlRedirect error: ', error)
+    }
+};
+
+/*
+*   CREATE REDIRECT 
+*/
+async function CreateRedirect(phone) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var path = '/' + _hashPhone(phone);
+    var target = '/discount/' + _hashPhone(phone) + '?redirect=/collections/all';
+    var params = { path: path, target: target };
+
+    //  EXECUTE ASYNC WORK
+    try {
+        var returnObject = await ShopifyAPI.redirect.create(params)
+        return returnObject;
+    } catch (error) {
+        console.log('CreateRedirect error: ', error)
+    }
+};
+
+
+/*
+*   GET REFERRAL CODE
+*/
+async function GetReferralCode(phone) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var priceRuleId = '913999855784';
+    var code = _hashPhone(phone);
+
+    //  EXECUTE ASYNC WORK
+    try {
+        var returnObject = await ShopifyAPI.discountCode.list(priceRuleId);
+        return _praseReferralCodes(returnObject, code);
+
+    } catch (error) {
+        console.log('GetReferralCode error: ', error)
+    }
+};
+
+/*
+*   CREATE REFERAL CODE
+*/
+async function CreateReferralCode(phone) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var priceRuleId = '913999855784';
+    var params = { code: _hashPhone(phone) }
+
+    //  EXECUTE ASYNC WORK
+    try {
+        var returnObject = await ShopifyAPI.discountCode.create(priceRuleId, params);
+        return returnObject;
+    } catch (error) {
+        console.log('CreateReferralCode error: ', error)
+    }
+};
+
+/*
+*
+*/
+async function GetPriceCodesList() {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var params = {};
+
+    //  EXECUTE ASYNC FUNCTIONS
+    try {
+        var priceCodesList = ShopifyAPI.priceRule.list(params);
+        return priceCodesList
+    } catch (error) {
+        console.log('GetPriceCodesList: ', error);
+    }
 };
 
 //  EXPORT MODULE

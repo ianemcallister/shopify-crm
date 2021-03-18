@@ -10,6 +10,7 @@ const squareStOps = require('./square/stdops.js');
 
 async function execute() {
     try {
+        //console.log(await Shopify.get.priceCodesList());
         await rewards.enrollmentInvite.viaSMS('+14083750514', '', 'DNFEDFQ5904GJ', 'today');
         console.log('finished with enrollment');
 

@@ -1,0 +1,17 @@
+{
+    "_id": "",
+    "ownerId": "",
+    "ownerPhone": "",
+    "ownerEmail": "",
+    "defaultReferralCode": "",
+    "defaultReferralCodeUrl": "",
+    "defaultReferralCodeId": "",
+    "defaultReferralRedirectId": "",
+    "persnalReferralCode": "",
+    "persnalReferralCodeUrl": "",
+    "persnalReferralCodeId": "",
+    "persnalReferralRedirectId": "",
+    "sucessfullyReferred": 0,
+    "linksFollowed": 0,
+    "successfulReferrals": []
+}
