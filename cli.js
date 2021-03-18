@@ -6,12 +6,12 @@ var Firebase    = require('./firebase/stdops.js');
 var Shopify     = require('./shopify/stdops.js');
 var CRM         = require('./app/crm.js');
 var rewards     = require('./rewards/enrollment.js');
-const squareStOps = require('./square/stdops.js');
+const Square = require('./square/stdops.js');
 
 async function execute() {
     try {
-        //console.log(await Shopify.get.priceCodesList());
-        await rewards.enrollmentInvite.viaSMS('+14083750514', '', 'DNFEDFQ5904GJ', 'today');
+        //console.log(await Square.get.loyaltyAcctByPhone(''));
+        await rewards.enrollmentInvite.viaSMS('', '', 'DNFEDFQ5904GJ', '');
         console.log('finished with enrollment');
 
         /*var merchId = '-MVrZajcORbaTjkuZL2a';
