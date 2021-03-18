@@ -48,6 +48,8 @@ module.exports = (function() {
         var timestamp = req.body.data.created_at;
         var data = req.body.data.object;
 
+        console.log('got this timestamp, ', timestamp, req.body.data);
+
         try {
             
             // work through various options

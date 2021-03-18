@@ -211,7 +211,8 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
         //  16. REWARDS
         if(firebsCR.rewards == undefined) {
             //  16.1    REWARDS ENROLLED AT
-            template.rewards.rewardsEnrolledAt = params.rewardsEnrolledAt;
+            if(params.rewardsEnrolledAt != undefined) { template.rewards.rewardsEnrolledAt = params.rewardsEnrolledAt; }
+            
 
             //  16.2    SQUARE LOYALTY ID
             template.rewards.squareLoyaltyId  = params.sqLoyalty;
