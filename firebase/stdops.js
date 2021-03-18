@@ -27,6 +27,7 @@ var db = admin.database();
 //  DEFINE MODULE
 var firebaseStOps = {
     updateCustomerRecord: UpdateCustomerRecord,
+    updateReferralRecord: UpdateReferralRecord,
     create: {
         newMerchCustomerRecord: CreateNewMerchCustomerRecord,
         newMerchantRecord: CreateNewMerchantRecord
@@ -114,6 +115,30 @@ async function _push(path, data) {
 };
 
 /*
+*
+*/
+async function UpdateReferralRecord(referralAcctRecord) {
+    //  NOTIFY PROGRESS
+    console.log('UpdateReferralRecord: ', referralAcctRecord);
+    
+    //  LOCAL VARIABLES
+    var ref = db.ref('ReferralAccts/' + referralAcctRecord._id);
+
+    //  EXECUTE
+    try {
+        ref.set(referralAcctRecord, function(error) {
+            if (error) {
+                console.log("referralAcctRecord Data could not be saved." + error);
+              } else {
+                console.log("referralAcctRecord Data saved successfully.");
+              }
+        });
+    } catch (error) {
+        console.log('UpdateReferralRecord error: ', error);
+    }
+};
+
+/*
 *   UPDATE CUSTOMER RECORD
 */
 async function UpdateCustomerRecord(customeRecord) {
@@ -125,9 +150,9 @@ async function UpdateCustomerRecord(customeRecord) {
     try {
         ref.set(customeRecord, function(error) {
             if (error) {
-                console.log("Data could not be saved." + error);
+                console.log("customeRecord Data could not be saved." + error);
               } else {
-                console.log("Data saved successfully.");
+                console.log("customeRecord Data saved successfully.");
               }
         });
     } catch (error) {

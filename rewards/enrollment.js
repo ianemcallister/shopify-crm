@@ -110,7 +110,7 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
             Shopify.get.urlRedirect(merchCustPhone),
             Shopify.get.referralCode(merchCustPhone)
         ]);
-        console.log('_GetMerchCustomerRecord: ', allRecordsRaw);
+        //console.log('_GetMerchCustomerRecord: ', allRecordsRaw);
 
         //  2. VALIDATE RETURNING DATA
         var validatedRecords = await Promise.all([
@@ -127,11 +127,18 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
         var comprehensiveCustomerRecord = await CRM.consolidateCustomerRecords(validatedRecords);
         //console.log('comprehensiveCustomerRecord: ', comprehensiveCustomerRecord);
 
-        //  3. UPDATE FIREBASE
+        //  3. BUILD REFERRAL RECORD
+        var newReferralRecord = await CRM.buildReferralRecord(validatedRecords, comprehensiveCustomerRecord);
+
+        //  4. UPDATE FIREBASE CUSTOMER RECORDS
         await Firebase.updateCustomerRecord(comprehensiveCustomerRecord);
 
+        //  5. UPDATE FIREBASE REFERRAL RECORDS
+        await Firebase.updateReferralRecord(newReferralRecord);
+
+
         //  4. RETURN CUSTOMER RECORD
-        return comprehensiveCustomerRecord;
+        return { customer: comprehensiveCustomerRecord, referral: newReferralRecord} ;
         
     } catch (error) {
         console.log('_GetMerchCustomerRecord Error: ', error);
@@ -153,9 +160,12 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
     //console.log('EnrollmentInviteViaSMS: sqLyltyId(', merchCustloyaltyId, '), phone(', merchCustPhone,'), merchant_id(', sq_merchant_id, ")");
     
     try {
-        //  1. Retrieve Customer Record
-        var customerRecord = await _GetMerchCustomerRecord(merchCustPhone, merchCustloyaltyId, sq_merchant_id, rewardsEnrolledAt);
-        //console.log(merchCustomerRecord);   //  TODO: REMOVE THIS LATER
+        //  1. RETREIVE CUSTOMER RECORD & REFRERAL CODE
+        var customerData = await _GetMerchCustomerRecord(merchCustPhone, merchCustloyaltyId, sq_merchant_id, rewardsEnrolledAt);
+        
+        //  2. SEPERATE CUSTOMER RECORD AND REFERRAL CODE
+        var customerRecord = customerData.customer;
+        var referralRecord = customerData.referral;
 
         //  2. Verify Enrollment Status
         if(!customerRecord.status.referralEnrolled) {

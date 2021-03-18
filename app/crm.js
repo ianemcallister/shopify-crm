@@ -8,11 +8,64 @@ const Firebase    = require('../firebase/stdops.js');
 
 //  DEFINE MODULE
 var omniCRM = {
+    buildReferralRecord: BuildReferralRecord,
     consolidateCustomerRecords: ConsolidateCustomerRecords,
     get: {
         crmMerchIdviaSqMrchId: GetCrmMerchIdViaSqMrchId,
         merchCustomerRecordViaPhone: GetMerchCustomerRecordViaPhone
     }
+};
+
+/*
+*   BUILD REFERRAL RECORDS
+*/
+async function BuildReferralRecord(allCustomerRecords, ownerRecord) {
+    //  NOTIFY PROGRESS
+    console.log('BuildReferralRecord: ', ownerRecord);
+
+    //  LOCAL VARIABLES
+    var redirect = allCustomerRecords[5];
+    var discount = allCustomerRecords[6];
+    var templateFile = fs.readFileSync('./models/referralTemplate.json', 'utf8');
+    var template = JSON.parse(templateFile);
+    var timestamp = new Date(Date.now()).toISOString();
+
+    //  EXECUTE
+    try {
+        //  1. ID
+        template._id = await Firebase.get.pushId('ReferralAccts');
+
+        //  2. OWNER ID
+        template.ownerId = ownerRecord._id;
+
+        //  3. OWNER PHONE
+        template.ownerPhone = ownerRecord.phoneNumber;
+
+        //  4. OWNER EMAIL
+        template.ownerEmail = ownerRecord.email;
+
+        //  5. DEFAULT REFERRAL CODE
+        template.defaultReferralCode = discount.code;
+
+        //  6. DEFAULT REFERRAL CODE URL
+        template.defaultReferralCodeUrl = redirect.path;
+
+        //  7. DEFAULT REFERRAL CODE ID
+        template.defaultReferralCodeId = discount.id;
+
+        //  8. DEFAULT REDIRECT ID
+        template.defaultReferralRedirectId = redirect.id;
+
+        //  9. DEFAULT REDIRECT TARGET
+        template.defaultRedirectTarget = redirect.target;
+
+        //  return object
+        return template;
+
+    } catch (error) {
+        console.log('BuildReferralRecord error: ', error);
+    }
+
 };
 
 /*
@@ -23,7 +76,7 @@ var omniCRM = {
 */
 async function ConsolidateCustomerRecords(allCustomerRecords) {
     //  NOTIFY PROGRESS
-    //console.log("ConsolidateCustomerRecords: ", allCustomerRecords);
+    console.log("ConsolidateCustomerRecords: ", allCustomerRecords);
 
     //  DEFINE LOCAL VARIABLES
     var shopfyCR = allCustomerRecords[0];
@@ -31,8 +84,8 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
     var firebsCR = allCustomerRecords[2];
     var merchtId = allCustomerRecords[3];
     var params   = allCustomerRecords[4];
-    var redirect = allCustomerRecords[5];
-    var discount = allCustomerRecords[6];
+    //var redirect = allCustomerRecords[5];
+    //var discount = allCustomerRecords[6];
     var templateFile = fs.readFileSync('./models/customerProfile.json', 'utf8');
     var template = JSON.parse(templateFile);
     var timestamp = new Date(Date.now()).toISOString();
@@ -48,36 +101,32 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
         //  3. PRIVATE: _id
         if(firebsCR._id == undefined) { template._id = Firebase.get.pushId('Customers'); } else { template._id =  firebsCR._id; }
         
-        //  3.5 PRIVATE: _merchantId
+        //  4 PRIVATE: _merchantId
         if(firebsCR._merchantId == undefined || firebsCR._merchantId == "") { template._merchantId = merchtId; } else { template._merchantId =firebsCR._merchantId; }
 
-        //  4. EXTERNAL IDS
+        //  5. EXTERNAL IDS
         if(firebsCR.externalIds == undefined) {
             firebsCR.externalIds = {};
             template.externalIds.shopifyId          = shopfyCR.id;
             template.externalIds.squareId           = squareCR.id;
-            template.externalIds.squareLoyaltyId    = params.sqLoyalty;
             template.externalIds.squareMerchantId   = params.sqMercantId;
         } else {
-            //  4.1     SHOPIFY ID
+            //  5.1     SHOPIFY ID
             if(firebsCR.externalIds.shopifyId == undefined || firebsCR.externalIds.shopifyId == "") { template.externalIds.shopifyId  = shopfyCR.id; } else { template.externalIds.shopifyId = firebsCR.externalIds.shopifyId; }
 
-            //  4.2     SQUARE ID
+            //  5.2     SQUARE ID
             if(firebsCR.externalIds.squareId == undefined || firebsCR.externalIds.squareId == '') { template.externalIds.squareId = squareCR.id; } else { template.externalIds.squareId = firebsCR.externalIds.squareId; }
-            
-            //  4.3     SQUARE LOYALTY
-            if(firebsCR.externalIds.squareLoyaltyId == undefined || firebsCR.externalIds.squareLoyaltyId == "") { template.externalIds.squareLoyaltyId = params.sqLoyalty } else { template.externalIds.squareLoyaltyId = firebsCR.externalIds.sqLoyalty; }
 
-            //  4.4     SQUARE MERCHANT ID
+            //  5.4     SQUARE MERCHANT ID
             if(firebsCR.externalIds.squareMerchantId == undefined || firebsCR.externalIds.squareMerchantId == "") { template.externalIds.squareMerchantId = params.sqMercantId } else { template.externalIds.squareMerchantId = firebsCR.externalIds.squareMerchantId; }
 
-            //  4.5     FACEBOOK ID
-            //  4.6     INSTAGRAM ID
+            //  5.5     FACEBOOK ID
+            //  5.6     INSTAGRAM ID
         }
 
-        //  5. CREATION SOURCE
+        //  6. CREATION SOURCE
 
-        //  6. EMAIL
+        //  7. EMAIL
         if(firebsCR.email == undefined || firebsCR.email == "") {
             if(shopfyCR.email != undefined) {
                 template.email = shopfyCR.email;
@@ -92,10 +141,10 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
             template.email = firebsCR.email;
         }
         
-        //  7. PHONE
+        //  8. PHONE
         template.phoneNumber = params.phone;
 
-        //  8. GIVEN NAME
+        //  9. GIVEN NAME
         if(firebsCR.givenName == undefined || firebsCR.givenName == "") {
             if(shopfyCR.first_name != undefined) {
                 template.givenName = shopfyCR.first_name;
@@ -108,7 +157,7 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
             template.givenName = firebsCR.givenName
         }
 
-        //  9. FAMILY NAME
+        // 10. FAMILY NAME
         if(firebsCR.familyName == undefined || firebsCR.familyName == "") {
             if(shopfyCR.last_name != undefined) {
                 template.familyName = shopfyCR.last_name;
@@ -121,44 +170,53 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
             template.familyName = firebsCR.familyName;
         }
 
-        // 10. PHYSICAL ADDRESSES
+        // 11. PHYSICAL ADDRESSES
 
-        // 11. PREFERENCES
+        // 12. PREFERENCES
         if(firebsCR.preferences != undefined) {
-            //  11.1    Email Unsubscribed (true or false)
-            //  11.2    Opt In to Email (true or false)
-            //  11.3    Opt In to SMS (true or false)
-            //  11.4    Accepts Marketing (true or false)
-            //  11.5    Perfered Communication
-            //  11.6    Marketing Opt In Level
+            //  12.1    Email Unsubscribed (true or false)
+            //  12.2    Opt In to Email (true or false)
+            //  12.3    Opt In to SMS (true or false)
+            //  12.4    Accepts Marketing (true or false)
+            //  12.5    Perfered Communication
+            //  12.6    Marketing Opt In Level
         }
 
-        // 12. STATUS
+        // 13. STATUS
         if(firebsCR.status != undefined) {
-            //  12.1    Email Verified? (true or false)
-            //  12.2    SMS Verified? (true or false)
-            //  12.3    Accepts Marketing Updated At
+            //  13.1    Email Verified? (true or false)
+            //  13.2    SMS Verified? (true or false)
+            //  13.3    Accepts Marketing Updated At
             
         } else {
             
         }
 
-        //  13. Referral
+        //  14. LOYALTY ENROLLED?
+        template.loyaltyEnrolled = true;
+
+        //  15. REFERRALS
         if(firebsCR.referrals == undefined) {
-            template.referrals.defaultReferralCode = discount.code;
-            template.referrals.defaultReferralCodeUrl = redirect.path;
-            template.referrals.defaultReferralCodeId = discount.id;
-            template.referrals.defaultReferralRedirectId = redirect.id;
+            //  15.1    WAS REFERRED?
+            //  15.2    REFERRED BY
+            //  15.3    REFERRED AT
+            //  15.4    LOGIN INVITE SENT AT
+            //  15.5    LOGIN INVITE COMPLETED AT
+            //  15.6    LOGIN INVITE COMPLETED?
+
         } else {
             template.referrals = firebsCR.referrals
         }
 
-        //  14. Rewards
+        //  16. REWARDS
         if(firebsCR.rewards == undefined) {
-            template.rewards.rewardsEnrolled = true;
+            //  16.1    REWARDS ENROLLED AT
             template.rewards.rewardsEnrolledAt = params.rewardsEnrolledAt;
+
+            //  16.2    SQUARE LOYALTY ID
+            template.rewards.squareLoyaltyId  = params.sqLoyalty;
+            
         } else {
-            template.rewards.rewardsEnrolled = true;
             if(firebsCR.rewards.rewardsEnrolledAt == '' && params.rewardsEnrolledAt != undefined && params.rewardsEnrolledAt != "") { template.rewards.referralEnroledAt = params.rewardsEnrolledAt; }
         }
 
