@@ -69,7 +69,7 @@ module.exports = (function() {
                     console.log('phone # found', merchCustPhone);
 
                     //  3.2 INVITE CUSTOMER TO REFERRAL PROGRAM 
-                //    await rewards.enrollmentInvite.viaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id, timestamp);
+                    await rewards.enrollmentInvite.viaSMS(merchCustPhone, merchCustloyaltyId, sq_merchant_id, timestamp);
                     console.log('proccessed enrollment: ', merchCustPhone);
                 }
 

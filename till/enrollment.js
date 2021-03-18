@@ -9,7 +9,8 @@ var url         = require("url");
 //  DEFINE MODULE
 var tillEnrollment = {
     send: {
-        enrollmentInvite: SendEnrollmentInvite
+        enrollmentInvite: SendEnrollmentInvite,
+        referralCodeNotification: SendReferralAlert
     }
 };
 
@@ -63,6 +64,24 @@ async function _sendAlert(phones, message) {
 };
 
 /*
+*   SEND REFERRAL ALERT
+*/
+async function SendReferralAlert(phone, referralObject) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var phones = [process.env.BIZ_PHONE];
+    phones.push(phone);
+    var message = "Welcome to SMS messages from 29 Kettle. Earn $5 towards your next online purchase when friends and family use your $5 off referal link: https://www.29kettle.com/" + referralObject.defaultReferralCodeUrl + "\n or your referral code: " + referralObject.defaultReferralCode + " at checkout on their first order. Thanks for being a fan!";
+
+    //  EXECUTE
+    try {
+        return await _sendAlert(phones, message)
+    } catch (error) {
+        console.log('till/enrollment/SendReferralAlert error: ', error);
+    }
+};
+
+/*
 *   SEND ENROLLMENT INVITE
 */
 async function SendEnrollmentInvite(phone, enrollmenturl) {
@@ -71,7 +90,6 @@ async function SendEnrollmentInvite(phone, enrollmenturl) {
 
     //  DEFINE LOCAL VARABIELS
     var phones = [process.env.BIZ_PHONE];
-    phones.push('+13237884533');
     //phones.push(phone);
     /*var questions = [{
         text: 'Welcome to SMS messages from 29 Kettle. We\'re excited you\'ve joined the Delight Circle Rewards Program. To finish your enrollment and start earning $5 everytime you refere someone to 29 Kettle, follow this link below: ' + enrollmenturl,

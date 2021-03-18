@@ -177,12 +177,13 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
             console.log('got this enrollment url: ', customerEnrollmentUrl);
 
             //  4. Send Enrollment SMS
-        //    await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
+            await till.send.referralCodeNotification(merchCustPhone, referralRecord);
+            //await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
 
             //  5. Record Touchpoint
 
             //  6. Notify Status
-        //    console.log(merchCustPhone, ' sent a referral enrollment link');
+            console.log(merchCustPhone, ' sent their referral link');
         } else {
             //  3. Notify Status
             console.log(merchCustPhone, ' aready enrolled.');
