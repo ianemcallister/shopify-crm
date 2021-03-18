@@ -71,7 +71,8 @@ async function SendReferralAlert(phone, referralObject) {
     //  LOCAL VARIABLES
     var phones = [process.env.BIZ_PHONE];
     phones.push(phone);
-    var message = "Welcome to SMS messages from 29 Kettle. Earn $5 towards your next online purchase when friends and family use your $5 off referal link: https://www.29kettle.com/" + referralObject.defaultReferralCodeUrl + "\n or your referral code: " + referralObject.defaultReferralCode + " at checkout on their first order. Thanks for being a fan!";
+    var referalUrl = "http://www.29kettle.com" + referralObject.defaultReferralCodeUrl;
+    var message = "Welcome to SMS messages from 29 Kettle. Earn $5 towards your next online purchase when friends and family use your $5 off referal link: " + referalUrl + " or your referral code: " + referralObject.defaultReferralCode + " at checkout on their first order. Thanks for being a fan!";
 
     //  EXECUTE
     try {
