@@ -28,6 +28,9 @@ var shopifyStandardOps = {
     create: {
         referralCode: CreateReferralCode,
         redirect: CreateRedirect
+    },
+    customer: {
+        update: UpdateCustomerRecord
     }
 };
 
@@ -293,6 +296,20 @@ async function GetPriceCodesList() {
         return priceCodesList
     } catch (error) {
         console.log('GetPriceCodesList: ', error);
+    }
+};
+
+/*
+*   UPDATE CUSTOMER RECORD
+*/
+async function UpdateCustomerRecord(id, params) {
+    //  NOTIFY
+    //  LOCAL VARIABLS
+    //  EXECUTE
+    try {
+        await ShopifyAPI.customer.update(id, params);
+    } catch (error) {
+        console.log('UpdateCustomerRecord error: ', error);
     }
 };
 

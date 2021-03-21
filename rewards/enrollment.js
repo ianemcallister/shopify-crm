@@ -103,7 +103,6 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
         //  1. COLLECT PROFILES FROM ALL RESOURCES [Square, Shopify, Firebase]
         var allRecordsRaw = await Promise.all([
             Shopify.get.merchCustomerRecord(merchCustPhone),
-            Square.customers.search.byLoyaltyId(merchCustsqLyltyId),
             Square.get.customerByLoyaltyId(merchCustsqLyltyId),
             Firebase.get.merchCustRecord(merchCustPhone),
             Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id),
@@ -181,10 +180,27 @@ async function EnrollmentInviteViaSMS(merchCustPhone, merchCustloyaltyId, sq_mer
             await till.send.referralCodeNotification(merchCustPhone, referralRecord);
             //await till.send.enrollmentInvite(merchCustPhone, merchCustEnrollmentUrl);
 
-            //  5. Record Touchpoint
+            //  5. Notify Status
+            console.log(merchCustPhone, ' sent referral link');
+            
+            //  6. Record Touchpoint
 
-            //  6. Notify Status
-            console.log(merchCustPhone, ' sent their referral link');
+            //  7. Update Shopify record
+            await Shopify.customer.update(
+                customerRecord.externalIds.shopifyId,
+                {
+                    email: customerRecord.email,
+                    first_name: customerRecord.givenName,
+                    last_name: customerRecord.familyName,
+                    default_address: {
+                        first_name: customerRecord.givenName,
+                        last_name: customerRecord.familyName,
+                        name: customerRecord.givenName + " " + customerRecord.familyName,
+                        phone: merchCustPhone
+                    }
+                }
+            )
+            
         } else {
             //  3. Notify Status
             console.log(merchCustPhone, ' aready enrolled.');

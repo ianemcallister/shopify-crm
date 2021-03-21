@@ -146,7 +146,7 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
 
         //  9. GIVEN NAME
         if(firebsCR.givenName == undefined || firebsCR.givenName == "") {
-            if(shopfyCR.first_name != undefined) {
+            if(shopfyCR.first_name != undefined && shopfyCR.first_name != "TEMPORARY") {
                 template.givenName = shopfyCR.first_name;
             } else if(squareCR.givenName != undefined) {
                 template.givenName = squareCR.givenName;
