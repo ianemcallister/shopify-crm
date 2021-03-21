@@ -131,8 +131,8 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
         if(firebsCR.email == undefined || firebsCR.email == "") {
             if(shopfyCR.email != undefined) {
                 template.email = shopfyCR.email;
-            } else if(squareCR.email != undefined) {
-                template.email = squareCR.email;
+            } else if(squareCR != undefined) {
+                if(squareCR.email != undefined) { template.email = squareCR.email; }
             } else {
                 template.email = template.email;
             }
