@@ -149,8 +149,8 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
         if(firebsCR.givenName == undefined || firebsCR.givenName == "") {
             if(shopfyCR.first_name != undefined && shopfyCR.first_name != "TEMPORARY") {
                 template.givenName = shopfyCR.first_name;
-            } else if(squareCR.givenName != undefined) {
-                template.givenName = squareCR.givenName;
+            } else if(squareCR != undefined) {
+                if(squareCR.givenName != undefined) { template.givenName = squareCR.givenName; }
             } 
         } else if(firebsCR.givenName != shopfyCR.first_name) {
             template.givenName = shopfyCR.first_name;
@@ -162,8 +162,8 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
         if(firebsCR.familyName == undefined || firebsCR.familyName == "") {
             if(shopfyCR.last_name != undefined) {
                 template.familyName = shopfyCR.last_name;
-            } else if(squareCR.familyName != undefined) {
-                template.familyName = squareCR.familyName;
+            } else if(squareCR != undefined) {
+                if(squareCR.familyName != undefined) { template.familyName = squareCR.familyName; }
             } 
         } else if(firebsCR.familyName != shopfyCR.last_name) {
             template.familyName = shopfyCR.last_name;
