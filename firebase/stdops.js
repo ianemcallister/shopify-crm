@@ -38,6 +38,14 @@ var firebaseStOps = {
         merchCustShopifyId: GetMerchCustShopifyId,
         merchCustRecord: GetMerchCustRecord
     },
+    merchants: {
+        channels: {
+            create: CreateMerchantChannel,
+            mrInstances: {
+                create: CreateMerchantMRInstance
+            }
+        }
+    },
     test: test
 };
 
@@ -113,6 +121,57 @@ async function _push(path, data) {
     //  return value
     return await writePath.push(data)
 };
+
+/*
+*   CREATE MERCHANT CHANNEL
+*/
+async function CreateMerchantChannel(merchId, record) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var ref = db.ref('Merchants/' + merchId + "/Channels");
+    var timestamp = new Date(Date.now()).toISOString();
+    record._createdAt = timestamp;
+    record._updatedAt = timestamp;
+
+    //  EXECUTE
+    try {
+        ref.push(record, function(error) {
+            if (error) {
+                console.log("Merchant Account Data could not be saved." + error);
+              } else {
+                console.log("Merchant Account Data saved successfully.");
+              }
+        });
+    } catch (error) {
+        console.log('CreateMerchantChannel error: ', error);
+    }
+};
+
+/*
+*   CREATE MERCHANT MOBILE RETAIL INSTANCE
+*/
+async function CreateMerchantMRInstance(merchantId, channelId, record) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var ref = db.ref('Merchants/' + merchantId + "/Channels/" + channelId + "/mrInstances");
+    var timestamp = new Date(Date.now()).toISOString();
+    record._createdAt = timestamp;
+    record._updatedAt = timestamp;
+
+    //  EXECUTE
+    try {
+        ref.push(record, function(error) {
+            if (error) {
+                console.log("Merchant MR Instance Data could not be saved." + error);
+              } else {
+                console.log("Merchant MR Instance Data saved successfully.");
+              }
+        });
+    } catch (error) {
+        console.log('CreateMerchantChannel error: ', error);
+    }
+};
+
 
 /*
 *

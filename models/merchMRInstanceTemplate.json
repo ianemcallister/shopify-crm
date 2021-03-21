@@ -1,0 +1,41 @@
+{
+    "_createdAt": "",
+    "_updatedAt": "",
+    "_id": "",
+    "channel": {
+        "id": "",
+        "name": ""
+    },
+    "location": {
+        "street01": "",
+        "street02": "",
+        "street03": "",
+        "city": "",
+        "state": "",
+        "zip": ""
+    },
+    "season": {
+        "id": "",
+        "name": ""
+    },
+    "shifts": {
+        "scheduled": [],
+        "actual": []
+    },
+    "schedule": {
+        "dayOfWeek": "",
+        "weekdayNum": 0,
+        "weekNum": 0,
+        "frequency": "",
+        "startsAt": "",
+        "endsAt": "",
+        "setup": {
+            "startsAt": "",
+            "endsAt": ""
+        },
+        "takeDown": {
+            "startsAt": "",
+            "endsAt": ""
+        }
+    }
+}

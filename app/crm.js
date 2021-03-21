@@ -108,7 +108,8 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
         if(firebsCR.externalIds == undefined) {
             firebsCR.externalIds = {};
             template.externalIds.shopifyId          = shopfyCR.id;
-            template.externalIds.squareId           = squareCR.id;
+            if(squareCR != undefined) { template.externalIds.squareId = squareCR.id; } else { template.externalIds.squareId = ""; }
+            
             template.externalIds.squareMerchantId   = params.sqMercantId;
         } else {
             //  5.1     SHOPIFY ID
