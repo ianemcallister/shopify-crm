@@ -15,10 +15,12 @@ const client = new Client({
 var squareStOps = {
     customers: {
         search: {
-            byId: SearchCustomersById
+            byId: SearchCustomersById,
+            byLoyaltyId: SearchCustomersByLoyaltyId
         }
     },
     get: {
+        customerByLoyaltyId: GetcustomerByLoyaltyId,
         loyaltyAcctByPhone: GetLoyaltyAcctByPhone,
         customerByPhone: GetCustomerByPhone
     }
@@ -56,16 +58,51 @@ async function _SearchLoyalty(params) {
 }
 
 /*
+*   SEARCH CUSTOMERS BY LOYALTY ID
+*/
+async function SearchCustomersByLoyaltyId(loyaltyId) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const loyaltyApi = client.loyaltyApi;
+    
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await loyaltyApi.retrieveLoyaltyAccount(loyaltyId);
+        return result.loyaltyAccount;
+    } catch (error) {
+        console.log('SearchCustomersByLoyaltyId Error: ', error);
+    }
+};
+
+/*
 *   SEARCH CUSTOMERS BY ID
 */
-async function SearchCustomersById(id) {
+async function SearchCustomersById(customerId) {
     //  NOTIFY PROGERSS
+    //  LOCAL VARIABLES
+    const customersApi = client.customersApi;
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await customersApi.retrieveCustomer(customerId);
+        return result.customer;
+    } catch (error) {
+        console.log('SearchCustomersById Error: ', error);
+    }
+};
+
+/*
+*   GET
+*/
+async function GetcustomerByLoyaltyId(loyaltyId) {
+    //  NOTIFY PROGRESS
     //  LOCAL VARIABLES
     //  EXECUTE
     try {
-        //var customersList = await _searchCustomersId({})
+        var loyaltyRecord = await SearchCustomersByLoyaltyId(loyaltyId);
+        var customerRecord = await SearchCustomersById(loyaltyRecord.customerId);
+        return customerRecord;
     } catch (error) {
-        console.log('SearchCustomersById Error: ', error);
+        console.log('GetcustomerByLoyaltyId error: ', error);
     }
 };
 
