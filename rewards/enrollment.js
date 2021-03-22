@@ -103,7 +103,7 @@ async function _GetMerchCustomerRecord(merchCustPhone, merchCustsqLyltyId, sq_me
         //  1. COLLECT PROFILES FROM ALL RESOURCES [Square, Shopify, Firebase]
         var allRecordsRaw = await Promise.all([
             Shopify.get.merchCustomerRecord(merchCustPhone),
-            Square.get.customerByLoyaltyId(merchCustsqLyltyId),
+            setTimeout(function() { Square.get.customerByLoyaltyId(merchCustsqLyltyId)}, 1000),
             Firebase.get.merchCustRecord(merchCustPhone),
             Firebase.get.crmMerchIdviaSqMrchId(sq_merchant_id),
             {phone: merchCustPhone, sqLoyalty: merchCustsqLyltyId, sqMercantId: sq_merchant_id, rewardsEnrolledAt: rewardsEnrollAt },
