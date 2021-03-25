@@ -40,10 +40,18 @@ var firebaseStOps = {
     },
     merchants: {
         channels: {
+            get: GetMerchantChannel,
             create: CreateMerchantChannel,
             mrInstances: {
                 create: CreateMerchantMRInstance
+            },
+            seasons: {
+                get: GetMerchantChannelSeason,
+                create: CreateMerchantChannelSeason
             }
+        },
+        events: {
+            createBatch: CreateMerchentEventsBatch
         }
     },
     test: test
@@ -100,6 +108,18 @@ function _extractKeyedObject(aRecord) {
 };
 
 /*
+*   PRIVATE: ONCE
+*/
+async function _once(path) {
+    //  NOTIFY
+    //  LOCAL VARIABLES
+    var ref = db.ref(path);
+
+    //  EXECUTE
+    return ref.once('value');
+};
+
+/*
 *   PRIVATE: SET
 */
 async function _set(path, data) {
@@ -123,19 +143,44 @@ async function _push(path, data) {
 };
 
 /*
+*   PRIVATE: _arrayToUpdate
+*/
+function _arrayToUpdate(anArray, path) {
+    //  NOTIFY
+    //  LOCAL VARIABLES
+    var returnObject = {};
+    var timestamp = new Date(Date.now()).toISOString();
+
+    //  EXECUTE
+    //  ITERATE OVER THE ARRAY
+    anArray.forEach(function(object) {
+        var recordId = GetPushId(path);
+        returnObject[recordId] = object;
+        returnObject[recordId]._id = recordId;
+        returnObject[recordId]._createdAt = timestamp;
+        returnObject[recordId]._updatedAt = timestamp;
+    });
+
+    return returnObject;
+};
+
+
+/*
 *   CREATE MERCHANT CHANNEL
 */
 async function CreateMerchantChannel(merchId, record) {
     //  NOTIFY PROGRESS
     //  LOCAL VARIABLES
-    var ref = db.ref('Merchants/' + merchId + "/Channels");
+    var writePath = 'Merchants/' + merchId + "/Channels";
     var timestamp = new Date(Date.now()).toISOString();
     record._createdAt = timestamp;
     record._updatedAt = timestamp;
+    record._id = GetPushId(writePath);
+    var ref = db.ref(writePath + "/" + record._id);
 
     //  EXECUTE
     try {
-        ref.push(record, function(error) {
+        ref.set(record, function(error) {
             if (error) {
                 console.log("Merchant Account Data could not be saved." + error);
               } else {
@@ -249,6 +294,42 @@ async function GetCrmMerchIdviaSqMrchId(sq_merchant_id) {
 };
 
 /*
+*   GET MERCHANT CHANNEL RECORD
+*/
+async function GetMerchantChannel(merhcantId, channelId) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var readPath = 'Merchants/' + merhcantId + "/Channels/" + channelId;
+
+    //  EXECUTE
+    try {
+        var record = await _once(readPath)
+        return record.val();
+    } catch (error) {
+        console.log('GetMerchantChannel ERror:');
+        console.log(error);
+    }
+};
+
+/*
+*   GET MERCHANT CHANNEL SEASON RECORD
+*/
+async function GetMerchantChannelSeason(merhcantId, channelId, seasonId) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var readPath = 'Merchants/' + merhcantId + "/Channels/" + channelId + "/Seasons/" + seasonId;
+
+    //  EXECUTE
+    try {
+        var record = await _once(readPath)
+        return record.val();
+    } catch (error) {
+        console.log('GetMerchantChannelSEASON ERror:');
+        console.log(error);
+    }
+};
+
+/*
 *
 */
 async function CreateNewMerchCustomerRecord(data, id) {
@@ -320,6 +401,59 @@ async function GetMerchCustRecord(merchCustPhone) {
         return error
     }
 }
+
+/*
+*
+*/
+async function CreateMerchantChannelSeason(merchantId, channelId, record) {
+    //  NOTIFY
+    //  LOCAL
+    var writePath = 'Merchants/' + merchantId + "/Channels/" + channelId + "/Seasons";
+    var timestamp = new Date(Date.now()).toISOString();
+    record._createdAt = timestamp;
+    record._updatedAt = timestamp;
+    record._id = GetPushId(writePath);
+    var ref = db.ref(writePath + "/" + record._id);
+
+    //  EXECUTE
+    try {
+        ref.set(record, function(error) {
+            if (error) {
+                console.log("Merchant Account Data could not be saved." + error);
+              } else {
+                console.log("Merchant Account Data saved successfully.");
+              }
+        });
+    } catch (error) {
+        console.log('CreateMerchantChannelSeason error: ');
+        return error;
+    }
+};
+
+/*
+*
+*/  
+async function CreateMerchentEventsBatch(merchantId, eventsArray) {
+    //  NOTIFY
+    //  LOCAL
+    var writePath = 'Merchants/' + merchantId + '/Events';
+    var ref = db.ref(writePath);
+    var updates = _arrayToUpdate(eventsArray, writePath);
+
+    //  EXECUTE
+    try {
+        ref.update(updates, function(error) {
+            if (error) {
+                console.log("Data could not be saved." + error);
+              } else {
+                console.log("Data saved successfully.");
+              }
+        })
+    } catch (error) {
+        console.log('CreateMerchentEventsBatch error: ');
+        return error;
+    }
+};
 
 //  FUNCTION: TEST
 async function test() {

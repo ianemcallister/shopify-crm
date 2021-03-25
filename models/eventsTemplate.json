@@ -1,0 +1,26 @@
+{
+    "_createdAt": "",
+    "_updatedAt": "",
+    "_id": "",
+    "externalIds": {
+        "channelId": "",
+        "seasonId": "",
+        "budgetId": "",
+        "equipmentId": "",
+        "rawMatsId": ""
+    },
+    "schedule": {
+        "startsAt": "",
+        "endsAt": "",
+        "duration": 0
+    },
+    "channel": "",
+    "season": "",
+    "weekNum": 0,
+    "instance": 0,
+    "shifts": [],
+    "reports": {
+        "manufacturing": "",
+        "sales": ""
+    }
+}

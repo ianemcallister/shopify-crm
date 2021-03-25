@@ -13,12 +13,42 @@ const client = new Client({
 
 //  DEFINE MODULE
 var squareStOps = {
+    payments: {},
+    orders: {},
+    subscriptiosn: {},
+    invoices: {},
     customers: {
         search: {
             byId: SearchCustomersById,
             byLoyaltyId: SearchCustomersByLoyaltyId
         }
     },
+    loyalty: {},
+    bookings: {},
+    business: {
+        locations: {
+            list: ListLocations
+        }
+    },
+    team: {
+        team: {
+            searchTeamMembers: SearchTeamMembers
+        },
+        employees: {
+            list: listEmployees,
+            retrieve: retrieveEmployee
+        },
+        labor: {
+            createShift: CreateShift,
+            searchShifts: SearchLaborShifts,
+            deleteShift: "",
+            getShift: "",
+            updateShift: ""
+        },
+        cashDrawers: {}
+    },
+    financials: {},
+
     get: {
         customerByLoyaltyId: GetcustomerByLoyaltyId,
         loyaltyAcctByPhone: GetLoyaltyAcctByPhone,
@@ -178,6 +208,138 @@ async function GetCustomerByPhone(phone) {
     }
     //  RETURN VALUE
 };
+
+/*
+*   SEARCH LABOR SHIFTS
+*/
+async function SearchLaborShifts(params) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const laborApi = client.laborApi;
+    console.log(params);
+    
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await laborApi.searchShifts(params);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result
+    } catch (error) {
+        console.log('SearchLaborShifts error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   SEARCH LABOR SHIFTS
+*/
+async function SearchTeamMembers(params) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const employeesApi = client.employeesApi;
+    console.log(params);
+    
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await employeesApi.searchTeamMembers(params);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result
+    } catch (error) {
+        console.log('SearchTeamMembers error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   LIST LOCATIONS
+*/
+async function ListLocations() {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const locationsApi = client.locationsApi;
+    
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await locationsApi.listLocations();
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result
+    } catch (error) {
+        console.log('ListLocations error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   LIST EMPLOYEES
+*/
+async function listEmployees() {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const employeesApi = client.employeesApi;
+    const locationId = 'RKNMKQF48TA6W';
+    const status = 'ACTIVE';
+    const limit = 10;
+    const cursor = undefined;
+    
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await employeesApi.listEmployees(locationId, status, limit, cursor)
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result
+    } catch (error) {
+        console.log('ListLocations error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   RETREIVE EMPLOYEE
+*/
+async function retrieveEmployee() {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const employeesApi = client.employeesApi;
+    const locationId = 'RKNMKQF48TA6W';
+    const status = 'ACTIVE';
+    const limit = 10;
+    const cursor = undefined;
+    
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await employeesApi.listEmployees(locationId, status, limit, cursor)
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result
+    } catch (error) {
+        console.log('ListLocations error: ');
+        console.log(error);
+    }
+};
+
+
+/*
+*   CREATE SHIFT
+*/
+async function CreateShift(params) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const laborApi = client.laborApi;
+    
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await laborApi.createShift(params);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result
+    } catch (error) {
+        console.log('CreateShift error: ');
+        console.log(error);
+    }
+};
+
 
 //  EXPORT MODULE
 module.exports = squareStOps;
