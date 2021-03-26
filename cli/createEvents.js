@@ -17,15 +17,15 @@ async function CreateNewEvents() {
 
     //  LOCAL VARIABLES
     var merchantId  = '-MVrZajcORbaTjkuZL2a';
-    var channelId   = '-MWHyj8sJgIlGTkit-Vq';
-    var seasonId    = '-MWeFJZmTri6IkEijs2S';
+    var channelId   = "MWe3jKGO4chQFeDIJ0Q";
+    var seasonId    = '-MWefUvFmEt480_MhmiC';
     var startsAt    = '';
     var isTemplate  = true;
 
     //  EXECUTE
     try {
         await ops.Events.createSeries(merchantId, channelId, seasonId, startsAt, isTemplate);
-        console.log('finished saving');
+        //console.log('finished saving');
         //process.exit();
     } catch (error) {
         console.log('CLI: Create Events Error');

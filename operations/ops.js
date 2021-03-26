@@ -47,10 +47,13 @@ async function CreateSeason(merchantId, channelId, record) {
 
     //  EXECUTE
     try {
-        
+        //  GET THE CHANNEL
+        var channelRecord = await Firebase.merchants.channels.get(merchantId, channelId);
+        record.channelId    = channelRecord._id;
+        record.channel      = channelRecord.name;
+
         //  CREATE THE SEASON
-        await Firebase.merchants.channels.seasons.create(merchantId, channelId, record);
-        return true;
+        return await Firebase.merchants.channels.seasons.create(merchantId, channelId, record);
 
     } catch (error) {
         console.log('CreateChannel Error:');
@@ -71,6 +74,8 @@ async function CreateSeriesOfEvents(merchantId, channelId, seasonId, startsAt, i
         if(isTemplate) {
             //  1. COLLECT SEASON RECORD
             var seasonRecord = await Firebase.merchants.channels.seasons.get(merchantId, channelId, seasonId)
+            console.log(seasonRecord);
+
             var frequency = seasonRecord.frequency
             
             switch(frequency) {
@@ -102,7 +107,7 @@ async function CreateSeriesOfEvents(merchantId, channelId, seasonId, startsAt, i
                         
                         var start = moment(cursor.format()).hour(startTimeArray[0]).minute(startTimeArray[1]);
                         var end = moment(cursor.format()).hour(endTimeArray[0]).minute(endTimeArray[1]);
-                        console.log(start, end);
+                        
                         template.schedule.startsAt  = start.format();
                         template.schedule.endsAt    = end.format();
                         template.schedule.duration  = seasonRecord.template.durationHrs
@@ -121,7 +126,7 @@ async function CreateSeriesOfEvents(merchantId, channelId, seasonId, startsAt, i
                     };
 
                     //  NOTIFY RESULT
-                    console.log(eventsArray);
+                    //console.log(eventsArray);
                     
                     return await Firebase.merchants.events.createBatch(merchantId, eventsArray);
 

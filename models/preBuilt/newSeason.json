@@ -2,15 +2,19 @@
     "_createdAt": "",
     "_updatedAt": "",
     "_id": "",
-    "name": "Winter 2021",
-    "startsAt": "2021-02-06T00:00:00-08:00",
-    "endsAt": "2021-05-01T00:00:00-08:00",
+    "channelId": "",
+    "channel": "",
+    "name": "Regular 2021",
+    "startsAt": "2021-05-02T00:00:00-08:00",
+    "endsAt": "2021-11-23T00:00:00-08:00",
     "frequency": "weekly",
     "instances": 0,
     "templateHours": true,
     "template": {
-        "startsAt": "00:10:00-08:00",
-        "endsAt": "00:13:30-08:00",
-        "durationHrs": 3.5
+        "startsAt": "10:00:00-08:00",
+        "endsAt": "14:00:00-08:00",
+        "durationHrs": 4,
+        "weekday": "Sundays",
+        "weekdayNum": 7
     }
 }

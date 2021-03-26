@@ -300,6 +300,7 @@ async function GetMerchantChannel(merhcantId, channelId) {
     //  NOTIFY PROGRESS
     //  LOCAL VARIABLES
     var readPath = 'Merchants/' + merhcantId + "/Channels/" + channelId;
+    console.log("GetMerchantChannel: ", readPath);
 
     //  EXECUTE
     try {
@@ -424,6 +425,7 @@ async function CreateMerchantChannelSeason(merchantId, channelId, record) {
                 console.log("Merchant Account Data saved successfully.");
               }
         });
+        return record._id;
     } catch (error) {
         console.log('CreateMerchantChannelSeason error: ');
         return error;
