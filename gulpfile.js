@@ -13,7 +13,7 @@ var uglify          = require('gulp-uglify');
 var rename          = require('gulp-rename');
 var cleanCSS        = require('gulp-clean-css');
 var del             = require('del');
-var merge           = require('merge-stream');
+var ngAnnotate      = require('gulp-ng-annotate');
 
 var paths = {
     styles: {
@@ -59,16 +59,19 @@ function styles() {
 
 function lib() {
     return gulp.src(paths.libraries.src, { sourcemaps: true })
-          .pipe(concat('lib.min.js'))
-          .pipe(gulp.dest(paths.libraries.dest));
+        .pipe(ngAnnotate())
+        .pipe(uglify())  
+        .pipe(concat('lib.min.js'))
+        .pipe(gulp.dest(paths.libraries.dest));
 }
    
 function scripts() {
     return gulp.src(paths.scripts.src, { sourcemaps: true })
     //      .pipe(babel())
-    //      .pipe(uglify())
-          .pipe(concat('main.min.js'))
-          .pipe(gulp.dest(paths.scripts.dest));
+        .pipe(ngAnnotate())
+        .pipe(uglify())
+        .pipe(concat('main.min.js'))
+        .pipe(gulp.dest(paths.scripts.dest));
 }
 
 function views() {
