@@ -87,6 +87,7 @@ function index() {
 function watch() {
     gulp.watch(paths.scripts.src, scripts);
     gulp.watch(paths.styles.src, styles);
+    gulp.watch(paths.views.src, views);
   }
 
   /*
