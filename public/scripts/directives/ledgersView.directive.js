@@ -26,7 +26,7 @@ ckc.directive('ledgersView', ledgersView);
 			var self = this;
 			var db = firebase.database();
 			var ref = db.ref('/Merchants/-MVrZajcORbaTjkuZL2a/AssetAccts')
-			self.db = $firebaseObject(ref);
+			self.accounts = $firebaseObject(ref);
             
             console.log('this is the ledger directive');
 

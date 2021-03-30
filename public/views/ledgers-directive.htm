@@ -1,4 +1,17 @@
 <div>
     This is the ledgers view directive
-    {{vm.db}}
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>SKU</th>
+        </tr>
+        <tr ng-repeat='(key, value) in vm.accounts'>
+            <td>{{value.name}}</td>
+            <td>{{value.description}}</td>
+            <td>{{value.sku}}</td>
+        </tr>
+    </table>
+    
 </div>
