@@ -1,0 +1,26 @@
+{
+    "_createdAt": "",
+    "_updatedAt": "",
+    "_createdBy": "",
+    "_updatedBy": "",
+    "_id": "",
+    "_isSubAcct": false,
+    "_parentId": "",
+    "_parentName": "",
+    "sku": "",
+    "serial": "",
+    "name": "",
+    "description": "",
+    "units": "",
+    "balance": 0,
+    "type": "",
+    "detail_type": "",
+    "txs": [
+        {
+            "sku": "",
+            "description": "Opening Balance",
+            "units": "",
+            "qty": 0
+        }
+    ]
+}

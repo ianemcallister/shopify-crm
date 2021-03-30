@@ -52,6 +52,9 @@ var firebaseStOps = {
         },
         events: {
             createBatch: CreateMerchentEventsBatch
+        },
+        assetAccts: {
+            create: CreateMerchantAssetAccount
         }
     },
     test: test
@@ -456,6 +459,24 @@ async function CreateMerchentEventsBatch(merchantId, eventsArray) {
         return error;
     }
 };
+
+/*
+*   CREATE MERCHANT ASSET ACCOUNT
+*/
+async function CreateMerchantAssetAccount(path, data) {
+    //  NOTIFY
+    console.log('CreateMerchantAssetAccount: ', path);
+    //  LOCAL
+    //  execute
+    try {
+        await _set(path, data);
+        console.log('DONE');
+    } catch (error) {
+        console.log('CreateMerchantAssetAccount error: ');
+        console.error(error);
+        return error;
+    }
+}
 
 //  FUNCTION: TEST
 async function test() {

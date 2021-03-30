@@ -60,7 +60,17 @@ function config($routeProvider, $locationProvider) {
         templateUrl: 'assets/views/admin-shiftsAssignment-page.htm',     //  Landing Page View
         controller: 'adminShiftAssignmentController',                  //  Landing Page Controller
         controllerAs: 'vm'
-    })    
+    }) 
+    .when('/admin/shipping_orders/build', {
+        templateUrl: 'assets/views/admin-buildShippingOrders-page.htm',     //  Landing Page View
+        controller: 'adminBuildShippingOrdersController',                  //  Landing Page Controller
+        controllerAs: 'vm'
+    }) 
+    .when('/admin/ledgers', {
+        templateUrl: 'assets/views/admin-allLedgers-page.htm',     //  Landing Page View
+        controller: 'adminAllLedgersController',                  //  Landing Page Controller
+        controllerAs: 'vm'
+    })      
 	.otherwise({
         redirectTo: '/'
     });

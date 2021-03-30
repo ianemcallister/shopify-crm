@@ -10,6 +10,11 @@ const fs            = require('fs');
 
 //  LOCAL VARIABLES
 var opsObject = {
+    Assets: {
+        create: {
+            SKUwithLocations: CreateSKUwithLocations
+        }
+    },
     Channels: {
         create: CreateChannel
     },
@@ -22,6 +27,74 @@ var opsObject = {
 };
 
 //  EXECUTE
+
+/*
+*   PRIVATE: BUILD ASSET ACCTS
+*/
+function _buildAssetAccts(object) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var returnArray             = [];
+    var parent = {
+        id: "",
+        name: ""
+    };
+
+    //  EXECUTE
+    object.locations.forEach(function(location) {
+        //  local variables
+        var timestamp               = new Date(Date.now()).toISOString();
+        const templateFile          = fs.readFileSync('./server/models/assetsTemplate.json', 'utf8');
+        let templateAsset           = JSON.parse(templateFile);
+        templateAsset._createdAt    = timestamp;
+        templateAsset._updatedAt    = timestamp;
+        templateAsset._createdBy    = 'admin';
+        templateAsset._updatedBy    = 'admin';
+        templateAsset._id           = Firebase.get.pushId();
+        templateAsset.sku           = object.sku;
+        templateAsset.serial        = object.serial;
+        templateAsset.name          = object.name;
+        templateAsset.type          = object.type;
+        templateAsset.description   = object.description;
+        templateAsset.detail_type   = object.detail_type;
+        templateAsset.units         = object.units;
+        templateAsset.txs[0].sku    = object.sku;
+        templateAsset.txs[0].units  = object.units;
+        var writePath               = "Merchants/-MVrZajcORbaTjkuZL2a/AssetAccts/" + templateAsset._id;
+        
+        if(location == "") {
+            parent.id   = templateAsset._id;
+            parent.name = templateAsset.name;
+        } else {
+            templateAsset._isSubAcct    = true;
+            templateAsset._parentId     = parent.id;
+            templateAsset._parentName   = parent.name;
+            templateAsset.name = templateAsset.name + " - " + location;
+        };
+
+        returnArray.push(Firebase.merchants.assetAccts.create(writePath, templateAsset))
+    });
+
+    return returnArray;
+};
+
+/*
+*
+*/
+async function CreateSKUwithLocations(SKU) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var allPromises = _buildAssetAccts(SKU);
+
+    //  EXECUTE
+    try {
+        var result = Promise.all(allPromises);
+        return result;
+    } catch (error) {
+        console.log('CreateSKUwithLocations Error:');
+        console.log(error);
+    }
+};
 
 /*
 *   CREATE CHANNELS
