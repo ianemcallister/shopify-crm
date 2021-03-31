@@ -57,6 +57,17 @@ var firebaseStOps = {
             create: CreateMerchantAssetAccount
         }
     },
+    Inventory: {
+        Roles: {
+            Create: CreateInventoryRole
+        },
+        Groups: {
+            Create: CreateInventoryGroups
+        },
+        Items: {
+            Create: CreateInventoryItems
+        }
+    },
     test: test
 };
 
@@ -130,6 +141,16 @@ async function _set(path, data) {
 
     return ref.set(data);
 };
+
+/*
+*   PRIVATE: UPDATE
+*/
+async function _update(path, data) {
+    var ref = db.ref(path);
+
+    return ref.update(data);
+};
+
 
 /*
 *   PRIVATE: PUSH
@@ -486,6 +507,57 @@ async function test() {
     ref.once("value", function(snapshot) {
     console.log(snapshot.val());
     });
+};
+
+/*
+*   CREATE INVENTORY ROLE
+*/
+async function CreateInventoryRole(writePath, role) {
+    //  NOITIFY
+    //  LOCAL
+
+    //  EXECTUE
+    try {
+        await _update(writePath, role);
+        console.log('Created Inventory role at: ', writePath);
+    } catch (error) {
+        console.log('CreateInventoryRole Error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   CREATE INVENTORY GROUPS
+*/
+async function CreateInventoryGroups(writePath, group) {
+    //  NOITIFY
+    //  LOCAL
+
+    //  EXECTUE
+    try {
+        await _update(writePath, group);
+        console.log('Created Inventory group at: ', writePath);
+    } catch (error) {
+        console.log('CreateInventoryGroups Error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   CREATE INVENTORY ITEMS
+*/
+async function CreateInventoryItems(writePath, item) {
+    //  NOITIFY
+    //  LOCAL
+
+    //  EXECTUE
+    try {
+        await _update(writePath, item);
+        console.log('Created Inventory items at: ', writePath);
+    } catch (error) {
+        console.log('CreateInventoryItems Error: ');
+        console.log(error);
+    }
 };
 
 //  EXPORT MODULE

@@ -23,6 +23,17 @@ var opsObject = {
     },
     Seasons: {
         create: CreateSeason
+    },
+    Inventory: {
+        Roles: {
+            create: CreateInventoryRole
+        },
+        Groups: {
+            create: CreateInventoryGroups
+        },
+        Items: {
+            create: createInventoryItems
+        }
     }
 };
 
@@ -218,6 +229,82 @@ async function CreateSeriesOfEvents(merchantId, channelId, seasonId, startsAt, i
         console.log(error);
     }
 };
+
+/*
+*   CREATE INVENTORY ROLE
+*/
+async function CreateInventoryRole(role) {
+    //  NOITIFY
+    //  LOCAL
+    var timestamp   = new Date(Date.now()).toISOString();
+    let roleId      = Firebase.get.pushId();
+    let writePath   = 'Inventory/Roles/' + roleId;
+    role._createdAt = timestamp;
+    role._updatedAt = timestamp;
+    role._createdBy = "admin";
+    role._updatedBy = "admin";
+    role._id        = roleId;
+
+    //  EXECTUE
+    try {
+        Firebase.Inventory.Roles.Create(writePath, role);
+        return true;
+    } catch (error) {
+        console.log('CreateInventoryRole Error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   CREATE INVENTORY ROLE
+*/
+async function CreateInventoryGroups(group) {
+    //  NOITIFY
+    //  LOCAL
+    var timestamp   = new Date(Date.now()).toISOString();
+    let groupId      = Firebase.get.pushId();
+    let writePath   = 'Inventory/Groups/' + groupId;
+    group._createdAt = timestamp;
+    group._updatedAt = timestamp;
+    group._createdBy = "admin";
+    group._updatedBy = "admin";
+    group._id        = groupId;
+
+    //  EXECTUE
+    try {
+        Firebase.Inventory.Groups.Create(writePath, group);
+        return true;
+    } catch (error) {
+        console.log('CreateInventoryGroups Error: ');
+        console.log(error);
+    }
+};
+
+/*
+*   CREATE INVENTORY ITEM
+*/
+async function createInventoryItems(item) {
+    //  NOITIFY
+    //  LOCAL
+    var timestamp   = new Date(Date.now()).toISOString();
+    let itemId      = Firebase.get.pushId();
+    let writePath   = 'Inventory/Items/' + itemId;
+    item._createdAt = timestamp;
+    item._updatedAt = timestamp;
+    item._createdBy = "admin";
+    item._updatedBy = "admin";
+    item._id        = itemId;
+
+    //  EXECTUE
+    try {
+        Firebase.Inventory.Items.Create(writePath, item);
+        return true;
+    } catch (error) {
+        console.log('CreateInventoryItems Error: ');
+        console.log(error);
+    }
+};
+
 
 //  EXPORTS
 module.exports = opsObject;

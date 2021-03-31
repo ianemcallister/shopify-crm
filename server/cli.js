@@ -18,9 +18,7 @@ async function execute() {
         //console.log(await Firebase.merchants.channels.mrInstances.create('-MVrZajcORbaTjkuZL2a', '-MWHyj8sJgIlGTkit-Vq', record));
         //console.log(await Square.team.employees.list());
         
-        console.log(await Square.team.labor.createShift({
-            
-        }));
+        console.log(await Square.team.employees.list());
     } catch (error) {
         console.log('error', error);
     }
