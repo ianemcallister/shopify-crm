@@ -1,0 +1,58 @@
+<div>
+    {{vm.model}} <br>
+    {{vm.merchantId}} <br>
+    
+    <h1>Event Planning Documents Center</h1>
+
+    <section>
+        <admin-channel-sellector merchant='vm.model.merchantId' channel-id='vm.model.channelId'></admin-channel-sellector>
+
+        <div>
+            <label for="season">
+                Season:
+                <admin-season-sellector></admin-season-sellector>
+            </label>
+        </div>
+    </section>
+
+    
+    
+
+    <!--Document Selection-->
+    <ul>
+        <li>
+            <label for="shipping">
+                <input type="radio" id='shipping' name='planningDoc', value='shipping' ng-model='vm.model.document'>Shipping
+            </label>
+        </li>
+        <li>
+            <label for="mfg">
+                <input type="radio" id='mfg' name='planningDoc', value='mfg' ng-model='vm.model.document'>Manufacturing
+            </label>
+        </li>
+        <li>
+            <label for="budgeting">
+                <input type="radio" id='budgeting' name='planningDoc', value='budgeting' ng-model='vm.model.document'> Budgeting 
+            </label>
+        </li>
+    </ul>
+
+    <!--Document Work-->
+    <!--Shipping-->
+    <section ng-if="vm.model.document == 'shipping'">
+        <h3>Shipping Order</h3>
+        <shipping-order></shipping-order>
+    </section>
+
+    <!--Manufacturing-->
+    <section ng-if="vm.model.document == 'mfg'">
+        <h3>Manufacturing Order</h3>
+        <mfg-order></mfg-order>
+    </section>
+
+    <!--Budgeting-->
+    <section ng-if="vm.model.document == 'budgeting'">
+        <h3>Budget</h3>
+        <budget></budget>
+    </section>
+</div>

@@ -46,6 +46,11 @@ function config($routeProvider, $locationProvider) {
         controller: 'adminDashController',                  //  Landing Page Controller
         controllerAs: 'vm'
     })
+    .when('/admin/planning/:merchId', {
+        templateUrl: 'assets/views/adminPlanning-page.htm',     //  Landing Page View
+        controller: 'adminPlanningController',                  //  Landing Page Controller
+        controllerAs: 'vm'
+    })
     .when('/admin/channels', {
         templateUrl: 'assets/views/adminChannels-page.htm',     //  Landing Page View
         controller: 'adminChannelsController',                  //  Landing Page Controller

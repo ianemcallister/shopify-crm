@@ -30,7 +30,7 @@ async function addInventoryItems(item) {
 var allItems = [
     { "SKU": "",
     "name": "Red Roaster",
-    "roles": [],
+    "role": "-MX8O8fHLyNP2VhWI9au",
     "vendor": "German Nut Roasters, UT",
     "manufacturer": "Mandelprofi",
     "serial": "",

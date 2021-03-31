@@ -1,0 +1,11 @@
+<div>
+    <label for="channel">
+        Channel:
+        <input list='channels' id='channels-sellector' name='channel' ng-model='channelName'>
+        
+        <datalist id='channels'>
+            <option ng-repeat='channel in vm.channels' value="{{channel.name}}" >{{channel.name}}</option>
+        </datalist>
+    </label>
+
+</div>
