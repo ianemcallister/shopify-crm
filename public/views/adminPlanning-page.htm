@@ -5,14 +5,9 @@
     <h1>Event Planning Documents Center</h1>
 
     <section>
-        <admin-channel-sellector merchant='vm.model.merchantId' channel-id='vm.model.channelId'></admin-channel-sellector>
+        <admin-channel-sellector ng-if='vm.model.merchantId' merchant-id='vm.model.merchantId' channel-id='vm.model.channelId'></admin-channel-sellector>
 
-        <div>
-            <label for="season">
-                Season:
-                <admin-season-sellector></admin-season-sellector>
-            </label>
-        </div>
+        <admin-season-sellector ng-if='vm.model.merchantId && vm.model.channelId' merchant-id='vm.model.merchantId' channel-id='vm.model.channelId' season-id='vm.model.seasonId'></admin-season-sellector>
     </section>
 
     

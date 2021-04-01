@@ -9,7 +9,7 @@ function adminChannelSellector() {
         templateUrl: 'assets/views/adminChannelSellector-directive.htm',
         replace: true,
         scope: {
-            merchant: "=",
+            merchantId: "=",
             channelId: "="
         },
         link: linkFunc,
@@ -21,7 +21,7 @@ function adminChannelSellector() {
     /* @ngInject */
     function linkFunc(scope, el, attr, ctrl) {
         scope.$watch('channelName', function(newValue, oldValue) {
-            console.log(scope.vm.channels);
+            //console.log(scope.vm.channels);
             if(newValue) {
                 Object.keys(scope.vm.channels).forEach(function(key) {
                     if(scope.vm.channels[key] != null) {
@@ -30,10 +30,18 @@ function adminChannelSellector() {
                         }
                     }  
                 })
-                console.log(scope.channelId);
+                //console.log(scope.channelId);
             }
 
         })
+        scope.$watch('merchantId', function(newValue, oldValue) {
+            //console.log('merchant ', scope.vm.merchant);
+            if(scope.vm.merchantId != undefined) {
+                var path = '/Merchants/' + scope.vm.merchantId + '/Channels';
+                //console.log('path: ', path);
+                scope.vm.initFirebase(path);
+            }
+        });
     }
     
     adminChannelSellectorController.$inject = ['$scope', '$log', '$firebaseObject'];
@@ -43,12 +51,12 @@ function adminChannelSellector() {
         //define local variables
         $scope.channelName ="";
         var self = this;
-        var db = firebase.database();
-        var path = '/Merchants/' + '-MVrZajcORbaTjkuZL2a' + '/Channels';
-        var ref = db.ref(path);
-        self.channels = $firebaseObject(ref);
-        
-        console.log('this is the admin channel sellector directive', path);
+        self.initFirebase = function(path) {
+            console.log('init firebase', path);
+            var db = firebase.database();
+            var ref = db.ref(path);
+            self.channels = $firebaseObject(ref);
+        };
 
     };
 

@@ -1,0 +1,10 @@
+<div>
+    <label for="season">
+        Season:
+        <input list='seasons' id='seasons-sellector' name='seasons' ng-model='seasonName'>
+        
+        <datalist id='seasons'>
+            <option ng-repeat='season in vm.seasons' value="{{season.name}}" >{{season.name}}</option>
+        </datalist>
+    </label>
+</div>
