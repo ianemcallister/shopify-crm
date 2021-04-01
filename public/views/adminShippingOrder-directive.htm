@@ -14,6 +14,22 @@
 
     </div>
     <div ng-if='vm.order != null'>
-        {{vm.order}}
+        <table class="table">
+            <tr>
+                <th>Category</th>
+                <th>Value</th>
+            </tr>
+            
+            <tr ng-repeat='item in vm.order.items'>
+                <td>
+                    <strong>{{vm.itemRoles[item.role].name}}</strong> <br>
+                    <I>{{vm.itemRoles[item.role].description}}</I>
+
+                </td>
+                <td>
+                    {{vm.allItems}}
+                </td>
+            </tr>
+        </table>
     </div>
 </div>

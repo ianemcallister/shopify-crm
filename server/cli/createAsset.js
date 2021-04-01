@@ -10,12 +10,12 @@ async function createAssetAcct() {
     //  notify
     //  LOCAL
     var SKU = {
-        sku: "310PECFB",
+        sku: "400PNTFB",
         serial: "",
-        name: "31.0oz Staged Pecans",
+        name: "40.0oz Staged Peanuts",
         type: "staged_products",
-        description: "Gallon ziploc of pecans and sugar",
-        detail_type: "pecans",
+        description: "Gallon ziploc of peanuts and sugar",
+        detail_type: "peanuts",
         units: "count",
         locations: [ "", "Warehouse", "Kit 01", "Kit 02", "Kit 03", "Kit 04", "Kit 05", "Kit 06", "Kit 07", "Kit 08" ]
     };

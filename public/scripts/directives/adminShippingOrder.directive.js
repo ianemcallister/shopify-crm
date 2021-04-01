@@ -37,13 +37,29 @@ function adminShippingOrder() {
         //console.log('adminShippingOrderController');
         //define local variables
         $scope.vm.order = {};
+        var db = firebase.database();
+        var rolesRef = db.ref('Inventory/Roles');
+        var itemsRef = db.ref('Inventory/Items');
+        $scope.vm.itemRoles = $firebaseObject(rolesRef);
+        $scope.vm.allItems = $firebaseObject(itemsRef);
         var self = this;
+
+
+
         self.initFirebase = function(path) {
             console.log('init firebase', path);
-            var db = firebase.database();
             var ref = db.ref(path).orderByChild('eventId').equalTo($scope.vm.eventId);
-            $scope.vm.order = $firebaseObject(ref);
-            console.log($scope.vm.order);
+            ref.once('value', function(snapshot) {
+                var orders = snapshot.val();
+                var orderId = "";
+                Object.keys(orders).forEach(function(key) {
+                    orderId = key;
+                });
+                var record = db.ref(path + "/" + orderId);
+                $scope.vm.order = $firebaseObject(record);
+                console.log($scope.vm.order);
+            });
+            
         };
         self.createBlankShippingOrder = function() {
             //  NOTIFY PROGRESS
@@ -51,7 +67,6 @@ function adminShippingOrder() {
 
             //  DEFINE LOCAL VARIABLES
             var timestamp = new Date(Date.now()).toISOString();
-            var db = firebase.database();
             var path = 'Projections/Shipping'
             var ref = db.ref(path);
             var recordId = ref.push().key
