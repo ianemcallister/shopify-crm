@@ -22,7 +22,7 @@ function adminSeasonSellector() {
     /* @ngInject */
     function linkFunc(scope, el, attr, ctrl) {
         scope.$watch('seasonName', function(newValue, oldValue) {
-            console.log('Season Name: ', scope.vm.seasonName);
+            //console.log('Season Name: ', scope.vm.seasonName);
             if(newValue) {
                 Object.keys(scope.vm.seasons).forEach(function(key) {
                     if(scope.vm.seasons[key] != null) {

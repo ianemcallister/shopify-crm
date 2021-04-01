@@ -12,6 +12,8 @@ function adminPlanningController($scope, $log, $routeParams) {
         merchantId: $routeParams.merchId,
         channelId: "",
         seasonId: "",
+        eventId: "",
+        eventData: {},
         document: ""
     }
 
