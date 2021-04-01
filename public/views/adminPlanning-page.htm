@@ -59,19 +59,19 @@
                 <!--Shipping-->
                 <section ng-if="vm.model.document == 'shipping'">
                     <STRONG>SHIPPING ORDER</STRONG>
-                    <shipping-order></shipping-order>
+                    <admin-shipping-order event-id='vm.model.eventId'></admin-shipping-order>
                 </section>
         
                 <!--Manufacturing-->
                 <section ng-if="vm.model.document == 'mfg'">
                     <STRONG>MANUFACTURING ORDER</STRONG>
-                    <mfg-order></mfg-order>
+                    <admin-mfg-order></admin-mfg-order>
                 </section>
         
                 <!--Budgeting-->
                 <section ng-if="vm.model.document == 'budgeting'">
                     <STRONG>BUDGET</STRONG>
-                    <budget></budget>
+                    <admin-event-budget></admin-event-budget>
                 </section>
             </div>
         </div> 

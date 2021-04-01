@@ -1,0 +1,19 @@
+<div>
+    <div ng-if='vm.order == null || vm.order.value == null'>
+        <I>Currently there is no shipping order for this event</I> <br>
+        
+        <button class='btn btn-success'
+                ng-click='vm.createShippingOrderFromTemplate()'>
+            Create Shipping Order From Template
+        </button> <br>
+
+        <button class='btn btn-success'
+                ng-click='vm.createBlankShippingOrder()'>
+            Create Blank Shipping Order
+        </button>
+
+    </div>
+    <div ng-if='vm.order != null'>
+        {{vm.order}}
+    </div>
+</div>

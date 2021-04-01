@@ -5,14 +5,15 @@ ckc
 
 /* @ngInject */
 function adminPlanningController($scope, $log, $routeParams) {
-
+    //  notify progess
+    console.log($routeParams);
 	//define view model variable
 	var vm = this;
     vm.model ={
         merchantId: $routeParams.merchId,
-        channelId: "",
-        seasonId: "",
-        eventId: "",
+        channelId: $routeParams.channelId,
+        seasonId: $routeParams.seasonId,
+        eventId: $routeParams.eventId,
         eventData: {},
         document: ""
     }
