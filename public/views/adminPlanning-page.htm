@@ -59,7 +59,10 @@
                 <!--Shipping-->
                 <section ng-if="vm.model.document == 'shipping'">
                     <STRONG>SHIPPING ORDER</STRONG>
-                    <admin-shipping-order event-id='vm.model.eventId'></admin-shipping-order>
+                    <admin-shipping-order   event-id='vm.model.eventId'
+                                            event-data='vm.model.eventData'>
+
+                    </admin-shipping-order>
                 </section>
         
                 <!--Manufacturing-->

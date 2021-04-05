@@ -9,11 +9,11 @@
     "roles": [],
     "vendor": "",
     "manufacturer": "",
+    "mfgSKU": "",
     "serial": "",
     "description": "",
-    "group": "",
-    "groupId": "",
+    "groups": {},
     "maintenance": [],
-    "usage": [],
+    "usage": {},
     "url": ""
 }

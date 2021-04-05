@@ -1,10 +1,10 @@
 ckc
     .controller('adminPlanningController', adminPlanningController);
 
-	adminPlanningController.$inject = ['$scope','$log', '$routeParams'];
+	adminPlanningController.$inject = ['$scope','$log', '$routeParams', '$firebaseObject'];
 
 /* @ngInject */
-function adminPlanningController($scope, $log, $routeParams) {
+function adminPlanningController($scope, $log, $routeParams, $firebaseObject) {
     //  notify progess
     console.log($routeParams);
 	//define view model variable
@@ -16,6 +16,13 @@ function adminPlanningController($scope, $log, $routeParams) {
         eventId: $routeParams.eventId,
         eventData: {},
         document: ""
+    };
+
+    if($routeParams.eventId != undefined) {
+        var db = firebase.database();
+        var readpath = 'Merchants/' + $routeParams.merchId + "/Events/" + $routeParams.eventId;
+        var ref = db.ref(readpath);
+        vm.model.eventData = $firebaseObject(ref);
     }
 
 	$log.info('in the admin planning controller');	    //  TODO: TAKE THIS OUT LATER

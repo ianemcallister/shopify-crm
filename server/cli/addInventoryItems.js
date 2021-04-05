@@ -29,16 +29,28 @@ async function addInventoryItems(item) {
 };
 var allItems = [
     { "SKU": "",
-    "name": "Red Roaster",
-    "role": "-MX8O8fHLyNP2VhWI9au",
-    "vendor": "German Nut Roasters, UT",
-    "manufacturer": "Mandelprofi",
+    "name": "Green Kit Right Rear Weight",
+    "role": "-MX8P_k5VGUrzgJv4MTt",
+    "vendor": "29 Kettle",
+    "manufacturer": "29 Kettle",
     "serial": "",
-    "description": "Mandelprofi Mini",
-    "group": "Red Group",
-    "groupId": "-MX8pvVkNlEYNn7TNWbR",
+    "description": "Weights to hold down the canopy",
     "maintenance": [],
-    "usage": [],
+    "groups": {
+        0: {
+            "group": "Weights",
+            "groupId": "-MXITgDrfztDSF4mdFS7"
+        },
+        1: {
+            "group": "Green Kit",
+            "groupId": "-MXIykptb75HQYHm8T2K"
+        }
+    },
+    "usage": {
+        "210401": {
+            "status": "registered"
+        }
+    },
     "url": "" }
 ];
 

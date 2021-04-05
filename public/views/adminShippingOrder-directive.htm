@@ -13,22 +13,48 @@
         </button>
 
     </div>
+
     <div ng-if='vm.order != null'>
         <table class="table">
             <tr>
-                <th>Category</th>
-                <th>Value</th>
+                <th>Item</th>
+                <th>Options</th>
             </tr>
             
             <tr ng-repeat='item in vm.order.items'>
+                <!--Type of Item-->
                 <td>
                     <strong>{{vm.itemRoles[item.role].name}}</strong> <br>
                     <I>{{vm.itemRoles[item.role].description}}</I>
 
                 </td>
+                <!--Specific Items-->
                 <td>
-                    {{vm.allItems}}
+
+                    <table class="table">
+                        <tr ng-repeat="option in vm.roleOptions[item.role]">
+                            <td>
+                                <input type="radio" name='item{{item._id}}' id='option{{option._id}}'>
+                           
+                                <label class="form-check-label" for="option{{option._id}}">
+                                    {{option.name}}
+                                </label>
+                            </td>
+                            <!--Status of Specific Items-->
+                            <td>
+                                <span ng-if="option.usage[vm.eventData.simpleDate] == undefined">
+                                    <strong>AVAILABLE</strong>
+                                </span>
+    
+                                <span ng-if="option.usage[vm.eventData.simpleDate] != undefined">
+                                    <strong>SCHEDULED</strong>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    
                 </td>
+
             </tr>
         </table>
     </div>

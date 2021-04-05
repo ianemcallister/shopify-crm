@@ -27,14 +27,11 @@ async function addInventoryGroup(item) {
     }
 };
 var allItems = [
-    { name: 'Red Group', description: "All the components of the mobile retail setup.", notes: "" },
-    { name: 'Yellow Group', description: "All the components of the mobile retail setup.", notes: "" },
-    { name: 'Blue Group', description: "All the components of the mobile retail setup.", notes: "" },
-    { name: 'Green Group', description: "All the components of the mobile retail setup.", notes: "" },
-    { name: 'Silver Group', description: "All the components of the mobile retail setup.", notes: "" },
-    { name: 'Black Group', description: "All the components of the mobile retail setup.", notes: "" },
-    { name: 'White Group', description: "All the components of the mobile retail setup.", notes: "" },
-    { name: 'Orange Group', description: "All the components of the mobile retail setup.", notes: "" }
+    { name: 'Cooking Boxes', description: "All Boxes used for cooking", notes: "" },
+    { name: 'Cleaning Boxes', description: "All Boxes used for cleaning and misc. supplies", notes: "" },
+    { name: 'Packaging Boxes', description: "All Boxes used for packaging supplies", notes: "" },
+    { name: 'Cooked Nuts Boxes', description: "All Boxes used for cooked nuts bins", notes: "" },
+    { name: 'Staged Nuts Boxes', description: "All Boxes used for staged nuts", notes: "" }
 ];
 
 //  EXECUTEC
