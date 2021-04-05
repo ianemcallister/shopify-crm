@@ -131,7 +131,28 @@ function adminShippingOrder() {
             //  NOTIFY PROGRESS
             console.log('loading role id: ', roleId);
         }
+        self.saveOrder = function() {
+            // LOCAL VARIABLES
+            var timestamp = new Date(Date.now()).toISOString();
+            $scope.vm.order.updatedAt = timestamp;
+            $scope.vm.order.updatedBy = "admin";
 
+            //  NOTIFY PROGRESS
+            console.log('saving order', $scope.vm.order);
+
+            $scope.vm.order.$save()
+            .then(function(success) {
+                console.log('success: ', success);
+            }).catch(function(error) {
+                console.log('Error: ', error);
+            });
+        }
+        self.addItem = function() {
+            //  NOTIFY PROGRES
+            //  LOCAL VARIABLES
+            $scope.vm.order.items.push({category: "", role: ""})
+            //  EXECUTE
+        };
     };
 
     return directive;		
