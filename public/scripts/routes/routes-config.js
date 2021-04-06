@@ -37,7 +37,7 @@ function config($routeProvider, $locationProvider) {
         controllerAs: 'vm'
     })
     .when('/team/:memberId/reports/mfg/:mfgReportId', {
-        templateUrl: 'assets/views/teamMfgReport-page.htm',     //  Landing Page View
+        templateUrl: 'assets/views/team-mfgReport-page.htm',     //  Landing Page View
         controller: 'teamMfgReportController',                  //  Landing Page Controller
         controllerAs: 'vm'
     })

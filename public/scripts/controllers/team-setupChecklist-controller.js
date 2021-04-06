@@ -9,7 +9,7 @@ function teamSetupChecklistController($scope, $log, $routeParams, $firebaseObjec
 	$log.info('in the setup checklist controller', $routeParams);	    //  TODO: TAKE THIS OUT LATER
 
 	//	DEFINE: PRIVATE VARIABLES
-	var _path = 'Actualizations/Mfg/' + $routeParams.shippingReportId;
+	var _path = 'Actualizations/Shipping/' + $routeParams.shippingReportId;
 	var _db = firebase.database();
 	var _reportRef = _db.ref(_path);
 
