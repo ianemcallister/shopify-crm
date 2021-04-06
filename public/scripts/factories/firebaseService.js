@@ -20,7 +20,10 @@ function FirebaseService($log, $http) {
     var firebaseMod = {
         value: "something",
         read: read,
-        test: function() { return new Promise(function(resolve, reject) { resolve('testing again'); }) }
+        mfg: {
+            recordCooking: RecordCookingBatch
+        },
+        test: function() { console.log('firebase Mod Test') }
     };
 
     /*
@@ -30,6 +33,16 @@ function FirebaseService($log, $http) {
         return 11
     };
 
+    /*
+    *   RECORD COOKING BATCH
+    */
+    function RecordCookingBatch(order) {
+        //  NOTIFY PROGRESS
+        console.log('RecordCookingBatch got this order: ', order);
+
+        //  LOCAL VARIABLES
+        //  EXECUTE
+    };
 
     //   RETURN
     return firebaseMod;
