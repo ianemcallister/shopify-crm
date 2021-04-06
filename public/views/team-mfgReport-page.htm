@@ -1,31 +1,66 @@
 <div>
     <div class="container">
-        <h3>29 Kettle: Mobile Retail</h3>
-        <h4>{{vm.report.channel}} Manufacturing Report</h4> <!-- Add market name here-->
-        <strong>Assigned to: </strong>{{ vm.report.assignedTo.name}} <br><!-- Add Team member name here-->
-        <strong>Event date: </strong> {{vm.report.eventDate | date : "shortDate"}}<!-- Event Date here-->
+        <h3 style='text-align: center; margin-top: 30px;'>29 Kettle: Mobile Retail</h3>
+        <h4 style='text-align: center;'>{{vm.report.channel}} Manufacturing Report</h4> <!-- Add market name here-->
+        <div class="row">
+            <div class="col">
+                <strong>Assigned to: </strong>{{ vm.report.assignedTo.name}} 
+            </div>
+            <div class="col">
+                <strong>Device name:</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>Event date: </strong> {{vm.report.eventDate | date : "shortDate"}}
+            </div>
+            <div class="col">
+                <strong>Device id: </strong>
+            </div>
+        </div>
+        
+        <!--First Row-->
+        <div class="row" style='margin-top: 20px;'>
+            <div class="col">
+                <!--Cook Time Chart-->
+                <team-cook-time-chart>
+                </team-cook-time-chart>
+            </div>
+            
+            <div class="col">
+                <!--Cooking Recorder-->
+                <team-record-cooking >
+                </team-record-cooking>
 
-        <!--Cook Time Chart-->
-        <team-cook-time-chart>
-        </team-cook-time-chart>
+            </div>
 
-        <!--Cooking Recorder-->
-        <team-record-cooking>
-        </team-record-cooking>
+            <div class="col">
+                <!--Raw Supply Levels-->
+                <team-raw-supply-levels>
+                </team-raw-supply-levels>
+            </div>
 
-        <!--Cooked Supply Levels-->
-        <team-cooked-supply-levels>
-        </team-cooked-supply-levels>
+        </div>
 
-        <!--All MFG txs-->
-        <team-all-mfg-txs>
-        </team-all-mfg-txs>
+        <!--Second Row-->
+        <div class="row" style='margin-top: 20px;'>
+            <div class="col">
+                <!--Cooked Supply Levels-->
+                <team-cooked-supply-levels>
+                </team-cooked-supply-levels>
+            </div>
+            <div class="col">
+                <!--All MFG txs-->
+                <team-all-mfg-txs>
+                </team-all-mfg-txs>
+            </div>
+        </div>
+        
 
-        <!--Raw Supply Levels-->
-        <team-raw-supply-levels>
-        </team-raw-supply-levels>
 
 
+    
+        <!--
         <section>
             <h4>Cooking</h4>
             <h4>Resources</h4>
@@ -50,6 +85,6 @@
                 <li>Hand Soap</li>
                 <li>Trash Bags</li>
             </ul>
-        </section>
+        </section>-->
     </div>
 </div>

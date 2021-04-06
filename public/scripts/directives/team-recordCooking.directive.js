@@ -89,10 +89,17 @@ function teamRecordCooking() {
 
                 // fire off update
                 FirebaseService.mfg.recordCooking(order)
+                .then(function(success) {
+                    console.log(success);
+                    //  reset buttons
+                    if($scope.vm.recipies[key].classes[0] == "btn-info") $scope.vm.recipies[key].classes = ["btn-outline-info"];
+                    if($scope.vm.recipies[key].classes[0] == "btn-warning") $scope.vm.recipies[key].classes = ["btn-outline-warning"];
 
-                //  reset buttons
-                if($scope.vm.recipies[key].classes[0] == "btn-info") $scope.vm.recipies[key].classes = ["btn-outline-info"];
-                if($scope.vm.recipies[key].classes[0] == "btn-warning") $scope.vm.recipies[key].classes = ["btn-outline-warning"];
+
+                }).catch(function(error) {
+                    console.log('Error: ', error);
+                });
+
             };
 
             //  flip the switch

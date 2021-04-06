@@ -1,3 +1,10 @@
 <div>
-    Cook Time Chart
+    <h5>Cooking Schedule</h5>
+    <table>
+        <tr ng-repeat="(key, value) in vm.schedule.slots">
+            <td>{{key | date : 'shortTime'}}</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
 </div>

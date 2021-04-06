@@ -41,7 +41,25 @@ function FirebaseService($log, $http) {
         console.log('RecordCookingBatch got this order: ', order);
 
         //  LOCAL VARIABLES
+        var readPath = 'Inventory/MFG/' + order.sku;
+        var _db = firebase.database();
+        var _ref = _db.ref(readPath);
         //  EXECUTE
+        return new Promise(function(resolve, reject) {
+
+            //  COLLECT THE MODEL OF THE PRODUCED PRODUCT
+            _ref.on('value', function(snapshot) {
+                //  ITERATE OVER THE COMPONENTS
+                //  UPDATE THE PRODUCT VALUES
+                //  UPDATE THE RESOURCE VALUES
+                //  EXECUTE UPDATES
+
+                resolve(snapshot.val());
+            });
+            
+
+            
+        });
     };
 
     //   RETURN
