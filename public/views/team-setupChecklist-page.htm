@@ -1,17 +1,61 @@
 <div>
     <div class="container">
         <h3>29 Kettle: Mobile Retail</h3>
-        <h4>{{}} Setup Checklist</h4>   <!-- Add market name here-->
-        <strong>Assigned to: {{}}</strong> <br><!-- Add Team member name here-->
-        <strong>Event date: {{}}</strong> <!-- Event Date here-->
+        <h4>{{vm.report.channel}} Setup Checklist</h4>   <!-- Add market name here-->
+        <strong>Assigned to: </strong>{{ vm.report.assignedTo.name}} <br><!-- Add Team member name here-->
+        <strong>Event date: </strong> {{vm.report.date | date : "shortDate"}}<!-- Event Date here-->
 
         <!-- Checklist Items-->
         <section>
             <table class="table">
-                <tr>
-                    <th>Task</th>
-                    <th>Status</th>
-                </tr>
+                <!--Header-->
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Task</th>
+                    </tr>
+                </thead>
+
+
+                <!-- Task Data-->
+                <tbody>
+                    <tr ng-repeat='task in vm.report.tasks track by $index'>
+                        <!--ID-->
+                        <th scope="row" style='width: 37px;'>
+                            {{$index + 1}}
+                        </th>
+                        
+                        <!--Status-->
+                        <td style='width: 76px;'>
+                            
+                            <div class="form-check form-switch">
+                                <input  class="form-check-input" 
+                                        type="checkbox" 
+                                        id="task{{$index}}" 
+                                        ng-model='task.isComplete'
+                                        style='height: 2rem; width: calc(3rem + 0.75rem); border-radius: 4rem;'>
+                            </div>
+                            
+
+                            
+                        </td>
+
+                        <!--Status-->
+                        <td>
+                            <strong>{{task.task}} </strong> <br>
+                            <i>{{task.details}} </i>
+                            <br>
+                            <a href="" ng-click='task.hasNotes = !task.hasNotes'>notes...</a><br>
+                            <input  type="textbox" 
+                                    ng-if='task.hasNotes' 
+                                    ng-model='task.notes'
+                                    style='width: 100%; '>
+                        </td>
+
+                    </tr>
+                </tbody>
+
             </table>
         </section>
 
