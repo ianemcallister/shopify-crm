@@ -21,24 +21,24 @@ function config($routeProvider, $locationProvider) {
         controller: 'loginController',                  //  Landing Page Controller
         controllerAs: 'vm'
     })
-    .when('/team/:teamId', {
+    .when('/team/:memberId', {
         templateUrl: 'assets/views/teamDash-page.htm',     //  Landing Page View
         controller: 'teamDashController',                  //  Landing Page Controller
         controllerAs: 'vm'
     })
-    .when('/team/:teamId/mobile_retail/reports/closing/:reportId', {
-        templateUrl: 'assets/views/closingReport-page.htm',     //  Landing Page View
-        controller: 'closingReportController',                  //  Landing Page Controller
+    .when('/team/:memberId/checklists/setup/:shippingReportId', {
+        templateUrl: 'assets/views/team-setupChecklist-page.htm',     //  Landing Page View
+        controller: 'teamSetupChecklistController',                  //  Landing Page Controller
         controllerAs: 'vm'
     })
-    .when('/team/:teamId/warehouse/reports/mafg/:reportId', {
-        templateUrl: 'assets/views/manufacturingReport-page.htm',     //  Landing Page View
-        controller: 'manufacturingReportController',                  //  Landing Page Controller
+    .when('/team/:memberId/checklists/closing/:shippingReportId', {
+        templateUrl: 'assets/views/teamClosingChecklist-page.htm',     //  Landing Page View
+        controller: 'teamClosingReportController',                  //  Landing Page Controller
         controllerAs: 'vm'
     })
-    .when('/team/:teamId/warehouse/reports/inventory/:reportId', {
-        templateUrl: 'assets/views/inventoryReport-page.htm',     //  Landing Page View
-        controller: 'inventoryReportController',                  //  Landing Page Controller
+    .when('/team/:memberId/reports/mfg/:mfgReportId', {
+        templateUrl: 'assets/views/teamMfgReport-page.htm',     //  Landing Page View
+        controller: 'teamMfgReportController',                  //  Landing Page Controller
         controllerAs: 'vm'
     })
     .when('/admin', {

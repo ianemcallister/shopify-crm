@@ -138,10 +138,29 @@ function adminShippingOrder() {
             $scope.vm.order.updatedBy = "admin";
 
             //  NOTIFY PROGRESS
-            console.log('saving order', $scope.vm.order);
+            console.log('saving order and items');
 
-            $scope.vm.order.$save()
-            .then(function(success) {
+            //  iterate over order to update items
+            Object.keys($scope.vm.order.items).forEach(function(key) {
+                var itemKey = $scope.vm.order.items[key].item;
+                var simpleDate = $scope.vm.eventData.simpleDate
+
+                if($scope.vm.allItems[itemKey].usage[simpleDate] == undefined) {
+                    $scope.vm.allItems[itemKey].usage[simpleDate] = [];
+                }
+                
+                console.log(key, $scope.vm.allItems[itemKey])
+
+                $scope.vm.allItems[itemKey].usage[simpleDate].push({
+                    status: "reserved",
+                    event: $scope.vm.eventId
+                });
+            });
+
+            var orderSavePromise = $scope.vm.order.$save();
+            var itemsSavePromise = $scope.vm.allItems.$save();
+
+            Promise.all([orderSavePromise, itemsSavePromise]).then(function(success) {
                 console.log('success: ', success);
             }).catch(function(error) {
                 console.log('Error: ', error);

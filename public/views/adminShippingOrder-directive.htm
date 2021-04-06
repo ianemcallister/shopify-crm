@@ -29,8 +29,13 @@
             <tr ng-repeat='item in vm.order.items'>
                 
                 <!--Type of Item-->
-                <td ng-if='item.category != ""'>
+                <!--setting the category-->
+                <td ng-if='item.category == ""'>
+                    <admin-role-selector category="item.category" role="item.role"></admin-role-selector>
+                </td>
 
+                <td ng-if='item.category != ""'>
+                    {{item}}
                     <strong>{{vm.itemRoles[item.role].name}}</strong> <br>
                     <I>{{vm.itemRoles[item.role].description}}</I>
 
@@ -41,7 +46,11 @@
                     <table class="table">
                         <tr ng-repeat="option in vm.roleOptions[item.role]">
                             <td>
-                                <input type="radio" name='item{{item._id}}' id='option{{option._id}}'>
+                                <input  type="radio" 
+                                        name='item{{item.role}}' 
+                                        id='option{{option._id}}' 
+                                        ng-model='item.item' 
+                                        value='{{option._id}}'>
                            
                                 <label class="form-check-label" for="option{{option._id}}">
                                     {{option.name}}
@@ -61,12 +70,6 @@
                     </table>
                     
                 </td>
-
-                <!--setting the category-->
-                <td ng-if='item.category == ""'>
-                    <admin-role-selector category="" role=""></admin-role-selector>
-                </td>
-                <td ng-if='item.category == ""'></td>
 
             </tr>
 
