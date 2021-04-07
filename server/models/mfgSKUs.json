@@ -1,0 +1,327 @@
+{
+  "032FLOZP" : {
+    "hasComponents" : false,
+    "name" : "Quart Ziploc",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "08BNALMS" : {
+    "name" : "Half Pint Bourbon Almonds"
+  },
+  "08BNCSHS" : {
+    "name" : "Half Pint Bourbon Cashews"
+  },
+  "08BNHZNS" : {
+    "name" : "Half Pint Bourbon Hazelnuts"
+  },
+  "08BNPNCS" : {
+    "name" : "Half Pint Bourbon Pecans"
+  },
+  "08BNPNTS" : {
+    "name" : "Half Pint Bourbon Peanuts"
+  },
+  "08FLOCPS" : {
+    "hasComponents" : false,
+    "name" : "Half Pint Cups",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "08FLOLDS" : {
+    "hasComponents" : false,
+    "name" : "Half Pint Lids",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "08MIXTUP" : {
+    "name" : "Half Pint Mix"
+  },
+  "08SSALMS" : {
+    "name" : "Half Pint Sweet & Salty Almonds"
+  },
+  "08SSCSHS" : {
+    "name" : "Half Pint Sweet & Salty Cashews"
+  },
+  "08SSHZNS" : {
+    "name" : "Half Pint Sweet & Salty Hazelnuts"
+  },
+  "08SSPNCS" : {
+    "name" : "Half Pint Sweet & Salty Pecans"
+  },
+  "08SSPNTS" : {
+    "name" : "Half Pint Sweet & Salty Peanuts"
+  },
+  "128FLOZP" : {
+    "hasComponents" : false,
+    "name" : "Gallon Ziploc",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "16FLOLDS" : {
+    "hasComponents" : false,
+    "name" : "Pint Lids",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "165SPCNQ" : {
+    "hasComponents" : true,
+    "name" : "Half Batch: Staged Pecans",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "16BNALMS" : {
+    "name" : "Pint Bourbon Almonds"
+  },
+  "16BNCSHS" : {
+    "name" : "Pint Bourbon Cashews"
+  },
+  "16BNHZNS" : {
+    "name" : "Pint Bourbon Hazelnuts"
+  },
+  "16BNPNCS" : {
+    "name" : "Pint Bourbon Pecans"
+  },
+  "16BNPNTS" : {
+    "name" : "Pint Bourbon Peanuts"
+  },
+  "16FLOCPS" : {
+    "hasComponents" : false,
+    "name" : "Pint Cups",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "16MIXTUP" : {
+    "name" : "Pint Mix"
+  },
+  "16SSALMS" : {
+    "name" : "Pint Sweet & Salty Almonds"
+  },
+  "16SSCSHS" : {
+    "name" : "Pint Sweet & Salty Cashews"
+  },
+  "16SSHZNS" : {
+    "name" : "Pint Sweet & Salty Hazelnuts"
+  },
+  "16SSPNCS" : {
+    "name" : "Pint Sweet & Salty Pecans"
+  },
+  "16SSPNTS" : {
+    "name" : "Pint Sweet & Salty Peanuts"
+  },
+  "180SALMQ" : {
+    "hasComponents" : true,
+    "name" : "Half Batch: Staged Almonds",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "320BNCSH" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Bourbon Cashews",
+    "qty" : 32,
+    "units" : "ounces"
+  },
+  "320SSCSH" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Sweet & Salty Cashews",
+    "qty" : 32,
+    "units" : "ounces"
+  },
+  "330BNPCN" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Bourbon Pecans",
+    "qty" : 33,
+    "units" : "ounces"
+  },
+  "330SPCNG" : {
+    "components" : {
+      "032FLOZP" : 1,
+      "RAWPECNS" : 21,
+      "RAWSUGAR" : 12
+    },
+    "hasComponents" : true,
+    "name" : "Full Batch: Staged Pecans",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "400SPNTG" : {
+    "components" : {
+      "032FLOZP" : 1,
+      "RAWPENTS" : 24,
+      "RAWSUGAR" : 16
+    },
+    "hasComponents" : true,
+    "name" : "Full Batch: Staged Peanuts",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "320SCSHG" : {
+    "components" : {
+      "032FLOZP" : 1,
+      "RAWCSHWS" : 20,
+      "RAWSUGAR" : 12
+    },
+    "hasComponents" : true,
+    "name" : "Full Batch: Staged Cashews",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "330SSPCN" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Sweet & Salty Pecans",
+    "qty" : 33,
+    "units" : "ounces"
+  },
+  "34MIXTUP" : {
+    "name" : "Platter"
+  },
+  "360BNALM" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Bourbon Almonds",
+    "qty" : 36,
+    "units" : "ounces"
+  },
+  "360BNHZL" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Bourbon Hazelnuts",
+    "qty" : 36,
+    "units" : "ounces"
+  },
+  "360SALMG" : {
+    "components" : {
+      "032FLOZP" : 1,
+      "RAWSUGAR" : 12,
+      "RWALMNDS" : 24
+    },
+    "hasComponents" : true,
+    "name" : "Full Batch: Staged Almonds",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "360SHZLG" : {
+    "components" : {
+      "032FLOZP" : 1,
+      "RAWSUGAR" : 12,
+      "RWHZLNTS" : 24
+    },
+    "hasComponents" : true,
+    "name" : "Full Batch: Staged Hazelnuts",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "360SSALM" : {
+    "components" : {
+      "360SALMG" : 1,
+      "RAWSSALT" : 0.4,
+      "SWTSLTMX" : 4
+    },
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Sweet & Salty Almonds",
+    "qty" : 36,
+    "units" : "ounces"
+  },
+  "360SSHZL" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Sweet & Salty Hazelnuts",
+    "qty" : 36,
+    "units" : "ounces"
+  },
+  "400BNPNT" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Bourbon Peanuts",
+    "qty" : 40,
+    "units" : "ounces"
+  },
+  "400SSPNT" : {
+    "hasComponents" : true,
+    "name" : "Full Batch Cooked Sweet & Salty Peanuts",
+    "qty" : 40,
+    "units" : "ounces"
+  },
+  "68FLOPLB" : {
+    "hasComponents" : false,
+    "name" : "Platter Base",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "68FLOPLL" : {
+    "hasComponents" : false,
+    "name" : "Platter Lid",
+    "qty" : 1,
+    "units" : "count"
+  },
+  "BURBONMX" : {
+    "hasComponents" : true,
+    "name" : "Bourbon Mix",
+    "qty" : 1,
+    "units" : "fluid_ounces"
+  },
+  "PUREWATR" : {
+    "hasComponents" : false,
+    "name" : "Water",
+    "qty" : 1,
+    "units" : "fluid_ounces"
+  },
+  "RAWCSHWS" : {
+    "hasComponents" : "fals",
+    "name" : "Raw Cashews",
+    "qty" : 1,
+    "units" : "ounces"
+  },
+  "RAWPECNS" : {
+    "hasComponents" : false,
+    "name" : "Raw Pecans",
+    "qty" : 1,
+    "units" : "ounces"
+  },
+  "RAWPENTS" : {
+    "hasComponents" : false,
+    "name" : "Raw Peanuts",
+    "qty" : 1,
+    "units" : "ounces"
+  },
+  "RAWSSALT" : {
+    "hasComponents" : false,
+    "name" : "Raw Sea Salt",
+    "qty" : 1,
+    "units" : "ounces"
+  },
+  "RAWSUGAR" : {
+    "hasComponents" : false,
+    "name" : "Raw Sugar",
+    "qty" : 1,
+    "units" : "ounces"
+  },
+  "RWALMNDS" : {
+    "hasComponents" : false,
+    "name" : "Raw Almonds",
+    "qty" : 1,
+    "units" : "ounces"
+  },
+  "RWBURBON" : {
+    "hasComponents" : false,
+    "name" : "Raw Bourbon",
+    "qty" : 1,
+    "units" : "fluid_ounces"
+  },
+  "RWHZLNTS" : {
+    "hasComponents" : false,
+    "name" : "Raw Hazelnuts",
+    "qty" : 1,
+    "units" : "ounces"
+  },
+  "RWVANILA" : {
+    "hasComponents" : false,
+    "name" : "Raw Vanilla",
+    "qty" : 1,
+    "units" : "fluid_ounces"
+  },
+  "SWTSLTMX" : {
+    "components" : {
+      "PUREWATR" : 0.75,
+      "RWVANILA" : 0.25
+    },
+    "hasComponents" : true,
+    "name" : "Sweet & Salty Mix",
+    "qty" : 1,
+    "units" : "fluid_ounces"
+  }
+}

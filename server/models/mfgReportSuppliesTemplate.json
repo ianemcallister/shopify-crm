@@ -1,0 +1,79 @@
+{
+  "330SPCNG": {
+    "name" : "Staged Pecans: Full Batches",
+    "qty" : 0,
+    "size" : "full_batch",
+    "type" : "staged_nuts",
+    "variety" : "Pecans"
+  }, 
+  "360SHZLG": {
+    "name" : "Staged Hazelnuts: Full Batches",
+    "qty" : 0,
+    "size" : "full_batch",
+    "type" : "staged_nuts",
+    "variety" : "Hazelnuts"
+  }, 
+  "360SALMG": {
+    "name" : "Staged Almonds: Full Batches",
+    "qty" : 0,
+    "size" : "full_batch",
+    "type" : "staged_nuts",
+    "variety" : "Almonds"
+  }, 
+  "320SCSHG": {
+    "name" : "Staged Cashews: Full Batches",
+    "qty" : 0,
+    "size" : "full_batch",
+    "type" : "staged_nuts",
+    "variety" : "Cashews"
+  }, 
+  "400SPNTG": {
+    "name" : "Staged Peanuts: Full Batches",
+    "qty" : 0,
+    "size" : "full_batch",
+    "type" : "staged_nuts",
+    "variety" : "Peanuts"
+  },
+  "16FLOCPS": {
+    "name" : "Pint Cups",
+    "qty" : 0,
+    "size" : "pint",
+    "type" : "packaging",
+    "variety" : "cup"
+  },
+  "08FLOCPS": {
+    "name" : "Half Pint Cups",
+    "qty" : 0,
+    "size" : "half_pint",
+    "type" : "packaging",
+    "variety" : "cup"
+  }, 
+  "16FLOLDS": {
+    "name" : "Pint Lids",
+    "qty" : 0,
+    "size" : "pint",
+    "type" : "packaging",
+    "variety" : "lids"
+  }, 
+  "08FLOLDS": {
+    "name" : "Half Pint Lids",
+    "qty" : 0,
+    "size" : "half_pint",
+    "type" : "packaging",
+    "variety" : "lids"
+  }, 
+  "68FLOPLB": {
+    "name" : "Platter Bases",
+    "qty" : 0,
+    "size" : "base",
+    "type" : "packaging",
+    "variety" : "platters"
+  }, 
+  "68FLOPLL": {
+    "name" : "Platter Lids",
+    "qty" : 0,
+    "size" : "lids",
+    "type" : "packaging",
+    "variety" : "platters"
+  }
+}

@@ -1,3 +1,51 @@
 <div>
     <h5 style='text-align: right;'>Raw Supplies Levels</h5>
+
+    <!--Overflow box-->
+    <div style="overflow: auto; text-align: right;">
+
+        <!--Staged Nuts-->
+        <div>
+            <strong>STAGED NUTS</strong><br>
+            <div class="row" ng-repeat="item in vm.supplies">
+
+                <div class="col-10" ng-if='item.type == "staged_nuts"'>
+                    {{item.variety}}:
+                </div>
+                <div class="col-2" ng-if='item.type == "staged_nuts"'>
+                    {{item.qty}}
+                </div>
+            </div>
+        </div>
+        <BR>
+
+        <!--Packaging-->
+        <div>
+            <strong>PACKAGING</strong><br>
+            <div class="row" ng-repeat="item in vm.supplies">
+
+                <div class="col-10" ng-if='item.type == "packaging"'>
+                    {{item.name}}
+                </div>
+                <div class="col-2" ng-if='item.type == "packaging"'>
+                    {{item.qty}}
+                </div>
+            </div>
+        </div>
+
+        <!--list-->
+        
+
+            <!--Items-->
+            <!--Name-->
+            <div class="col">
+                {{item}}
+            </div>
+            <!--Value-->
+            <div class="col">
+
+            </div>
+
+        </div>
+    </div>
 </div>

@@ -9,8 +9,7 @@ function teamRawSupplyLevels() {
         templateUrl: 'assets/views/directives/team-rawSupplyLevels-directive.htm',
         replace: true,
         scope: {
-            merchantId: "=",
-            channelId: "="
+            supplies: "="
         },
         link: linkFunc,
         controller: teamRawSupplyLevelsController,
@@ -27,7 +26,11 @@ function teamRawSupplyLevels() {
 
     /* @ngInject */
     function teamRawSupplyLevelsController($scope, $log, $firebaseObject) {
-
+        //  NOTIFY PROGRES
+        //  PRIVATE VARIABES
+        //  VIEW MODEL VARIALES
+        //  PRIVATE FUNCTIONS
+        //  VIEW MODEL FUNCTIONS
 
     };
 
