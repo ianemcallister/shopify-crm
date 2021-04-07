@@ -1,0 +1,85 @@
+<div>
+    <div class="container">
+        
+        <h1>Event Planning Documents Center</h1>
+
+        <!--Left Side-->
+        <div class="col-md-4 col-lg-4">
+            <section>
+                <admin-channel-sellector    ng-if='vm.model.merchantId' 
+                                            merchant-id='vm.model.merchantId' 
+                                            channel-id='vm.model.channelId'>
+                </admin-channel-sellector>
+    
+                <admin-season-sellector ng-if='vm.model.merchantId && vm.model.channelId' 
+                                        merchant-id='vm.model.merchantId' 
+                                        channel-id='vm.model.channelId' 
+                                        season-id='vm.model.seasonId'>
+                </admin-season-sellector>
+            
+                <admin-event-sellector  ng-if='vm.model.merchantId && vm.model.channelId && vm.model.seasonId' 
+                                        merchant-id='vm.model.merchantId' 
+                                        channel-id='vm.model.channelId' 
+                                        season-id='vm.model.seasonId' 
+                                        event-id='vm.model.eventId'
+                                        event-data='vm.model.eventData'>
+                </admin-event-sellector>
+            </section>
+    
+            
+            
+    
+            <!--Document Selection-->
+            <ul>
+                <li>
+                    <label for="shipping">
+                        <input type="radio" id='shipping' name='planningDoc', value='shipping' ng-model='vm.model.document'>Shipping
+                    </label>
+                </li>
+                <li>
+                    <label for="mfg">
+                        <input type="radio" id='mfg' name='planningDoc', value='mfg' ng-model='vm.model.document'>Manufacturing
+                    </label>
+                </li>
+                <li>
+                    <label for="budgeting">
+                        <input type="radio" id='budgeting' name='planningDoc', value='budgeting' ng-model='vm.model.document'> Budgeting 
+                    </label>
+                </li>
+            </ul>
+    
+        </div>
+        <!--Right Side-->
+        <div class="col-md-7 col-lg-7">
+            <div ng-if='vm.model.eventId != ""'>
+                <h3>{{vm.model.eventData.channel}}</h3>
+                <strong>{{vm.model.eventData.schedule.startsAt | date : "EEEE, MMMM d"}}</strong>
+            
+                <!--Document Work-->
+                <!--Shipping-->
+                <section ng-if="vm.model.document == 'shipping'">
+                    <STRONG>SHIPPING ORDER</STRONG>
+                    <admin-shipping-order   event-id='vm.model.eventId'
+                                            event-data='vm.model.eventData'>
+
+                    </admin-shipping-order>
+                </section>
+        
+                <!--Manufacturing-->
+                <section ng-if="vm.model.document == 'mfg'">
+                    <STRONG>MANUFACTURING ORDER</STRONG>
+                    <admin-mfg-order></admin-mfg-order>
+                </section>
+        
+                <!--Budgeting-->
+                <section ng-if="vm.model.document == 'budgeting'">
+                    <STRONG>BUDGET</STRONG>
+                    <admin-event-budget></admin-event-budget>
+                </section>
+            </div>
+        </div> 
+
+        
+
+    </div>
+</div>

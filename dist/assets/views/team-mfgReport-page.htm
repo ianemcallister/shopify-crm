@@ -1,0 +1,93 @@
+<div>
+    <div class="container">
+        <h3 style='text-align: center; margin-top: 30px;'>29 Kettle: Mobile Retail</h3>
+        <h4 style='text-align: center;'>{{vm.report.channel}} Manufacturing Report</h4> <!-- Add market name here-->
+        <div class="row">
+            <div class="col">
+                <strong>Assigned to: </strong>{{ vm.report.assignedTo.name}} 
+            </div>
+            <div class="col">
+                <strong>Device name:</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <strong>Event date: </strong> {{vm.report.eventDate | date : "shortDate"}}
+            </div>
+            <div class="col">
+                <strong>Device id: </strong>
+            </div>
+        </div>
+        
+        <!--First Row-->
+        <div class="row" style='margin-top: 20px;'>
+            <div class="col">
+                <!--Cook Time Chart-->
+                <team-cook-time-chart>
+                </team-cook-time-chart>
+            </div>
+            
+            <div class="col">
+                <!--Cooking Recorder-->
+                <team-record-cooking orders='vm.report.orders' supplies='vm.report.supplies'>
+                </team-record-cooking>
+
+            </div>
+
+            <div class="col">
+                <!--Raw Supply Levels-->
+                <team-raw-supply-levels supplies='vm.report.supplies' orders='vm.report.orders'>
+                </team-raw-supply-levels>
+            </div>
+
+        </div>
+
+        <!--Second Row-->
+        <div class="row" style='margin-top: 20px;'>
+            <div class="col">
+                <!--Cooked Supply Levels-->
+                <team-cooked-supply-levels>
+                </team-cooked-supply-levels>
+            </div>
+            <div class="col">
+                <!--All MFG txs-->
+                <team-all-mfg-txs txs='vm.report.orders'>
+                </team-all-mfg-txs>
+            </div>
+        </div>
+        
+
+
+
+    
+        <!--
+        <section>
+            <h4>Cooking</h4>
+            <h4>Resources</h4>
+            <ul>
+                <li>Staged Pecans</li>
+                <li>Staged Almonds</li>
+                <li>Staged Cashews</li>
+                <li>Staged Peanuts</li>
+                <li>Staged Hazelnuts</li>
+                <li>Salt</li>
+                <li>Sweet & Salty Mix Supply</li>
+                <li>Bourbon Supply</li>
+                <li>Pint Cups</li>
+                <li>Pint Linds</li>
+                <li>Half Pint Cups</li>
+                <li>Half Pint Lids</li>
+                <li>Platter Bases</li>
+                <li>Platter Lids</li>
+                <li>Tape</li>
+                <li>Paper Towels</li>
+                <li>Cooking Trays</li>
+                <li>Hand Soap</li>
+                <li>Trash Bags</li>
+            </ul>
+        </section>-->
+    </div>
+
+
+
+</div>

@@ -1,0 +1,87 @@
+<div>
+    <!-- Create Template-->
+    <div ng-if='false'>
+        <I>Currently there is no shipping order for this event</I> <br>
+        
+        <button class='btn btn-success'
+                ng-click='vm.createShippingOrderFromTemplate()'>
+            Create Shipping Order From Template
+        </button> <br>
+
+        <button class='btn btn-success'
+                ng-click='vm.createBlankShippingOrder()'>
+            Create Blank Shipping Order
+        </button>
+
+    </div>
+
+    <!--Order Table-->
+    <div ng-if='vm.order != null'>
+
+        <button class="btn btn-success" ng-click='vm.saveOrder()'>Save</button>
+
+        <table class="table">
+            <tr>
+                <th>Item</th>
+                <th>Options</th>
+            </tr>
+            
+            <tr ng-repeat='item in vm.order.items'>
+                
+                <!--Type of Item-->
+                <!--setting the category-->
+                <td ng-if='item.category == ""'>
+                    <admin-role-selector category="item.category" role="item.role"></admin-role-selector>
+                </td>
+
+                <td ng-if='item.category != ""'>
+                    {{item}}
+                    <strong>{{vm.itemRoles[item.role].name}}</strong> <br>
+                    <I>{{vm.itemRoles[item.role].description}}</I>
+
+                </td>
+                <!--Specific Items-->
+                <td ng-if='item.category != ""'>
+
+                    <table class="table">
+                        <tr ng-repeat="option in vm.roleOptions[item.role]">
+                            <td>
+                                <input  type="radio" 
+                                        name='item{{item.role}}' 
+                                        id='option{{option._id}}' 
+                                        ng-model='item.item' 
+                                        value='{{option._id}}'>
+                           
+                                <label class="form-check-label" for="option{{option._id}}">
+                                    {{option.name}}
+                                </label>
+                            </td>
+                            <!--Status of Specific Items-->
+                            <td>
+                                <span ng-if="option.usage[vm.eventData.simpleDate] == undefined">
+                                    <strong>AVAILABLE</strong>
+                                </span>
+    
+                                <span ng-if="option.usage[vm.eventData.simpleDate] != undefined">
+                                    <strong>SCHEDULED</strong>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </td>
+
+            </tr>
+
+            <!--Add rows-->
+            <tr>
+                <td>
+                    <button class='btn btn-success' ng-click='vm.addItem()'>Add Item</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+</div>

@@ -1,0 +1,12 @@
+<div>
+    Category: {{vm.category}} <br>
+    Role: {{vm.role}} <br>
+    <label for="roles">
+        Category:
+        <input list='roles' id='roles-sellector' name='role' ng-model='vm.role'>
+        
+        <datalist id='roles'>
+            <option ng-repeat='(key, value) in vm.allRoles track by $index' value="{{key}}">{{value.name}}</option>
+        </datalist>
+    </label>
+</div>

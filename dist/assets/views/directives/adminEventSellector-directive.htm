@@ -1,0 +1,10 @@
+<div>
+    <label for="season">
+        Event:
+        <input list='events' id='event-sellector' name='events' ng-model='eventWeek'>
+        
+        <datalist id='events'>
+            <option ng-repeat='event in vm.events' value="{{event.weekNum}}" >{{event.schedule.startsAt | date : "shortDate"}}</option>
+        </datalist>
+    </label>
+</div>
