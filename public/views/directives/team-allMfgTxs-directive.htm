@@ -1,3 +1,20 @@
 <div>
     <h5 style='text-align: center;'>Manufacturing Transactions</h5>
+
+    <!--Overflow Box-->
+    <div style='overflow: auto;'>
+        <!--List-->
+        <div class="row" ng-repeat="(key, value) in vm.txs">
+            <!--Tx Items-->
+            <!--Time-->
+            <div class="col-4">
+                {{ key | date : "shortTime"}}
+            </div>
+            <div class="col-8">
+                <I>{{value.description}}</I>
+            </div>
+
+        </div>
+    </div>
+
 </div>
