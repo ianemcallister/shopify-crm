@@ -33,16 +33,11 @@ function teamMfgReportController($scope, $log, $routeParams, $firebaseObject, lo
 		//	When the data loads, process it
 
 		//	BUILD SUPPLY LEVELS
-		var newSupplies = logicService.buildMfgReportSupplyLevels(data);
-
-		//	add each supply
-		Object.keys(newSupplies).forEach(function(supplyKey) {
-			$scope.vm.report.supplies[supplyKey].qty = newSupplies[supplyKey].qty;
-		});
+		$scope.vm.report.supplies = logicService.buildMfgReportSupplyLevels(data);
 
 		report.$save()
 		.then(function(ref) {
-
+			console.log('db load updates saved');
 		}).catch(function(e) {
 			console.log("error: ", e);
 		})

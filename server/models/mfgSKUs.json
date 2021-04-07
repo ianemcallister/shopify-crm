@@ -114,18 +114,33 @@
     "units" : "count"
   },
   "320BNCSH" : {
+    "components": {
+      "320SCSHG": -1,
+      "BURBONMX": -3,
+      "RAWSSALT": -0.4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Bourbon Cashews",
     "qty" : 32,
     "units" : "ounces"
   },
   "320SSCSH" : {
+    "components": {
+      "320SCSHG": -1,
+      "SWTSLTMX": -3,
+      "RAWSSALT": -0.4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Sweet & Salty Cashews",
     "qty" : 32,
     "units" : "ounces"
   },
   "330BNPCN" : {
+    "components": {
+      "330SPCNG": -1,
+      "BURBONMX": -4,
+      "RAWSSALT": -0.4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Bourbon Pecans",
     "qty" : 33,
@@ -133,9 +148,9 @@
   },
   "330SPCNG" : {
     "components" : {
-      "032FLOZP" : 1,
-      "RAWPECNS" : 21,
-      "RAWSUGAR" : 12
+      "032FLOZP" : -1,
+      "RAWPECNS" : -21,
+      "RAWSUGAR" : -12
     },
     "hasComponents" : true,
     "name" : "Full Batch: Staged Pecans",
@@ -144,9 +159,9 @@
   },
   "400SPNTG" : {
     "components" : {
-      "032FLOZP" : 1,
-      "RAWPENTS" : 24,
-      "RAWSUGAR" : 16
+      "032FLOZP" : -1,
+      "RAWPENTS" : -24,
+      "RAWSUGAR" : -16
     },
     "hasComponents" : true,
     "name" : "Full Batch: Staged Peanuts",
@@ -155,9 +170,9 @@
   },
   "320SCSHG" : {
     "components" : {
-      "032FLOZP" : 1,
-      "RAWCSHWS" : 20,
-      "RAWSUGAR" : 12
+      "032FLOZP" : -1,
+      "RAWCSHWS" : -20,
+      "RAWSUGAR" : -12
     },
     "hasComponents" : true,
     "name" : "Full Batch: Staged Cashews",
@@ -165,6 +180,11 @@
     "units" : "count"
   },
   "330SSPCN" : {
+    "components": {
+      "RAWSSALT": -0.4,
+      "330SPCNG": -1,
+      "SWTSLTMX": -4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Sweet & Salty Pecans",
     "qty" : 33,
@@ -174,12 +194,22 @@
     "name" : "Platter"
   },
   "360BNALM" : {
+    "components": {
+      "360SALMG": -1,
+      "BURBONMX": -4,
+      "RAWSSALT": -0.4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Bourbon Almonds",
     "qty" : 36,
     "units" : "ounces"
   },
   "360BNHZL" : {
+    "components": {
+      "360SHZLG": -1,
+      "BURBONMX": -4,
+      "RAWSSALT": -0.4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Bourbon Hazelnuts",
     "qty" : 36,
@@ -187,9 +217,9 @@
   },
   "360SALMG" : {
     "components" : {
-      "032FLOZP" : 1,
-      "RAWSUGAR" : 12,
-      "RWALMNDS" : 24
+      "032FLOZP" : -1,
+      "RAWSUGAR" : -12,
+      "RWALMNDS" : -24
     },
     "hasComponents" : true,
     "name" : "Full Batch: Staged Almonds",
@@ -198,9 +228,9 @@
   },
   "360SHZLG" : {
     "components" : {
-      "032FLOZP" : 1,
-      "RAWSUGAR" : 12,
-      "RWHZLNTS" : 24
+      "032FLOZP" : -1,
+      "RAWSUGAR" : -12,
+      "RWHZLNTS" : -24
     },
     "hasComponents" : true,
     "name" : "Full Batch: Staged Hazelnuts",
@@ -209,9 +239,9 @@
   },
   "360SSALM" : {
     "components" : {
-      "360SALMG" : 1,
-      "RAWSSALT" : 0.4,
-      "SWTSLTMX" : 4
+      "360SALMG" : -1,
+      "RAWSSALT" : -0.4,
+      "SWTSLTMX" : -4
     },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Sweet & Salty Almonds",
@@ -219,6 +249,11 @@
     "units" : "ounces"
   },
   "360SSHZL" : {
+    "components": {
+      "360SHZLG": -1,
+      "SWTSLTMX": -4,
+      "RAWSSALT": -0.4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Sweet & Salty Hazelnuts",
     "qty" : 36,
@@ -231,6 +266,11 @@
     "units" : "ounces"
   },
   "400SSPNT" : {
+    "components": {
+      "400SPNTG": -1,
+      "SWTSLTMX": -4,
+      "RAWSSALT": -0.4
+    },
     "hasComponents" : true,
     "name" : "Full Batch Cooked Sweet & Salty Peanuts",
     "qty" : 40,
@@ -316,8 +356,8 @@
   },
   "SWTSLTMX" : {
     "components" : {
-      "PUREWATR" : 0.75,
-      "RWVANILA" : 0.25
+      "PUREWATR" : -0.75,
+      "RWVANILA" : -0.25
     },
     "hasComponents" : true,
     "name" : "Sweet & Salty Mix",

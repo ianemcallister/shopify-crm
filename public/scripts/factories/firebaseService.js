@@ -21,7 +21,7 @@ function FirebaseService($log, $http) {
         value: "something",
         read: read,
         mfg: {
-            recordCooking: RecordCookingBatch
+            collectSku : CollectSku
         },
         test: function() { console.log('firebase Mod Test') }
     };
@@ -36,12 +36,12 @@ function FirebaseService($log, $http) {
     /*
     *   RECORD COOKING BATCH
     */
-    function RecordCookingBatch(order) {
+    function CollectSku(sku) {
         //  NOTIFY PROGRESS
-        console.log('RecordCookingBatch got this order: ', order);
+        console.log('CollectSku got this order: ', sku);
 
         //  LOCAL VARIABLES
-        var readPath = 'Inventory/MFG/' + order.sku;
+        var readPath = 'Inventory/MFG/' + sku;
         var _db = firebase.database();
         var _ref = _db.ref(readPath);
         //  EXECUTE

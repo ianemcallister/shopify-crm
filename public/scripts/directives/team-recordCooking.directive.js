@@ -9,8 +9,8 @@ function teamRecordCooking() {
         templateUrl: 'assets/views/directives/team-recordCooking-directive.htm',
         replace: true,
         scope: {
-            merchantId: "=",
-            channelId: "="
+            orders: "=",
+            supplies: "="
         },
         link: linkFunc,
         controller: teamRecordCookingController,
@@ -23,10 +23,10 @@ function teamRecordCooking() {
         
     }
     
-    teamRecordCookingController.$inject = ['$scope', '$log', '$firebaseObject', 'FirebaseService'];
+    teamRecordCookingController.$inject = ['$scope', '$log', '$firebaseObject', 'FirebaseService', 'logicService'];
 
     /* @ngInject */
-    function teamRecordCookingController($scope, $log, $firebaseObject, FirebaseService) {
+    function teamRecordCookingController($scope, $log, $firebaseObject, FirebaseService, logicService) {
         //	NOTIFY PROGRESS
         console.log('teamRecordCookingController');
         //	DEFINE: PRIVATE VARIABLES
@@ -75,29 +75,45 @@ function teamRecordCooking() {
                 console.log('second click');
 
                 //  LOCAL VARIABLES
+                var timestamp = moment().format('YYYY-MM-DDTHH:mm:ssZ')
+                var newSku = "";
                 var order = {
                     sku: "",
-                    qty: 1
+                    qty: 1,
+                    description: "",
+                    updates: {}
                 };
-                if($scope.vm.areFullBatches) {
-                    // if full batches
-                    order.sku = $scope.vm.recipies[key].product.fbsku;
-                } else {
-                    // if half batches
-                    order.sku = $scope.vm.recipies[key].product.hbsku;
-                }
 
-                // fire off update
-                FirebaseService.mfg.recordCooking(order)
-                .then(function(success) {
-                    console.log(success);
-                    //  reset buttons
-                    if($scope.vm.recipies[key].classes[0] == "btn-info") $scope.vm.recipies[key].classes = ["btn-outline-info"];
-                    if($scope.vm.recipies[key].classes[0] == "btn-warning") $scope.vm.recipies[key].classes = ["btn-outline-warning"];
+                //  ASSIGN SKU
+                if($scope.vm.areFullBatches) { newSku = $scope.vm.recipies[key].product.fbsku; } else { newSku = $scope.vm.recipies[key].product.hbsku; }
+                
+                //  BUILD ORDER VALUES
+                order.sku = newSku;
 
+                //  COLLECT FIREBASE RECORD
+                FirebaseService.mfg.collectSku(newSku)
+                .then(function(skuRecord) {
 
-                }).catch(function(error) {
-                    console.log('Error: ', error);
+                    console.log('got this sku record: ', skuRecord);
+
+                    order.description = skuRecord.name,
+                    order.updates = skuRecord.components;
+
+                    console.log('order to write: ', order);
+
+                    //  EXECUTE UPDATES
+                    //  1. ADD MFG TX
+                    $scope.vm.orders[timestamp] = order;
+
+                    //  2. UPDATE SUPPLY LEVELS
+                    Object.keys(order.updates).forEach(function(key) {
+                        $scope.vm.supplies[key].qty += order.updates[key];
+                    });
+
+                    $scope.$apply();
+
+                }).catch(function(e) {
+                    console.log('Error: ', e);
                 });
 
             };

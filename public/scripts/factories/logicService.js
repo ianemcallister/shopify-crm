@@ -18,7 +18,7 @@ function logicService($log) {
 
     //  DEFINE METHODS
     var logicMod = {
-        buildMfgReportSupplyLevels: BuildMfgReportSupplyLevels
+        buildMfgReportSupplyLevels:     BuildMfgReportSupplyLevels
     };
 
     /*
@@ -26,7 +26,7 @@ function logicService($log) {
     */
     function BuildMfgReportSupplyLevels(data) {
         //  NOTIFY PROGRESS
-        console.log('building mfg report supply levels');
+        console.log('building mfg report supply levels', data);
         //  DEFINE LOCAL VARIABLES
         var supplies        = data.supplies;
         var orders          = data.orders;
@@ -44,7 +44,7 @@ function logicService($log) {
 
                 //  REFLECT THE UPDATES
                 supplies[updateKey].qty += orders[orderKey].updates[updateKey];
-                console.log(updateKey, orders[orderKey].updates[updateKey]);
+                //console.log(updateKey, orders[orderKey].updates[updateKey]);
             });
 
         });
@@ -53,6 +53,7 @@ function logicService($log) {
         //  RETURN
         return supplies;
     };
+
 
 
     //   RETURN
