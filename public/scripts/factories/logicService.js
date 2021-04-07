@@ -39,7 +39,10 @@ function logicService($log) {
         //  ITERATE OVER ORDERS
         Object.keys(orders).forEach(function(orderKey) {
 
-            //  ITERATE OVER UPDATES
+            //  LOCAL VARIABLES
+            var sku = orders[orderKey].sku;
+
+            //  ITERATE OVER UPDATES - CONSUMED MATERIALS
             Object.keys(orders[orderKey].updates).forEach(function(updateKey) {
 
                 //  REFLECT THE UPDATES
@@ -47,7 +50,14 @@ function logicService($log) {
                 //console.log(updateKey, orders[orderKey].updates[updateKey]);
             });
 
+            //  ADDRESS PRODUCED MATERIALS
+            if(sku == "330SSPCN" || sku == "360SSHZL" || sku == "360SSALM" || sku == "320SSCSH" || sku == "400SSPNT" || sku == "330BNPCN" || sku == "360BNHZL" || sku == "360BNALM") {
+                supplies[sku].qty += orders[orderKey].qty
+            }
+            
         });
+
+        //  UPDATE PRODUCED
 
 
         //  RETURN

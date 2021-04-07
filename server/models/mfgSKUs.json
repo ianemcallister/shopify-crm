@@ -1,24 +1,64 @@
 {
   "032FLOZP" : {
-    "hasComponents" : false,
     "name" : "Quart Ziploc",
+    "hasComponents" : false,
     "qty" : 1,
     "units" : "count"
   },
   "08BNALMS" : {
-    "name" : "Half Pint Bourbon Almonds"
+    "name" : "Half Pint Bourbon Almonds",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "360BNALM": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08BNCSHS" : {
-    "name" : "Half Pint Bourbon Cashews"
+    "name" : "Half Pint Bourbon Cashews",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "320BNCSH": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08BNHZNS" : {
-    "name" : "Half Pint Bourbon Hazelnuts"
+    "name" : "Half Pint Bourbon Hazelnuts",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "360BNHZL": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08BNPNCS" : {
-    "name" : "Half Pint Bourbon Pecans"
+    "name" : "Half Pint Bourbon Pecans",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "330BNPCN": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08BNPNTS" : {
-    "name" : "Half Pint Bourbon Peanuts"
+    "name" : "Half Pint Bourbon Peanuts",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "400BNPNT": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08FLOCPS" : {
     "hasComponents" : false,
@@ -33,22 +73,77 @@
     "units" : "count"
   },
   "08MIXTUP" : {
-    "name" : "Half Pint Mix"
+    "name" : "Half Pint Mix",
+    "components": {
+      "08FLOCPS": -1,
+      "08FLOLDS": -1,
+      "330BNPCN": -1,
+      "360BNALM": -1,
+      "360BNHZL": -1,
+      "330SSPCN": -1,
+      "360SSALM": -1,
+      "360SSHZL": -1,
+      "320SSCSH": -1,
+      "400SSPNT": -1
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08SSALMS" : {
-    "name" : "Half Pint Sweet & Salty Almonds"
+    "name" : "Half Pint Sweet & Salty Almonds",
+    "components": {
+      "08FLOCPS": -1,
+      "08FLOLDS": -1,
+      "360SSALM": -4
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08SSCSHS" : {
-    "name" : "Half Pint Sweet & Salty Cashews"
+    "name" : "Half Pint Sweet & Salty Cashews",
+    "components": {
+      "08FLOCPS": -1,
+      "08FLOLDS": -1,
+      "320SSCSH": -4
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08SSHZNS" : {
-    "name" : "Half Pint Sweet & Salty Hazelnuts"
+    "name" : "Half Pint Sweet & Salty Hazelnuts",
+    "components": {
+      "08FLOCPS": -1,
+      "08FLOLDS": -1,
+      "360SSHZL": -4
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08SSPNCS" : {
-    "name" : "Half Pint Sweet & Salty Pecans"
+    "name" : "Half Pint Sweet & Salty Pecans",
+    "components": {
+      "08FLOCPS": -1,
+      "08FLOLDS": -1,
+      "330SSPCN": -4
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "08SSPNTS" : {
-    "name" : "Half Pint Sweet & Salty Peanuts"
+    "name" : "Half Pint Sweet & Salty Peanuts",
+    "components": {
+      "08FLOCPS": -1,
+      "08FLOLDS": -1,
+      "400SSPNT": -4
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "128FLOZP" : {
     "hasComponents" : false,
@@ -69,19 +164,59 @@
     "units" : "count"
   },
   "16BNALMS" : {
-    "name" : "Pint Bourbon Almonds"
+    "name" : "Pint Bourbon Almonds",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "360BNALM": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16BNCSHS" : {
-    "name" : "Pint Bourbon Cashews"
+    "name" : "Pint Bourbon Cashews",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "320BNCSH": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16BNHZNS" : {
-    "name" : "Pint Bourbon Hazelnuts"
+    "name" : "Pint Bourbon Hazelnuts",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "360BNHZL": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16BNPNCS" : {
-    "name" : "Pint Bourbon Pecans"
+    "name" : "Pint Bourbon Pecans",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "330BNPCN": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16BNPNTS" : {
-    "name" : "Pint Bourbon Peanuts"
+    "name" : "Pint Bourbon Peanuts",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "400BNPNT": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16FLOCPS" : {
     "hasComponents" : false,
@@ -90,22 +225,77 @@
     "units" : "count"
   },
   "16MIXTUP" : {
-    "name" : "Pint Mix"
+    "name" : "Pint Mix",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "330BNPCN": -2,
+      "360BNALM": -2,
+      "360BNHZL": -2,
+      "330SSPCN": -2,
+      "360SSALM": -2,
+      "360SSHZL": -2,
+      "320SSCSH": -2,
+      "400SSPNT": -2
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16SSALMS" : {
-    "name" : "Pint Sweet & Salty Almonds"
+    "name" : "Pint Sweet & Salty Almonds",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "360SSALM": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16SSCSHS" : {
-    "name" : "Pint Sweet & Salty Cashews"
+    "name" : "Pint Sweet & Salty Cashews",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "320SSCSH": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16SSHZNS" : {
-    "name" : "Pint Sweet & Salty Hazelnuts"
+    "name" : "Pint Sweet & Salty Hazelnuts",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "360SSHZL": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16SSPNCS" : {
-    "name" : "Pint Sweet & Salty Pecans"
+    "name" : "Pint Sweet & Salty Pecans",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "330SSPCN": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "16SSPNTS" : {
-    "name" : "Pint Sweet & Salty Peanuts"
+    "name" : "Pint Sweet & Salty Peanuts",
+    "components": {
+      "16FLOCPS": -1,
+      "16FLOLDS": -1,
+      "400SSPNT": -8
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "180SALMQ" : {
     "hasComponents" : true,
@@ -191,7 +381,23 @@
     "units" : "ounces"
   },
   "34MIXTUP" : {
-    "name" : "Platter"
+    "name" : "Platter",
+    "components": {
+      "68FLOPLB": -1,
+      "68FLOPLL": -1,
+      "330BNPCN": -4.25,
+      "360BNALM": -4.25,
+      "360BNHZL": -4.25,
+      "330SSPCN": -4.25,
+      "360SSALM": -4.25,
+      "360SSHZL": -4.25,
+      "320SSCSH": -4.25,
+      "400SSPNT": -4.25,
+      "2INBSTKR": -1
+    },
+    "hasComponents" : true,
+    "qty" : 1,
+    "units" : "count"
   },
   "360BNALM" : {
     "components": {
@@ -289,6 +495,10 @@
     "units" : "count"
   },
   "BURBONMX" : {
+    "components": {
+      "PUREWATR": -0.5,
+      "RWBURBON": -0.5
+    },
     "hasComponents" : true,
     "name" : "Bourbon Mix",
     "qty" : 1,
@@ -301,7 +511,7 @@
     "units" : "fluid_ounces"
   },
   "RAWCSHWS" : {
-    "hasComponents" : "fals",
+    "hasComponents" : false,
     "name" : "Raw Cashews",
     "qty" : 1,
     "units" : "ounces"
@@ -363,5 +573,19 @@
     "name" : "Sweet & Salty Mix",
     "qty" : 1,
     "units" : "fluid_ounces"
+  },
+  "2INBSTKR": {
+    "components": {
+      "2INRBSTR": -1
+    },
+    "hasComponents": true,
+    "name": "2 inch Round, Branded Sticker",
+    "qty": 1,
+    "units": "count"
+  },
+  "2INRBSTR": {
+    "name": "2 inch Round, Blank Stickers",
+    "qty": 1,
+    "units": "count"
   }
 }
