@@ -7,6 +7,7 @@ module.exports = (function() {
     //  DEFINE DEPENDENCIES
     var webhookRoutes       = require('express').Router();
     var rewards             = require('../rewards/enrollment.js');
+    var rcdPayment          = require('../automations/recordSquarePayment');
 
     function _parseMappings(mappings) {
         //  NOTIFY PROGRESS
@@ -105,12 +106,15 @@ module.exports = (function() {
                 //  RETURN
                 res.sendStatus(200);
             } else if(req.body.type == "payment.created") {
-                 //  NOTIFY PROGRESS
-                 console.log('payment created');
-                 console.log(data.payment); 
+                //  NOTIFY PROGRESS
+                console.log('payment created');
+                console.log(data.payment); 
 
                 //  DEFINE LOCAL VARIABLES
-                var paymentId = data.payment.id;
+                var record = data.payment;
+
+                await rcdPayment.usingPaymentId(record)
+                console.log('Payment processed locally');
 
                 res.sendStatus(200);
             } else {

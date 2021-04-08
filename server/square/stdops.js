@@ -13,7 +13,9 @@ const client = new Client({
 
 //  DEFINE MODULE
 var squareStOps = {
-    payments: {},
+    payments: {
+        get: GetPayment
+    },
     orders: {},
     subscriptiosn: {},
     invoices: {},
@@ -84,6 +86,23 @@ async function _SearchLoyalty(params) {
         return result;
     } catch (error) {
         console.log('_SearchLoyalty Error: ', error);
+    }
+}
+
+/*
+*
+*/
+async function GetPayment(paymentId) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const paymentsApi = client.paymentsApi;
+
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await paymentsApi.getPayment(paymentId);
+        return result
+    } catch (error) {
+        console.log('GetPayment Error: ', error);
     }
 }
 

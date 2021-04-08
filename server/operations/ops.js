@@ -34,6 +34,11 @@ var opsObject = {
         Items: {
             create: createInventoryItems
         }
+    },
+    Actualizations: {
+        Mfg: {
+            create: CreateMfgReport
+        }
     }
 };
 
@@ -302,6 +307,30 @@ async function createInventoryItems(item) {
     } catch (error) {
         console.log('CreateInventoryItems Error: ');
         console.log(error);
+    }
+};
+
+/*
+*
+*/
+async function CreateMfgReport(data) {
+    //  NOTIFY PROGRESS
+
+    //  LOCAL VARIABLES
+    var timestamp   = new Date(Date.now()).toISOString();
+    let reportId    = Firebase.get.pushId();
+    let writePath   = 'Actualizations/Mfg/' + reportId;
+    data._createdAt = timestamp;
+    data._updatedAt = timestamp;
+    data._createdBy = "admin";
+    data._updatedBy = "admin";
+    data.id         = reportId;
+
+    //  EXECUTE
+    try {
+        Firebase.Actualizations.Mfg.createReport(writePath, data);
+    } catch (error) {
+        console.log("Error: ", error);
     }
 };
 

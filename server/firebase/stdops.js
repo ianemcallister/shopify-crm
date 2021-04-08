@@ -68,6 +68,12 @@ var firebaseStOps = {
             Create: CreateInventoryItems
         }
     },
+    Actualizations: {
+        Mfg: {
+            createReport: CreateMfgReport,
+            recordByDevice: GetMFGRecordByDevice
+        }
+    },
     test: test
 };
 
@@ -557,6 +563,42 @@ async function CreateInventoryItems(writePath, item) {
     } catch (error) {
         console.log('CreateInventoryItems Error: ');
         console.log(error);
+    }
+};
+
+/*
+*
+*/
+async function CreateMfgReport(writePath, data) {
+    //  NOITIFY
+    //  LOCAL
+
+    //  EXECTUE
+    try {
+        await _update(writePath, data);
+        console.log('Created Mfg report at: ', writePath);
+    } catch (error) {
+        console.log('CreateInventoryItems Error: ');
+        console.log(error);
+    }   
+}
+
+/*
+*
+*/
+async function GetMFGRecordByDevice(deviceId) {
+    //  NOTIFY PROGRESS
+    //  LOCAL 
+    var ref = db.ref('Actualizations/Mfg');
+    var reportsQuery = ref.orderByChild('device/id').equalTo(deviceId);
+
+    //  EXECUTE
+    try {
+        reportsQuery.on("value", function(snapshot) {
+            return snapshot.val();
+        });
+    } catch (error) {
+        console.log('GetMFGRecordByDevice Error: ', error);
     }
 };
 
