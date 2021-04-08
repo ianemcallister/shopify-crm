@@ -28,6 +28,7 @@ var db = admin.database();
 var firebaseStOps = {
     updateCustomerRecord: UpdateCustomerRecord,
     updateReferralRecord: UpdateReferralRecord,
+    update: _update,
     create: {
         newMerchCustomerRecord: CreateNewMerchCustomerRecord,
         newMerchantRecord: CreateNewMerchantRecord
@@ -66,12 +67,19 @@ var firebaseStOps = {
         },
         Items: {
             Create: CreateInventoryItems
+        },
+        MFG: {
+            get: GetInventoryMfgSku,
+            list: GetInventoryMfgList
         }
     },
     Actualizations: {
         Mfg: {
+            dailyReports: GetDailyReports,
             createReport: CreateMfgReport,
-            recordByDevice: GetMFGRecordByDevice
+            recordByDevice: GetMFGRecordByDevice,
+            updateOrders: UpdateMfgOrders,
+            updateSupplies: UpdateMfgSupplies
         }
     },
     test: test
@@ -569,6 +577,65 @@ async function CreateInventoryItems(writePath, item) {
 /*
 *
 */
+async function GetInventoryMfgSku(sku) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var readPath = "Inventory/MFG/" + sku;
+    var ref = db.ref(readPath);
+
+    //  EXECUTE
+    try {
+        return ref.once('value', function(snapshot) {
+            console.log('got GetInventoryMfgSku snapshot');
+        });
+    } catch (error) {
+        console.log('GetInventoryMfgSku Error: ', error);
+    }
+} 
+
+/*
+*
+*/
+async function GetInventoryMfgList() {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    var readPath = 'Inventory/MFG';
+    var ref = db.ref(readPath);
+
+    //  EXECUTE
+    try {
+        return ref.once('value', function(snapshot) {
+            console.log('got GetInventoryMfgList snapshot');
+        });
+    } catch (error) {
+        console.log('GetInventoryMfgList error: ', error);
+    }
+};
+
+/*
+*
+*/
+async function GetDailyReports(reportsDate) {
+    //  NOTIFY
+    //  LOCAL
+    var readPath = "Actualizations/Mfg"
+    var ref = db.ref(readPath);
+    var reportsQuery = ref.orderByChild('eventDate').equalTo(reportsDate);
+
+    //  EXECUTE
+    try {
+        return reportsQuery.once("value", function(snapshot) {
+            //console.log('got these reports');
+            //console.log(snapshot.val());
+        });
+    } catch (e) {
+       console.log("GetDailyReports Error: ", e); 
+    }
+}
+
+/*
+*
+*/
 async function CreateMfgReport(writePath, data) {
     //  NOITIFY
     //  LOCAL
@@ -600,6 +667,42 @@ async function GetMFGRecordByDevice(deviceId) {
     } catch (error) {
         console.log('GetMFGRecordByDevice Error: ', error);
     }
+};
+
+/*
+*
+*/
+async function UpdateMfgOrders(data) {
+    //  NOTIFY PROGRESS
+    //  LOCAL FUNCTIONS
+    var updatePath = "Actualizations/Mfg/" + data.id + "/orders";
+
+    //  EXECUTE
+    try {
+        var result = _update(updatePath, data.updates);
+        return result;
+    } catch (e) {
+        console.log("UpdateMfgOrders Error: ", e);
+    }
+    
+};
+
+/*
+*
+*/
+async function UpdateMfgSupplies(data) {
+    //  NOTIFY PROGRESS
+    //  LOCAL FUNCTIONS
+    var updatePath = "Actualizations/Mfg/" + data.id + "/supplies";
+
+    //  EXECUTE
+    try {
+        var result = _update(updatePath, data.updates);
+        return result;
+    } catch (e) {
+        console.log("UpdateMfgOrders Error: ", e);
+    }
+    
 };
 
 //  EXPORT MODULE

@@ -5,6 +5,7 @@
 //  DEFINE DEPENDENCIES
 const { merchants } = require('../firebase/stdops.js');
 var Firebase        = require('../firebase/stdops.js');
+const Square        = require('../square/stdops');
 var moment          = require('moment');
 const fs            = require('fs');
 
@@ -37,7 +38,10 @@ var opsObject = {
     },
     Actualizations: {
         Mfg: {
-            create: CreateMfgReport
+            create: CreateMfgReport,
+            selectReportFromReports:    SelectMfgReportFromReports,
+            buildOrderUpdates:          BuildMfgOrderUpdates,
+            buildSuppliesUpdates:       BuildMfgSuppliesUpdies
         }
     }
 };
@@ -332,6 +336,152 @@ async function CreateMfgReport(data) {
     } catch (error) {
         console.log("Error: ", error);
     }
+};
+
+/*
+*
+*/
+function SelectMfgReportFromReports(payment, reports) {
+    //  NOTIFY PROGRESS
+    //console.log("SelectMfgReportFromReports: ");
+    //console.log("payment: ", payment);
+    //console.log("reports: ", reports)
+    
+    //  LOCAL VARIABLES
+    var targetKey   = "";
+
+    //  FIND THE DEVICE DETAILS
+    if(payment.card_details.device_details != undefined) {
+        var device = payment.card_details.device_details;
+        if(device.device_installation_id != undefined) {
+            var deviceId = device.device_installation_id
+        } else {
+            if(device.device_name != undefined) {
+                var deviceName = device.device_name
+            } else {
+                var deviceName = "";
+            }
+        }
+        if(device.device_name != undefined) {
+            var deviceName = device.device_name
+        } else {
+            var deviceName = "";
+        }
+    } else {
+        deviceId = "";
+    }
+    console.log("Device Details: ", deviceId, deviceName);
+
+    //  FIND THE EMPLOYEE DETAILS
+    if(payment.employee_id != undefined) {
+        var employeeId  = payment.employee_id;
+    } else {
+        var employeeId  = "";
+    }
+    console.log("Employee Details: ", employeeId);
+
+    //  EXECUTE BASED ON FINDINGS
+    if(deviceId != "") {
+        //  FIRST TRY USING THE DEVICE ID
+        
+        Object.keys(reports).forEach(function(key) {
+            console.log(key, reports[key].device.id, deviceId && deviceId != "");
+            if(reports[key].device.id == deviceId) {
+                targetKey = key;
+                console.log('device id match');
+            } else if(reports[key].device.name == deviceName && deviceName != "") {
+                targetKey = key;
+                console.log('device name match');
+            } else if(reports[key].assignedTo.id == employeeId && employeeId != "") {
+                targetKey = key;
+                console.log('employee name match', reports[key].assignedTo.id, employeeId);
+            } 
+        });
+        console.log('targetKey: ', targetKey);
+
+        //  ONLY REUTRN GOOD VALUE
+        if(targetKey == "") {
+            
+        } else {
+            return reports[targetKey];
+        }
+
+    } else if(deviceName != "") {
+        //  NEXT TRY USING THE DEVICE NAME
+        
+    } else if(employeeId != "") {
+        //  THEN TRY USING THE EMPLOYEE ID
+
+    } else {
+        //  IF ALL THAT FAILS, WE'LL HAVE TO CREATE A NEW ANONOMUS RECORD
+    }
+
+};
+
+/*
+*
+*/
+async function BuildMfgOrderUpdates(payment, report) {
+    //  NOTIFY PROGRESS
+    console.log('BuildMfgOrderUpdates:');
+    
+    //  LOCAL VARIABLES
+    var timestamp    = new Date(Date.now()).toISOString();
+    var itemsList    = [];
+    var returnObject = {
+        id: report.id,
+        updates: {}
+    };
+
+    //  ITERATE OVER SQUARE ORDER ITEMS ARRAY, ADD ALL CATALOGY ID'S TO THE LIST TO COLLECT
+    payment.order.lineItems.forEach(function(item) {
+        itemsList.push(item.catalogObjectId);
+    });
+
+    var squareCatalogue     = await Square.items.catalog.batchList(itemsList);
+    //console.log("objects: ", squareCatalogue.objects);
+    //console.log('relatedObjects: ', squareCatalogue.relatedObjects);
+
+    //  ITERATE OVER PARALLEL SQUARE ITEMS
+    for(var i = 0; i < squareCatalogue.objects.length; i++) {
+
+        //  LOCAL VARIABLES
+        var sku                 = squareCatalogue.objects[i].itemVariationData.sku;
+        var mfgObjectSnapshot   = await Firebase.Inventory.MFG.get(sku);
+        var mfgObject           = mfgObjectSnapshot.val();
+        //  ADD OBJECT TIMESTAMP AND NEW VALUES
+        returnObject.updates[timestamp] = {
+            description: squareCatalogue.relatedObjects[i].itemData.name,
+            qty: 1, //  TODO: UPDATE THIS LATER
+            sku: sku,
+            updates: mfgObject.components
+        };  
+
+    };
+    
+    
+
+    //  EXECUTE
+    return returnObject;
+};
+
+/*
+*
+*/
+function BuildMfgSuppliesUpdies(payment, report) {
+    //  NOTIFY PROGRESS
+    //console.log('BuildMfgSuppliesUpdies:');
+    //console.log("payment: ", payment);
+    //console.log("report: ", report);
+
+    //  LOCAL VARIABLES
+    var returnObject = {
+        id: report.id,
+        updates: {}
+    };
+
+    //  EXECUTE
+    return returnObject;
 };
 
 

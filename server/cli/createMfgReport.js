@@ -19,15 +19,15 @@ async function CreateNewEvents() {
     var data = {
         assignedTo: {
             id: "",
-            name: "Laura"
+            name: "Ian"
         },
-        channel: "",
+        channel: "Test channel 2",
         completedAt: "",
         device: {
             id: "",
             name: ""
         },
-        eventDate: "2021-04-10",
+        eventDate: "2021-04-08",
         eventId: "",
         id: "",
         isReady: false,

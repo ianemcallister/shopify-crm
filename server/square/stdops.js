@@ -16,9 +16,17 @@ var squareStOps = {
     payments: {
         get: GetPayment
     },
-    orders: {},
+    orders: {
+        get: GetOrderById
+    },
     subscriptiosn: {},
     invoices: {},
+    items: {
+        catalog: {
+            batchList: GetCatalogItemsBatchList,
+            list: GetCatalogItemsList
+        }
+    },
     customers: {
         search: {
             byId: SearchCustomersById,
@@ -104,7 +112,86 @@ async function GetPayment(paymentId) {
     } catch (error) {
         console.log('GetPayment Error: ', error);
     }
+};
+
+/*
+*
+*/
+async function GetOrderById(id) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const ordersApi = client.ordersApi;
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await ordersApi.retrieveOrder(id);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result;
+    } catch(error) {
+        if (error instanceof ApiError) {
+            const errors = error.result;
+            console.log("GetOrderById Error: ", errors);
+            // const { statusCode, headers } = error;
+        }
+    }
+};
+
+/*
+*
+*/
+async function GetCatalogItemsBatchList(list) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const catalogApi = client.catalogApi;
+    const body = {
+        objectIds: list,
+    };
+    body.includeRelatedObjects = true;
+    body.catalogVersion = undefined;
+
+    //  EXECTE
+    try {
+        const { result, ...httpResponse } = await catalogApi.batchRetrieveCatalogObjects(body);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result;
+      } catch(error) {
+        if (error instanceof ApiError) {
+            console.log(error);
+            const errors = error.result;
+            // const { statusCode, headers } = error;
+        }
+      }
 }
+
+/*
+*
+*/
+async function GetCatalogItemsList() {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const catalogApi = client.catalogApi;
+    const cursor = undefined;
+    const types = undefined;
+    const catalogVersion = undefined; //126;
+
+    //  EXECTE
+    
+    try {
+        const { result, ...httpResponse } = await catalogApi.listCatalog(cursor, types, catalogVersion);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        return result
+    } catch(error) {
+        console.log(error);
+        if (error instanceof ApiError) {
+            const errors = error.result;
+            // const { statusCode, headers } = error;
+            console.log("GetCatalogItemsList Error: ", errors);
+        }
+    }
+}
+
 
 /*
 *   SEARCH CUSTOMERS BY LOYALTY ID
