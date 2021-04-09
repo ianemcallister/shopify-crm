@@ -71,6 +71,7 @@ var paymentRecord = {
 
 //  EXECUTE
 async function execute() {
+    console.log('running TestSqPayment');
     var result = await rcdPayment.usingPaymentId(paymentRecord)
     console.log(result); 
 }

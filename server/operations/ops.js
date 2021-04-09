@@ -41,7 +41,7 @@ var opsObject = {
             create: CreateMfgReport,
             selectReportFromReports:    SelectMfgReportFromReports,
             buildOrderUpdates:          BuildMfgOrderUpdates,
-            buildSuppliesUpdates:       BuildMfgSuppliesUpdies
+            buildSuppliesUpdates:       BuildMfgSuppliesUpdates
         }
     }
 };
@@ -423,24 +423,41 @@ function SelectMfgReportFromReports(payment, reports) {
 */
 async function BuildMfgOrderUpdates(payment, report) {
     //  NOTIFY PROGRESS
-    console.log('BuildMfgOrderUpdates:');
+    console.log('BuildMfgOrderUpdates: ', payment);
     
     //  LOCAL VARIABLES
-    var timestamp    = new Date(Date.now()).toISOString();
     var itemsList    = [];
     var returnObject = {
         id: report.id,
+        oldsupplyLevels: report.supplies,
         updates: {}
     };
 
     //  ITERATE OVER SQUARE ORDER ITEMS ARRAY, ADD ALL CATALOGY ID'S TO THE LIST TO COLLECT
     payment.order.lineItems.forEach(function(item) {
+        //  NOTIFY PROGRESS
+        console.log('PAYMENT Line Item: ', item);
+        
+        //  LOCAL VARIABLES
+        var timestamp = moment().format();
+
+        //  ADD OBJECT TIMESTAMP AND NEW VALUES
+        returnObject.updates[timestamp] = {
+            description: "",
+            qty: parseInt(item.quantity),
+            sku: "",
+            squareCatalogId: item.catalogObjectId,
+            updates: ""
+        }; 
+
+        //add the catalog Id to the list for square
         itemsList.push(item.catalogObjectId);
+
     });
 
     var squareCatalogue     = await Square.items.catalog.batchList(itemsList);
-    //console.log("objects: ", squareCatalogue.objects);
-    //console.log('relatedObjects: ', squareCatalogue.relatedObjects);
+    console.log("objects: ", squareCatalogue.objects);
+    console.log('relatedObjects: ', squareCatalogue.relatedObjects);
 
     //  ITERATE OVER PARALLEL SQUARE ITEMS
     for(var i = 0; i < squareCatalogue.objects.length; i++) {
@@ -449,13 +466,22 @@ async function BuildMfgOrderUpdates(payment, report) {
         var sku                 = squareCatalogue.objects[i].itemVariationData.sku;
         var mfgObjectSnapshot   = await Firebase.Inventory.MFG.get(sku);
         var mfgObject           = mfgObjectSnapshot.val();
-        //  ADD OBJECT TIMESTAMP AND NEW VALUES
-        returnObject.updates[timestamp] = {
-            description: squareCatalogue.relatedObjects[i].itemData.name,
-            qty: 1, //  TODO: UPDATE THIS LATER
-            sku: sku,
-            updates: mfgObject.components
-        };  
+
+        //  ITERATE OVER THE UPDATE OJBECTS
+        Object.keys(returnObject.updates).forEach(function(timestamp) {
+            //  NOTIFY PROGRESS
+            //  LOCAL VARIABLES
+            var sqCatId = returnObject.updates[timestamp].squareCatalogId;
+
+            //  MAKE SURE THE SQUAR CATEGORY IDS MATCH
+            if(sqCatId == squareCatalogue.objects[i].id && sqCatId != '') {
+
+                returnObject.updates[timestamp].description = squareCatalogue.relatedObjects[i].itemData.name;
+                returnObject.updates[timestamp].sku         = sku
+                returnObject.updates[timestamp].updates     = mfgObject.components
+            };
+
+        });
 
     };
     
@@ -468,7 +494,7 @@ async function BuildMfgOrderUpdates(payment, report) {
 /*
 *
 */
-function BuildMfgSuppliesUpdies(payment, report) {
+function BuildMfgSuppliesUpdates(orderUpdates) {
     //  NOTIFY PROGRESS
     //console.log('BuildMfgSuppliesUpdies:');
     //console.log("payment: ", payment);
@@ -476,9 +502,50 @@ function BuildMfgSuppliesUpdies(payment, report) {
 
     //  LOCAL VARIABLES
     var returnObject = {
-        id: report.id,
+        id: orderUpdates.id,
         updates: {}
     };
+
+    //  EXTRACT THE TIME STAMP
+    Object.keys(orderUpdates.updates).forEach(function(timestamp) {
+        //  NOTIFY PROGRESS
+        //  LOCAL VARIABLES
+        var updates     = orderUpdates.updates[timestamp].updates;
+        var multiplier  = orderUpdates.updates[timestamp].qty;
+
+        //  ITERATE OVER UPDATES
+        Object.keys(updates).forEach(function(key) {
+            
+            //  NOTIFY PROGRESS
+            console.log('orderUpdates.updates ', key, updates[key]);
+            console.log('orderUpdates.oldsupplyLevels[key]: ', key, orderUpdates.oldsupplyLevels[key])
+            
+            // LOCAL VARIABLES
+            var writePath = key + "/qty"
+            var delta = parseInt(updates[key]) * multiplier;
+            
+            if(orderUpdates.oldsupplyLevels[key] != undefined) {
+                //  LOCAL VARIABLES
+                var oldItemSupplyLevel = orderUpdates.oldsupplyLevels[key].qty;
+
+                //  notify progres
+                console.log('oldItemSupplyLevel: ', oldItemSupplyLevel);
+
+                //  If the key isn't present yet, create it
+                if(returnObject.updates[writePath] == undefined) {
+                    returnObject.updates[writePath] = oldItemSupplyLevel;
+                }
+
+                console.log('delta: ', delta);
+
+                //  add the new update value to the old value
+                returnObject.updates[writePath] += delta;
+
+            }
+            
+        });
+
+    });
 
     //  EXECUTE
     return returnObject;

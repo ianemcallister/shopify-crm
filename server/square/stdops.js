@@ -119,6 +119,7 @@ async function GetPayment(paymentId) {
 */
 async function GetOrderById(id) {
     //  NOTIFY PROGRESS
+    console.log('GetOrderById: ', id);
     //  LOCAL VARIABLES
     const ordersApi = client.ordersApi;
     //  EXECUTE
@@ -128,6 +129,7 @@ async function GetOrderById(id) {
         // const { statusCode, headers } = httpResponse;
         return result;
     } catch(error) {
+        console.log(error);
         if (error instanceof ApiError) {
             const errors = error.result;
             console.log("GetOrderById Error: ", errors);

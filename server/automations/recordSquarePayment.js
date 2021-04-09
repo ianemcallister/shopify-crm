@@ -30,9 +30,10 @@ async function UsingPaymentId(paymentRecord) {
         var desiredReport           = Ops.Actualizations.Mfg.selectReportFromReports(paymentRecord, eventDayReportsSnapshot.val());
         var orderUpdates            = await Ops.Actualizations.Mfg.buildOrderUpdates(sqOrder, desiredReport);
         console.log('orderUpdates', orderUpdates);
-        var suppliesUpdates         = await Ops.Actualizations.Mfg.buildSuppliesUpdates(sqOrder, desiredReport);
-        //var orderUpdatesPromise     = Firebase.Actualizations.Mfg.updateOrders(orderUpdates);
-        //var suppliesUpdatesPromise  = Firebase.Actualizations.Mfg.updateSupplies(suppliesUpdates);
+        var suppliesUpdates         = await Ops.Actualizations.Mfg.buildSuppliesUpdates(orderUpdates);
+        console.log('suppliesUpdates: ', suppliesUpdates);
+        var orderUpdatesPromise     = Firebase.Actualizations.Mfg.updateOrders(orderUpdates);
+        var suppliesUpdatesPromise  = Firebase.Actualizations.Mfg.updateSupplies(suppliesUpdates);
         
         
 
