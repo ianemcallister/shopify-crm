@@ -29,25 +29,18 @@ async function UsingPaymentId(paymentRecord) {
         var eventDayReportsSnapshot = await Firebase.Actualizations.Mfg.dailyReports(eventDate);
         var desiredReport           = Ops.Actualizations.Mfg.selectReportFromReports(paymentRecord, eventDayReportsSnapshot.val());
         var orderUpdates            = await Ops.Actualizations.Mfg.buildOrderUpdates(sqOrder, desiredReport);
-        console.log('orderUpdates', orderUpdates);
+        //console.log('orderUpdates', orderUpdates);
         var suppliesUpdates         = await Ops.Actualizations.Mfg.buildSuppliesUpdates(orderUpdates);
-        console.log('suppliesUpdates: ', suppliesUpdates);
-        var orderUpdatesPromise     = Firebase.Actualizations.Mfg.updateOrders(orderUpdates);
-        var suppliesUpdatesPromise  = Firebase.Actualizations.Mfg.updateSupplies(suppliesUpdates);
+        //console.log('suppliesUpdates: ', suppliesUpdates);
+        var orderUpdatesSnapshot    = await Firebase.Actualizations.Mfg.updateOrders(orderUpdates);
+        var suppliesUpdatesSnapshot = await Firebase.Actualizations.Mfg.updateSupplies(suppliesUpdates);
         
-        
+        //console.log("orderUpdatesSnapshot: ", orderUpdatesSnapshot);
+        //console.log("suppliesUpdatesSnapshot: ", suppliesUpdatesSnapshot);
 
-        /*Promise.all([
-            orderUpdatesPromise,
-            suppliesUpdatesPromise
-        ]).then(function(success) {
-            console.log('Promises Processed');
-            return success;
-        }).catch(function(error) {
-            console.log("UsingPaymentId Error: ", error);
-        })*/
-
+        //  return 
         return true;
+
     } catch (error) {
         console.log('Error: ', error);
     };

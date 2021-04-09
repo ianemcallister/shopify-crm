@@ -21,10 +21,10 @@ async function CreateNewEvents() {
             id: "",
             name: "Ian"
         },
-        channel: "Test channel 2",
+        channel: "Test channel 3",
         completedAt: "",
         device: {
-            id: "",
+            id: "C4F1253F-8969-4C88-B20D-4E89F622884D",
             name: ""
         },
         eventDate: "2021-04-08",

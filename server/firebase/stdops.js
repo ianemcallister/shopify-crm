@@ -679,8 +679,7 @@ async function UpdateMfgOrders(data) {
 
     //  EXECUTE
     try {
-        var result = _update(updatePath, data.updates);
-        return result;
+        return _update(updatePath, data.updates);
     } catch (e) {
         console.log("UpdateMfgOrders Error: ", e);
     }

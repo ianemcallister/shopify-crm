@@ -423,7 +423,7 @@ function SelectMfgReportFromReports(payment, reports) {
 */
 async function BuildMfgOrderUpdates(payment, report) {
     //  NOTIFY PROGRESS
-    console.log('BuildMfgOrderUpdates: ', payment);
+    //console.log('BuildMfgOrderUpdates: ', payment);
     
     //  LOCAL VARIABLES
     var itemsList    = [];
@@ -436,7 +436,7 @@ async function BuildMfgOrderUpdates(payment, report) {
     //  ITERATE OVER SQUARE ORDER ITEMS ARRAY, ADD ALL CATALOGY ID'S TO THE LIST TO COLLECT
     payment.order.lineItems.forEach(function(item) {
         //  NOTIFY PROGRESS
-        console.log('PAYMENT Line Item: ', item);
+        //console.log('PAYMENT Line Item: ', item);
         
         //  LOCAL VARIABLES
         var timestamp = moment().format();
@@ -456,8 +456,8 @@ async function BuildMfgOrderUpdates(payment, report) {
     });
 
     var squareCatalogue     = await Square.items.catalog.batchList(itemsList);
-    console.log("objects: ", squareCatalogue.objects);
-    console.log('relatedObjects: ', squareCatalogue.relatedObjects);
+    //console.log("objects: ", squareCatalogue.objects);
+    //console.log('relatedObjects: ', squareCatalogue.relatedObjects);
 
     //  ITERATE OVER PARALLEL SQUARE ITEMS
     for(var i = 0; i < squareCatalogue.objects.length; i++) {
@@ -517,7 +517,7 @@ function BuildMfgSuppliesUpdates(orderUpdates) {
         Object.keys(updates).forEach(function(key) {
             
             //  NOTIFY PROGRESS
-            console.log('orderUpdates.updates ', key, updates[key]);
+            //console.log('orderUpdates.updates ', key, updates[key]);
             console.log('orderUpdates.oldsupplyLevels[key]: ', key, orderUpdates.oldsupplyLevels[key])
             
             // LOCAL VARIABLES
@@ -529,14 +529,14 @@ function BuildMfgSuppliesUpdates(orderUpdates) {
                 var oldItemSupplyLevel = orderUpdates.oldsupplyLevels[key].qty;
 
                 //  notify progres
-                console.log('oldItemSupplyLevel: ', oldItemSupplyLevel);
+                //console.log('oldItemSupplyLevel: ', oldItemSupplyLevel);
 
                 //  If the key isn't present yet, create it
                 if(returnObject.updates[writePath] == undefined) {
                     returnObject.updates[writePath] = oldItemSupplyLevel;
                 }
 
-                console.log('delta: ', delta);
+                //console.log('delta: ', delta);
 
                 //  add the new update value to the old value
                 returnObject.updates[writePath] += delta;
