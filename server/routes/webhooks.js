@@ -111,10 +111,10 @@ module.exports = (function() {
                 console.log(data.payment); 
 
                 //  DEFINE LOCAL VARIABLES
-                var record = data.payment;
-
-                await rcdPayment.usingPaymentId(record)
-                console.log('Payment processed locally');
+                var paymentRecord = data.payment;
+                
+                //await rcdPayment.usingPaymentId(paymentRecord)
+                //console.log('Payment processed locally');
 
                 res.sendStatus(200);
             } else {
