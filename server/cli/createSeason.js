@@ -15,7 +15,7 @@ async function CreateNewSeason() {
     //  LOCAL VARIABLES
     var merchantId = '-MVrZajcORbaTjkuZL2a';
     var channelId = "-MWe4orVlZyjItAXclBF"
-    const templateFile  = fs.readFileSync('./models/preBuilt/newSeason.json', 'utf8');
+    const templateFile  = fs.readFileSync('../models/preBuilt/newSeason.json', 'utf8');
     let record = JSON.parse(templateFile);
 
     //  EXECUTE

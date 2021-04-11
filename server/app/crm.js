@@ -26,7 +26,7 @@ async function BuildReferralRecord(allCustomerRecords, ownerRecord) {
     //  LOCAL VARIABLES
     var redirect = allCustomerRecords[5];
     var discount = allCustomerRecords[6];
-    var templateFile = fs.readFileSync('./models/referralTemplate.json', 'utf8');
+    var templateFile = fs.readFileSync('../models/referralTemplate.json', 'utf8');
     var template = JSON.parse(templateFile);
     var timestamp = new Date(Date.now()).toISOString();
 
@@ -86,7 +86,7 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
     var params   = allCustomerRecords[4];
     //var redirect = allCustomerRecords[5];
     //var discount = allCustomerRecords[6];
-    var templateFile = fs.readFileSync('./models/customerProfile.json', 'utf8');
+    var templateFile = fs.readFileSync('../models/customerProfile.json', 'utf8');
     var template = JSON.parse(templateFile);
     var timestamp = new Date(Date.now()).toISOString();
    

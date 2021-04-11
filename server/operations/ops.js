@@ -178,7 +178,7 @@ async function CreateSeriesOfEvents(merchantId, channelId, seasonId, startsAt, i
                     var i = 1;
                     for(var cursor = moment(seasonRecord.startsAt); cursor.isSameOrBefore(seasonRecord.endsAt); cursor = cursor.add(7, "days")) {
                         
-                        const templateFile  = fs.readFileSync('./models/eventsTemplate.json', 'utf8');
+                        const templateFile  = fs.readFileSync('../models/eventsTemplate.json', 'utf8');
                         let template = JSON.parse(templateFile);
 
                         //  ADD SEASON DETAILS

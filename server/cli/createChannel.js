@@ -13,7 +13,7 @@ async function CreateNewChannel() {
     console.log('creating a new channel');
 
     //  LOCAL VARIABLES
-    const templateFile  = fs.readFileSync('./models/preBuilt/newChannel.json', 'utf8');
+    const templateFile  = fs.readFileSync('../models/preBuilt/newChannel.json', 'utf8');
     let record = JSON.parse(templateFile);
 
     //  EXECUTE
