@@ -14,9 +14,11 @@ const client = new Client({
 //  DEFINE MODULE
 var squareStOps = {
     payments: {
+        list: ListPayments,
         get: GetPayment
     },
     orders: {
+        list: ListOrders,
         get: GetOrderById
     },
     subscriptiosn: {},
@@ -28,6 +30,7 @@ var squareStOps = {
         }
     },
     customers: {
+        list: ListCustomers,
         search: {
             byId: SearchCustomersById,
             byLoyaltyId: SearchCustomersByLoyaltyId
@@ -100,6 +103,60 @@ async function _SearchLoyalty(params) {
 /*
 *
 */
+async function ListPayments(cursor) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const paymentsApi = client.paymentsApi;
+    const beginTime = '2021-01-01T00:00:00-08:00';
+    const endTime = '2021-04-01T00:00:00-08:00';
+    const sortOrder = 'DESC';
+    //const cursor = '';
+    const locationId = 'RKNMKQF48TA6W';
+    const total = ""; //10;
+    const last4 = ''; //'last_42';
+    const cardBrand = ''; // 'card_brand6';
+    const limit = 100;
+    var paymentsList = [];
+
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await paymentsApi.listPayments(beginTime, endTime, sortOrder, cursor, locationId, limit);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        var theCursor = result.cursor;
+        var newPayments = result.payments;
+        
+        console.log('found ', newPayments.length, " records");
+
+        if(theCursor == undefined || theCursor == "") {
+            console.log('found the bottom');
+            return newPayments;
+
+        } else {
+            
+            console.log('going down');
+            
+            paymentsList = await ListCustomers(theCursor)
+            
+            newPayments.forEach(function(payment) {
+                paymentsList.push(payment);
+            });
+            
+            return paymentsList;
+        }
+    } catch(error) {
+        console.log('error', error);
+        //if (error instanceof ApiError) {
+        //    const errors = error.result;
+            // const { statusCode, headers } = error;
+        //}
+    }
+
+}
+
+/*
+*
+*/
 async function GetPayment(paymentId) {
     //  NOTIFY PROGRESS
     //  LOCAL VARIABLES
@@ -113,6 +170,82 @@ async function GetPayment(paymentId) {
         console.log('GetPayment Error: ', error);
     }
 };
+
+async function ListOrders(cursor) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIABLES
+    const ordersApi = client.ordersApi;
+    const bodyLocationIds = ['057P5VYJ4A5X1', '18YC4JDH91E1H'];
+    const bodyQueryFilterStateFilterStates = ['COMPLETED'];
+    const bodyQueryFilterStateFilter= {
+        states: bodyQueryFilterStateFilterStates,
+    };
+
+    const bodyQueryFilterDateTimeFilterCreatedAt = {};
+    bodyQueryFilterDateTimeFilterCreatedAt.startAt = 'start_at8';
+    bodyQueryFilterDateTimeFilterCreatedAt.endAt = 'end_at4';
+
+    const bodyQueryFilterDateTimeFilterUpdatedAt = {};
+    bodyQueryFilterDateTimeFilterUpdatedAt.startAt = 'start_at6';
+    bodyQueryFilterDateTimeFilterUpdatedAt.endAt = 'end_at6';
+
+    const bodyQueryFilterDateTimeFilterClosedAt = {};
+    bodyQueryFilterDateTimeFilterClosedAt.startAt = '2018-03-03T20:00:00+00:00';
+    bodyQueryFilterDateTimeFilterClosedAt.endAt = '2019-03-04T21:54:45+00:00';
+
+    const bodyQueryFilterDateTimeFilter = {};
+    bodyQueryFilterDateTimeFilter.createdAt = bodyQueryFilterDateTimeFilterCreatedAt;
+    bodyQueryFilterDateTimeFilter.updatedAt = bodyQueryFilterDateTimeFilterUpdatedAt;
+    bodyQueryFilterDateTimeFilter.closedAt = bodyQueryFilterDateTimeFilterClosedAt;
+
+    const bodyQueryFilterFulfillmentFilterFulfillmentTypes = ['SHIPMENT'];
+    const bodyQueryFilterFulfillmentFilterFulfillmentStates = ['CANCELED', 'FAILED'];
+    const bodyQueryFilterFulfillmentFilter = {};
+    bodyQueryFilterFulfillmentFilter.fulfillmentTypes = bodyQueryFilterFulfillmentFilterFulfillmentTypes;
+    bodyQueryFilterFulfillmentFilter.fulfillmentStates = bodyQueryFilterFulfillmentFilterFulfillmentStates;
+
+    const bodyQueryFilterSourceFilterSourceNames = ['source_names8'];
+    const bodyQueryFilterSourceFilter = {};
+    bodyQueryFilterSourceFilter.sourceNames = bodyQueryFilterSourceFilterSourceNames;
+
+    const bodyQueryFilterCustomerFilterCustomerIds = ['customer_ids5', 'customer_ids6'];
+    const bodyQueryFilterCustomerFilter = {};
+    bodyQueryFilterCustomerFilter.customerIds = bodyQueryFilterCustomerFilterCustomerIds;
+
+    const bodyQueryFilter = {};
+    bodyQueryFilter.stateFilter = bodyQueryFilterStateFilter;
+    bodyQueryFilter.dateTimeFilter = bodyQueryFilterDateTimeFilter;
+    bodyQueryFilter.fulfillmentFilter = bodyQueryFilterFulfillmentFilter;
+    bodyQueryFilter.sourceFilter = bodyQueryFilterSourceFilter;
+    bodyQueryFilter.customerFilter = bodyQueryFilterCustomerFilter;
+
+    const bodyQuerySort = {
+        sortField: 'CLOSED_AT',
+    };
+    bodyQuerySort.sortOrder = 'DESC';
+
+    const bodyQuery = {};
+    bodyQuery.filter = bodyQueryFilter;
+    bodyQuery.sort = bodyQuerySort;
+
+    const body = {};
+    body.locationIds = bodyLocationIds;
+    body.cursor = 'cursor0';
+    body.query = bodyQuery;
+    body.limit = 3;
+    body.returnEntries = true;
+
+    try {
+    const { result, ...httpResponse } = await ordersApi.searchOrders(body);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+    } catch(error) {
+        //if (error instanceof ApiError) {
+        //    const errors = error.result;
+            // const { statusCode, headers } = error;
+        //}
+    }
+}
 
 /*
 *
@@ -194,6 +327,48 @@ async function GetCatalogItemsList() {
     }
 }
 
+/*
+*
+*/
+async function ListCustomers(cursor) {
+    //  NOTIFY PROGRESS
+    //  LOCAL VARIALES
+    const customersApi = client.customersApi;
+    //const cursor = undefined; //'cursor6';
+    const sortField = 'DEFAULT';
+    const sortOrder = 'DESC';
+    var customerList = [];
+
+    //  EXECUTE
+    try {
+        const { result, ...httpResponse } = await customersApi.listCustomers(cursor, sortField, sortOrder);
+        // Get more response info...
+        // const { statusCode, headers } = httpResponse;
+        var theCursor = result.cursor;
+        var newCustomers = result.customers;
+        
+        console.log('found ', newCustomers.length, " records");
+
+        if(theCursor == undefined || theCursor == "") {
+            console.log('found the bottom');
+            return newCustomers;
+
+        } else {
+            
+            console.log('going down');
+            
+            customerList = await ListCustomers(theCursor)
+            
+            newCustomers.forEach(function(customer) {
+                customerList.push(customer);
+            });
+            
+            return customerList;
+        }
+    } catch (error) {
+        console.log('Error: ', error);
+    }
+}
 
 /*
 *   SEARCH CUSTOMERS BY LOYALTY ID

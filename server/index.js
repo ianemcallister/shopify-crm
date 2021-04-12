@@ -63,7 +63,8 @@ serverApp.get('/', async function(req, res) {
 	//  NOTIFY PROGRESS
 	console.log(req.query);
 
-	res.sendStatus(200);
+	//res.sendStatus(200);
+	res.redirect('/#/');
 });
 
 //	SHOPIFY GET
