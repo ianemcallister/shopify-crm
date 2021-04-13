@@ -4,6 +4,7 @@
 
 //  DEFINE DEPENDENCIES
 const fs          = require('fs');
+const path        = require('path');
 const Firebase    = require('../firebase/stdops.js');
 
 //  DEFINE MODULE
@@ -86,7 +87,9 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
     var params   = allCustomerRecords[4];
     //var redirect = allCustomerRecords[5];
     //var discount = allCustomerRecords[6];
-    var templateFile = fs.readFileSync('../models/customerProfile.json', 'utf8');
+    var readpath = path.resolve(__dirname, '../models/shopifyCustomer.json');
+    console.log('readpath: ', readpath);
+    var templateFile = fs.readFileSync(readpath, 'utf8');
     var template = JSON.parse(templateFile);
     var timestamp = new Date(Date.now()).toISOString();
    

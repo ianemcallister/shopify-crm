@@ -135,7 +135,9 @@ function _parseRedirects(allRedirects, query) {
 async function createNewShopifyCustomer(phone) {
     //  NOTIFY PROGRESS
     //  LOCAL VARIABLES
-    var paramsFile = fs.readFileSync('../models/shopifyCustomer.json', 'utf8');
+    var readpath = path.resolve(__dirname, '../models/shopifyCustomer.json');
+    console.log('readpath: ', readpath);
+    var paramsFile = fs.readFileSync(readpath, 'utf8');
     var params = JSON.parse(paramsFile);
     params.first_name = "TEMPORARY"
     params.phone = phone;
