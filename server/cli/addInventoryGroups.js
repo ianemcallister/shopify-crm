@@ -9,7 +9,8 @@ const ops               = require('../operations/ops');
 async function addInventoryGroup(item) {
     //  notify
     //  LOCAL
-    const templateFile  = fs.readFileSync('./server/models/inventoryGroupTemplate.json', 'utf8');
+    var readpath = path.resolve(__dirname, './server/models/inventoryGroupTemplate.json');
+    const templateFile  = fs.readFileSync(readpath, 'utf8');
     var group            = JSON.parse(templateFile);
     
     //  CUSTOMIZED ELEMENTS

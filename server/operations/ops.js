@@ -64,7 +64,8 @@ function _buildAssetAccts(object) {
     object.locations.forEach(function(location) {
         //  local variables
         var timestamp               = new Date(Date.now()).toISOString();
-        const templateFile          = fs.readFileSync('./server/models/assetsTemplate.json', 'utf8');
+        var readpath                = path.resolve(__dirname, './server/models/assetsTemplate.json');
+        const templateFile          = fs.readFileSync(readpath, 'utf8');
         let templateAsset           = JSON.parse(templateFile);
         templateAsset._createdAt    = timestamp;
         templateAsset._updatedAt    = timestamp;
@@ -177,9 +178,9 @@ async function CreateSeriesOfEvents(merchantId, channelId, seasonId, startsAt, i
 
                     var i = 1;
                     for(var cursor = moment(seasonRecord.startsAt); cursor.isSameOrBefore(seasonRecord.endsAt); cursor = cursor.add(7, "days")) {
-                        
-                        const templateFile  = fs.readFileSync('../models/eventsTemplate.json', 'utf8');
-                        let template = JSON.parse(templateFile);
+                        var readpath        = path.resolve(__dirname, '../models/eventsTemplate.json');
+                        const templateFile  = fs.readFileSync(readpath, 'utf8');
+                        let template        = JSON.parse(templateFile);
 
                         //  ADD SEASON DETAILS
                         template.externalIds.seasonId   = seasonRecord._id;

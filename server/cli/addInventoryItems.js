@@ -9,7 +9,8 @@ const ops               = require('../operations/ops');
 async function addInventoryItems(item) {
     //  notify
     //  LOCAL
-    const templateFile  = fs.readFileSync('./server/models/inventoryItemTemplate.json', 'utf8');
+    var readpath = path.resolve(__dirname, './server/models/inventoryItemTemplate.json');
+    const templateFile  = fs.readFileSync(readpath, 'utf8');
     var postItem            = JSON.parse(templateFile);
     
     //  CUSTOMIZED ELEMENTS
