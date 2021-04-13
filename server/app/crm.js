@@ -88,7 +88,7 @@ async function ConsolidateCustomerRecords(allCustomerRecords) {
     var params   = allCustomerRecords[4];
     //var redirect = allCustomerRecords[5];
     //var discount = allCustomerRecords[6];
-    var readpath = path.resolve(__dirname, '../models/shopifyCustomer.json');
+    var readpath = path.resolve(__dirname, '../models/customerProfile.json');
     console.log('readpath: ', readpath);
     var templateFile = fs.readFileSync(readpath, 'utf8');
     var template = JSON.parse(templateFile);
