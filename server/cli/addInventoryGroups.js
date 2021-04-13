@@ -3,6 +3,7 @@
 */
 //  DEFINE DEPENDENCIES
 const fs                = require('fs');
+const path              = require('path');
 const ops               = require('../operations/ops');
 
 //  LOCAL VARIABLES

@@ -8,6 +8,7 @@ var CRM         = require('./app/crm.js');
 var rewards     = require('./rewards/enrollment.js');
 const Square    = require('./square/stdops.js');
 const fs        = require('fs');
+const path      = require('path');
 
 async function execute() {
     try {

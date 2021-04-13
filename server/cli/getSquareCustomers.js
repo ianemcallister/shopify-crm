@@ -5,6 +5,7 @@
 //  DEFEIN DEPENDENCIES
 const Square    = require('../square/stdops.js');
 const fs        = require('fs');
+const path      = require('path');
 
 async function GetCustomerList() {
     var filename = 'squareCustomers.json';

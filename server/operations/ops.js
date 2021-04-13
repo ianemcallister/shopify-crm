@@ -8,6 +8,7 @@ var Firebase        = require('../firebase/stdops.js');
 const Square        = require('../square/stdops');
 var moment          = require('moment');
 const fs            = require('fs');
+const path          = require('path');
 
 //  LOCAL VARIABLES
 var opsObject = {

@@ -4,6 +4,7 @@
 
 //  DEFINE DEPENDENICE
 const fs                = require('fs');
+const path              = require('path');  
 const shopifyAPINode    = require('shopify-api-node');
 
 //  INSTANCIATE
